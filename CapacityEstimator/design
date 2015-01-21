@@ -1,0 +1,30 @@
+tokencheck
+	keep sending response times to tokengen
+	
+tokengen
+	schedule the capacity estimation logic every epoch with Timer
+	
+	capacity discovery
+		set cmin as current capacity
+		keep getting response times and record them
+		
+		at every epoch
+			record power ratio
+			plot curve
+			if capacity found
+				set new capacity
+				dont schedule requests till some slots
+				//schedule capacity checking logic every epoch with Timer
+			else
+				set capacity += cdelta
+				
+				
+				
+java logic
+	cmin
+	cdelta
+	getMaxima()
+	epoch
+	pastPowerRatios
+	
+	

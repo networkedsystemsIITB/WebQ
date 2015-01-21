@@ -1,0 +1,27 @@
+webq.env.capacity.name = "WebQCapacity"
+
+webq.logic.cjump=1.15
+webq.logic.initialcapacity=15
+webq.logic.cdeltarelative=0.05
+webq.logic.relativecapacityforlocalsearch=0.8
+webq.logic.epoch=8
+webq.logic.responsetime.hardcut=0.2
+
+webq.logic.stability.requiredStableEpochs=2
+webq.logic.stability.maxUnstableEpochs=10
+
+#tolerance to decide if current throughput is near enough to the currentCapacity, so that estimated capacity can be increased 
+webq.logic.tightnessCushion=0.1
+
+webq.fitting.degree=3
+webq.fitting.minobservation=10
+webq.fitting.extraobservations=5
+
+webq.tokencheck.port=5006
+webq.proxy1.port=5007
+webq.proxy1.ip=127.0.0.1
+
+webq.bypass.capacity=100
+webq.bypass.bypassdiscovery=false
+
+webq.logging.filename=javapersecond.log

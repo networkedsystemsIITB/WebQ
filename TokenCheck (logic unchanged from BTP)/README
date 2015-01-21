@@ -1,0 +1,9 @@
+Configuration steps:
+
+1. Go inside "lighttpd" directory.
+2. Run "sudo make", and then "sudo make install"
+
+
+
+For starting the server, run "lighttpd -f lighttpd.conf"
+The configuration options are in the file lighttpd.conf

@@ -1,0 +1,4 @@
+1. Install LAMP server, and configure FastCGI module in Apache (mod_fastcgi)
+2. Compile using "gcc proxy1.c -lfcgi -lssl -lcrypto -lpthread -levent -o proxy1"
+3. Copy to your cgi directory (usually /usr/lib/cgi-bin/)
+4. Start Apache server

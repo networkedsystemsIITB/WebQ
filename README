@@ -1,0 +1,5 @@
+read README of TokenGen
+read README of TokenCheck
+read README of CapacityEstimator
+
+To start components, just run redeploy.sh in "Experiments Scripts" folder. Do not deploy each component by hand, as there are many dependencies between the modules, and there is a sequence to start things, which is all taken care in the redeploy.sh script.

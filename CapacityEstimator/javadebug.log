@@ -1,0 +1,215 @@
+2014-11-06 02:02:21,504 [main] DEBUG [CapacityManager]  - Epoch: 8
+ 2014-11-06 02:02:21,506 [main] DEBUG [TokenGenCommunicator]  - Proxy1 IP: 127.0.0.1
+ 2014-11-06 02:02:21,506 [main] DEBUG [TokenGenCommunicator]  - Proxy1 port: 5007
+ 2014-11-06 02:02:21,513 [main] DEBUG [TokenGenCommunicator]  - connected to TokenGen
+ 2014-11-06 02:02:21,513 [main] DEBUG [CapacityManager]  - enter scheduleCapacityEstimation
+ 2014-11-06 02:02:21,533 [main] DEBUG [TokenGenCommunicator]  - To TokenGen: >15<
+ 2014-11-06 02:02:21,533 [main] DEBUG [TokenGenCommunicator]  - To TokenGen: >15<
+ 2014-11-06 02:02:21,537 [main] DEBUG [CapacityManager]  - exit scheduleCapacityEstimation
+ 2014-11-06 02:02:21,537 [main] DEBUG [CapacityManager]  - enter startTokenCheckListener
+ 2014-11-06 02:02:21,538 [main] DEBUG [TokenCheckCommunicator]  - Enter connectWithTokenCheck
+ 2014-11-06 02:02:21,540 [main] DEBUG [TokenCheckCommunicator]  - before TokenCheck accept
+ 2014-11-06 02:02:21,545 [Timer-3] DEBUG [TokenGenCommunicator]  - To TokenGen: >80<
+ 2014-11-06 02:02:21,546 [Timer-3] DEBUG [CapacityEstimator]  - Max distance: -1.7976931348623157E308
+ 2014-11-06 02:02:21,549 [Timer-3] DEBUG [PowerRatioData]  - request arrival count: 0
+ 2014-11-06 02:02:21,550 [Timer-3] INFO  [CapacityChangeDetector]  - ------------------capacity change detection module is active now
+ 2014-11-06 02:02:21,551 [Timer-4] DEBUG [PowerRatioData]  - request arrival count: 0
+ 2014-11-06 02:02:21,555 [Timer-4] DEBUG [CapacityChangeDetector]  - Curve: 3.5636337007202066 + 4.668903764294937 x + 0.08131408708927226 x^2 - 9.484975992496265E-4 x^3
+ 2014-11-06 02:02:21,566 [Timer-4] DEBUG [CapacityChangeDetector]  - Respt:NaN Arrv:0 Success:0 Failed:0 Tput:0.0 PowerRatio:-1.0 Cap:80.0
+ 2014-11-06 02:02:21,566 [Timer-4] DEBUG [CapacityChangeDetector]  - current difference: 4.563633700720207 maxdistance: 110.52798287301505 ratio: 0.04128939642337759
+ 2014-11-06 02:02:21,589 [main] DEBUG [TokenCheckCommunicator]  - after TokenCheck accept
+ 2014-11-06 02:02:21,590 [main] DEBUG [TokenCheckCommunicator]  - connected with TokenCheck
+ 2014-11-06 02:02:29,552 [Timer-4] DEBUG [PowerRatioData]  - request arrival count: 0
+ 2014-11-06 02:02:29,552 [Timer-4] DEBUG [CapacityChangeDetector]  - Curve: 3.5636337007202066 + 4.668903764294937 x + 0.08131408708927226 x^2 - 9.484975992496265E-4 x^3
+ 2014-11-06 02:02:29,553 [Timer-4] DEBUG [CapacityChangeDetector]  - Respt:NaN Arrv:0 Success:0 Failed:0 Tput:0.0 PowerRatio:-1.0 Cap:80.0
+ 2014-11-06 02:02:29,554 [Timer-4] DEBUG [CapacityChangeDetector]  - current difference: 4.563633700720207 maxdistance: 110.52798287301505 ratio: 0.04128939642337759
+ 2014-11-06 02:02:37,552 [Timer-4] DEBUG [PowerRatioData]  - request arrival count: 68
+ 2014-11-06 02:02:37,553 [Timer-4] DEBUG [CapacityChangeDetector]  - Curve: 3.5636337007202066 + 4.668903764294937 x + 0.08131408708927226 x^2 - 9.484975992496265E-4 x^3
+ 2014-11-06 02:02:37,554 [Timer-4] DEBUG [CapacityChangeDetector]  - Respt:0.36856319230769236 Arrv:68 Success:26 Failed:0 Tput:3.25 PowerRatio:8.818026508970437 Cap:80.0
+ 2014-11-06 02:02:37,554 [Timer-4] DEBUG [CapacityChangeDetector]  - current difference: 10.745864326439513 maxdistance: 110.52798287301505 ratio: 0.09722302033490807
+ 2014-11-06 02:02:45,553 [Timer-4] DEBUG [PowerRatioData]  - request arrival count: 451
+ 2014-11-06 02:02:45,553 [Timer-4] DEBUG [CapacityChangeDetector]  - Curve: 3.5636337007202066 + 4.668903764294937 x + 0.08131408708927226 x^2 - 9.484975992496265E-4 x^3
+ 2014-11-06 02:02:45,555 [Timer-4] DEBUG [CapacityChangeDetector]  - Respt:1.314824686375321 Arrv:451 Success:389 Failed:0 Tput:48.625 PowerRatio:36.9821167064092 Cap:80.0
+ 2014-11-06 02:02:45,555 [Timer-4] DEBUG [CapacityChangeDetector]  - current difference: 276.81788704573364 maxdistance: 110.52798287301505 ratio: 2.504505011764922
+ 2014-11-06 02:02:45,555 [Timer-4] INFO  [CapacityChangeDetector]  - ---------------------Capacity has decreased.
+ 2014-11-06 02:02:45,555 [Timer-4] DEBUG [CapacityManager]  - enter scheduleCapacityEstimation
+ 2014-11-06 02:02:45,556 [Timer-4] DEBUG [TokenGenCommunicator]  - To TokenGen: >15<
+ 2014-11-06 02:02:45,557 [Timer-4] DEBUG [TokenGenCommunicator]  - To TokenGen: >15<
+ 2014-11-06 02:02:45,557 [Timer-4] DEBUG [CapacityManager]  - exit scheduleCapacityEstimation
+ 2014-11-06 02:02:45,565 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 1
+ 2014-11-06 02:02:45,566 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:0.25 baseValue:15.0 tol:0.05 Ratio:0.9833333333333333
+ 2014-11-06 02:02:45,611 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 2
+ 2014-11-06 02:02:45,611 [Timer-5] DEBUG [CapacityEstimator]  - Respt:1.8448525 Arrv:1 Success:2 Failed:0 Tput:0.25 PowerRatio:0.13551218864380757 Cap:15.0 Lower:NA Near:false Overload:false
+ 2014-11-06 02:02:45,612 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:0.25 baseValue:15.0 tol:0.05 Ratio:0.9833333333333333
+ 2014-11-06 02:02:53,565 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 114
+ 2014-11-06 02:02:53,565 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:26.25 baseValue:15.0 tol:0.05 Ratio:0.75
+ 2014-11-06 02:02:53,566 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 3
+ 2014-11-06 02:02:53,568 [Timer-5] DEBUG [CapacityEstimator]  - Respt:1.186320642857143 Arrv:114 Success:210 Failed:0 Tput:26.25 PowerRatio:22.127238666925088 Cap:15.0 Lower:false Near:false Overload:false
+ 2014-11-06 02:02:53,568 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >17<
+ 2014-11-06 02:03:01,566 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 129
+ 2014-11-06 02:03:01,568 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 4
+ 2014-11-06 02:03:01,570 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.14993008208955222 Arrv:129 Success:134 Failed:0 Tput:16.75 PowerRatio:111.71874093949565 Cap:17.25 Lower:false Near:true Overload:false
+ 2014-11-06 02:03:01,570 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >19<
+ 2014-11-06 02:03:09,566 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 152
+ 2014-11-06 02:03:09,569 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 5
+ 2014-11-06 02:03:09,570 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.15187262337662336 Arrv:152 Success:154 Failed:0 Tput:19.25 PowerRatio:126.75095466193818 Cap:19.8375 Lower:false Near:true Overload:false
+ 2014-11-06 02:03:09,571 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >22<
+ 2014-11-06 02:03:17,566 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 179
+ 2014-11-06 02:03:17,569 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 6
+ 2014-11-06 02:03:17,571 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.16289897206703907 Arrv:179 Success:179 Failed:0 Tput:22.375 PowerRatio:137.35507177290134 Cap:22.813124999999996 Lower:false Near:true Overload:false
+ 2014-11-06 02:03:17,571 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >26<
+ 2014-11-06 02:03:25,567 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 229
+ 2014-11-06 02:03:25,567 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:28.5 baseValue:26.235093749999994 tol:0.05 Ratio:0.08633116662676332
+ 2014-11-06 02:03:25,570 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 7
+ 2014-11-06 02:03:25,572 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.19402242105263157 Arrv:229 Success:228 Failed:0 Tput:28.5 PowerRatio:146.89024003194422 Cap:26.235093749999994 Lower:false Near:false Overload:false
+ 2014-11-06 02:03:25,572 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >30<
+ 2014-11-06 02:03:33,567 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 230
+ 2014-11-06 02:03:33,568 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:28.125 baseValue:30.17035781249999 tol:0.05 Ratio:0.06779362131570646
+ 2014-11-06 02:03:33,571 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 8
+ 2014-11-06 02:03:33,573 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.1651701377777777 Arrv:230 Success:225 Failed:0 Tput:28.125 PowerRatio:170.27896433579164 Cap:30.17035781249999 Lower:false Near:false Overload:false
+ 2014-11-06 02:03:33,573 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:28.125 baseValue:30.17035781249999 tol:0.05 Ratio:0.06779362131570646
+ 2014-11-06 02:03:41,567 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 250
+ 2014-11-06 02:03:41,571 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: waiting for 9, got only 9
+ 2014-11-06 02:03:41,573 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.18974249999999993 Arrv:250 Success:240 Failed:0 Tput:30.0 PowerRatio:158.10901616664697 Cap:30.17035781249999 Lower:false Near:true Overload:false
+ 2014-11-06 02:03:41,573 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >34<
+ 2014-11-06 02:03:49,568 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 267
+ 2014-11-06 02:03:49,588 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: nobracketingexception
+ 2014-11-06 02:03:49,588 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.25740980000000013 Arrv:267 Success:275 Failed:0 Tput:34.375 PowerRatio:133.54192420024407 Cap:34.69591148437499 Lower:false Near:true Overload:false
+ 2014-11-06 02:03:49,588 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >39<
+ 2014-11-06 02:03:57,569 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 308
+ 2014-11-06 02:03:57,573 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: nobracketingexception
+ 2014-11-06 02:03:57,574 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.1849730809061489 Arrv:308 Success:309 Failed:0 Tput:38.625 PowerRatio:208.8141680442542 Cap:39.900298207031234 Lower:false Near:true Overload:false
+ 2014-11-06 02:03:57,575 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >45<
+ 2014-11-06 02:04:05,569 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 388
+ 2014-11-06 02:04:05,579 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: got one estimate: 38.50621538524056
+ 2014-11-06 02:04:05,580 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: curve: 0.002746321463906354 + 5.963144133795322 x + 0.006525376516425589 x^2 - 0.0014535541971826486 x^3
+ 2014-11-06 02:04:05,580 [Timer-5] DEBUG [CapacityEstimator]  - ------------------new FOUND1 capacity: 38.50621538524056
+ 2014-11-06 02:04:05,580 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >30<
+ 2014-11-06 02:04:05,580 [Timer-5] INFO  [CapacityEstimator]  - ------------------first estimate found, assuming overload. waiting it to finish.
+ 2014-11-06 02:04:05,582 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.36249554569892467 Arrv:388 Success:372 Failed:0 Tput:46.5 PowerRatio:128.2774383071211 Cap:30.804972308192447 Lower:false Near:true Overload:true
+ 2014-11-06 02:04:13,570 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 349
+ 2014-11-06 02:04:13,570 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:44.25 baseValue:30.804972308192447 tol:0.05 Ratio:0.43645641220823
+ 2014-11-06 02:04:13,570 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:44.25 baseValue:30.804972308192447 tol:0.05 Ratio:0.43645641220823
+ 2014-11-06 02:04:13,572 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.26336101694915237 Arrv:349 Success:354 Failed:0 Tput:44.25 PowerRatio:168.02031110224425 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:04:21,571 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 361
+ 2014-11-06 02:04:21,571 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:45.625 baseValue:30.804972308192447 tol:0.05 Ratio:0.4810920634350394
+ 2014-11-06 02:04:21,571 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:45.625 baseValue:30.804972308192447 tol:0.05 Ratio:0.4810920634350394
+ 2014-11-06 02:04:21,573 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.25354926575342474 Arrv:361 Success:365 Failed:0 Tput:45.625 PowerRatio:179.94530516357347 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:04:29,571 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 365
+ 2014-11-06 02:04:29,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:44.0 baseValue:30.804972308192447 tol:0.05 Ratio:0.428340839257901
+ 2014-11-06 02:04:29,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:44.0 baseValue:30.804972308192447 tol:0.05 Ratio:0.428340839257901
+ 2014-11-06 02:04:29,574 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.25248555965909103 Arrv:365 Success:352 Failed:0 Tput:44.0 PowerRatio:174.26739200217753 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:04:37,571 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 351
+ 2014-11-06 02:04:37,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:45.0 baseValue:30.804972308192447 tol:0.05 Ratio:0.46080313105921694
+ 2014-11-06 02:04:37,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:45.0 baseValue:30.804972308192447 tol:0.05 Ratio:0.46080313105921694
+ 2014-11-06 02:04:37,574 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.25938843611111123 Arrv:351 Success:360 Failed:0 Tput:45.0 PowerRatio:173.48498905604208 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:04:45,571 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 365
+ 2014-11-06 02:04:45,571 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:45.875 baseValue:30.804972308192447 tol:0.05 Ratio:0.4892076363853684
+ 2014-11-06 02:04:45,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:45.875 baseValue:30.804972308192447 tol:0.05 Ratio:0.4892076363853684
+ 2014-11-06 02:04:45,573 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.25956980108991795 Arrv:365 Success:367 Failed:0 Tput:45.875 PowerRatio:176.73473496290262 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:04:53,572 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 354
+ 2014-11-06 02:04:53,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:44.625 baseValue:30.804972308192447 tol:0.05 Ratio:0.4486297716337235
+ 2014-11-06 02:04:53,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:44.625 baseValue:30.804972308192447 tol:0.05 Ratio:0.4486297716337235
+ 2014-11-06 02:04:53,574 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.2432260980392155 Arrv:354 Success:357 Failed:0 Tput:44.625 PowerRatio:183.4712654593714 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:05:01,572 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 284
+ 2014-11-06 02:05:01,572 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:36.375 baseValue:30.804972308192447 tol:0.05 Ratio:0.18081586427286703
+ 2014-11-06 02:05:01,573 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:36.375 baseValue:30.804972308192447 tol:0.05 Ratio:0.18081586427286703
+ 2014-11-06 02:05:01,573 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.1535388041237113 Arrv:284 Success:291 Failed:0 Tput:36.375 PowerRatio:236.91079403413525 Cap:30.804972308192447 Lower:false Near:false Overload:true
+ 2014-11-06 02:05:09,572 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 232
+ 2014-11-06 02:05:09,574 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.12799430508474577 Arrv:232 Success:236 Failed:0 Tput:29.5 PowerRatio:230.47900436248221 Cap:30.804972308192447 Lower:false Near:true Overload:true
+ 2014-11-06 02:05:17,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 248
+ 2014-11-06 02:05:17,573 [Timer-5] INFO  [CapacityEstimator]  - overloadrecheck: stable epochs found. Ending overload.
+ 2014-11-06 02:05:17,577 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: nobracketingexception
+ 2014-11-06 02:05:17,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.11026465199999999 Arrv:248 Success:250 Failed:0 Tput:31.25 PowerRatio:283.40904753410916 Cap:30.804972308192447 Lower:false Near:true Overload:false
+ 2014-11-06 02:05:17,579 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >32<
+ 2014-11-06 02:05:25,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 269
+ 2014-11-06 02:05:25,574 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: nobracketingexception
+ 2014-11-06 02:05:25,575 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.12169953612167293 Arrv:269 Success:263 Failed:0 Tput:32.875 PowerRatio:270.1325004816139 Cap:32.73028307745447 Lower:false Near:true Overload:false
+ 2014-11-06 02:05:25,575 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >34<
+ 2014-11-06 02:05:33,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 272
+ 2014-11-06 02:05:33,574 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: nobracketingexception
+ 2014-11-06 02:05:33,575 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.17202306296296302 Arrv:272 Success:270 Failed:0 Tput:33.75 PowerRatio:196.19462308531536 Cap:34.6555938467165 Lower:false Near:true Overload:false
+ 2014-11-06 02:05:33,575 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >36<
+ 2014-11-06 02:05:41,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 278
+ 2014-11-06 02:05:41,574 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: got one estimate: 36.55003392430925
+ 2014-11-06 02:05:41,574 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: curve: 7.480281900780011 - 3.902042715691584 x + 0.6619892140340924 x^2 - 0.011100942660768418 x^3
+ 2014-11-06 02:05:41,574 [Timer-5] DEBUG [CapacityEstimator]  - ------------------new FOUND1 capacity: 36.55003392430925
+ 2014-11-06 02:05:41,575 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.13176660357142847 Arrv:278 Success:280 Failed:0 Tput:35.0 PowerRatio:265.6211744960633 Cap:36.580904615978525 Lower:false Near:true Overload:false
+ 2014-11-06 02:05:41,575 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >38<
+ 2014-11-06 02:05:49,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 295
+ 2014-11-06 02:05:49,579 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: got one estimate: 36.46942194416831
+ 2014-11-06 02:05:49,579 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: curve: 7.073451768457362 - 3.5164022601774296 x + 0.639991461270595 x^2 - 0.010817851364148668 x^3
+ 2014-11-06 02:05:49,579 [Timer-5] DEBUG [CapacityEstimator]  - ------------------new FOUND1 capacity: 36.46942194416831
+ 2014-11-06 02:05:49,581 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.19350174581939802 Arrv:295 Success:299 Failed:0 Tput:37.375 PowerRatio:193.1507121123517 Cap:38.50621538524055 Lower:false Near:true Overload:false
+ 2014-11-06 02:05:49,581 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >40<
+ 2014-11-06 02:05:57,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 329
+ 2014-11-06 02:05:57,577 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: got one estimate: 36.91734390646291
+ 2014-11-06 02:05:57,577 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: curve: 7.765376132036669 - 3.8242522714456135 x + 0.6497454483312745 x^2 - 0.010798007899327309 x^3
+ 2014-11-06 02:05:57,577 [Timer-5] DEBUG [CapacityEstimator]  - ------------------new FOUND1 capacity: 36.91734390646291
+ 2014-11-06 02:05:57,579 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.1859235015105742 Arrv:329 Success:331 Failed:0 Tput:41.375 PowerRatio:222.53776237990462 Cap:40.43152615450258 Lower:false Near:true Overload:false
+ 2014-11-06 02:05:57,579 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >42<
+ 2014-11-06 02:06:05,573 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 350
+ 2014-11-06 02:06:05,576 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: got one estimate: 37.62093106332215
+ 2014-11-06 02:06:05,577 [Timer-5] DEBUG [CapacityEstimator]  - curvefitting: curve: 8.638182962502356 - 4.121629084339558 x + 0.6544898932599013 x^2 - 0.010627266485271541 x^3
+ 2014-11-06 02:06:05,577 [Timer-5] DEBUG [TokenGenCommunicator]  - To TokenGen: >37<
+ 2014-11-06 02:06:05,577 [Timer-5] DEBUG [CapacityEstimator]  - ------------------new FOUND2 capacity: 37.62093106332215
+ 2014-11-06 02:06:05,577 [Timer-5] INFO  [CapacityEstimator]  - ------------------final capacity found, waiting for stable region
+ 2014-11-06 02:06:05,579 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.16825030538922156 Arrv:350 Success:334 Failed:0 Tput:41.75 PowerRatio:248.14219447279876 Cap:37.62093106332215 Lower:false Near:true Overload:true
+ 2014-11-06 02:06:13,574 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 339
+ 2014-11-06 02:06:13,574 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:42.0 baseValue:37.62093106332215 tol:0.05 Ratio:0.11639980226186217
+ 2014-11-06 02:06:13,574 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:42.0 baseValue:37.62093106332215 tol:0.05 Ratio:0.11639980226186217
+ 2014-11-06 02:06:13,576 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.22665615476190457 Arrv:339 Success:336 Failed:0 Tput:42.0 PowerRatio:185.30271125493914 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:06:21,574 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 324
+ 2014-11-06 02:06:21,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.5 baseValue:37.62093106332215 tol:0.05 Ratio:0.10310932842541143
+ 2014-11-06 02:06:21,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.5 baseValue:37.62093106332215 tol:0.05 Ratio:0.10310932842541143
+ 2014-11-06 02:06:21,577 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.1612607048192771 Arrv:324 Success:332 Failed:0 Tput:41.5 PowerRatio:257.347256707755 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:06:29,574 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 323
+ 2014-11-06 02:06:29,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.09314147304807337
+ 2014-11-06 02:06:29,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.09314147304807337
+ 2014-11-06 02:06:29,576 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.20989186018237083 Arrv:323 Success:329 Failed:0 Tput:41.125 PowerRatio:195.93422996140637 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:06:37,574 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 344
+ 2014-11-06 02:06:37,574 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:43.625 baseValue:37.62093106332215 tol:0.05 Ratio:0.15959384223032708
+ 2014-11-06 02:06:37,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:43.625 baseValue:37.62093106332215 tol:0.05 Ratio:0.15959384223032708
+ 2014-11-06 02:06:37,576 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.23658537249283654 Arrv:344 Success:349 Failed:0 Tput:43.625 PowerRatio:184.39432472234057 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:06:45,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 347
+ 2014-11-06 02:06:45,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:42.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.11972242072097485
+ 2014-11-06 02:06:45,575 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:42.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.11972242072097485
+ 2014-11-06 02:06:45,577 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.15362259643916906 Arrv:347 Success:337 Failed:0 Tput:42.125 PowerRatio:274.21096229603506 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:06:53,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 341
+ 2014-11-06 02:06:53,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:40.5 baseValue:37.62093106332215 tol:0.05 Ratio:0.07652838075250995
+ 2014-11-06 02:06:53,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:40.5 baseValue:37.62093106332215 tol:0.05 Ratio:0.07652838075250995
+ 2014-11-06 02:06:53,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.30396855555555574 Arrv:341 Success:324 Failed:0 Tput:40.5 PowerRatio:133.23746571739684 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:01,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 326
+ 2014-11-06 02:07:01,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:42.75 baseValue:37.62093106332215 tol:0.05 Ratio:0.13633551301653826
+ 2014-11-06 02:07:01,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:42.75 baseValue:37.62093106332215 tol:0.05 Ratio:0.13633551301653826
+ 2014-11-06 02:07:01,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.21950996198830372 Arrv:326 Success:342 Failed:0 Tput:42.75 PowerRatio:194.75198124392128 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:09,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 325
+ 2014-11-06 02:07:09,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.25 baseValue:37.62093106332215 tol:0.05 Ratio:0.09646409150718606
+ 2014-11-06 02:07:09,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.25 baseValue:37.62093106332215 tol:0.05 Ratio:0.09646409150718606
+ 2014-11-06 02:07:09,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.16585905151515168 Arrv:325 Success:330 Failed:0 Tput:41.25 PowerRatio:248.7051482760451 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:17,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 353
+ 2014-11-06 02:07:17,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:43.25 baseValue:37.62093106332215 tol:0.05 Ratio:0.149625986852989
+ 2014-11-06 02:07:17,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:43.25 baseValue:37.62093106332215 tol:0.05 Ratio:0.149625986852989
+ 2014-11-06 02:07:17,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.20395690462427735 Arrv:353 Success:346 Failed:0 Tput:43.25 PowerRatio:212.0546008465549 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:25,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 318
+ 2014-11-06 02:07:25,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.09314147304807337
+ 2014-11-06 02:07:25,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.09314147304807337
+ 2014-11-06 02:07:25,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.20663214285714296 Arrv:318 Success:329 Failed:0 Tput:41.125 PowerRatio:199.02518277822898 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:33,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 335
+ 2014-11-06 02:07:33,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.75 baseValue:37.62093106332215 tol:0.05 Ratio:0.1097545653436368
+ 2014-11-06 02:07:33,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.75 baseValue:37.62093106332215 tol:0.05 Ratio:0.1097545653436368
+ 2014-11-06 02:07:33,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.16097243113772455 Arrv:335 Success:334 Failed:0 Tput:41.75 PowerRatio:259.36118194226435 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:41,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 346
+ 2014-11-06 02:07:41,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:43.5 baseValue:37.62093106332215 tol:0.05 Ratio:0.15627122377121438
+ 2014-11-06 02:07:41,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:43.5 baseValue:37.62093106332215 tol:0.05 Ratio:0.15627122377121438
+ 2014-11-06 02:07:41,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.16968460057471274 Arrv:346 Success:348 Failed:0 Tput:43.5 PowerRatio:256.35797151107295 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:49,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 334
+ 2014-11-06 02:07:49,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.09314147304807337
+ 2014-11-06 02:07:49,576 [Timer-5] DEBUG [CapacityEstimator]  - NewValue:41.125 baseValue:37.62093106332215 tol:0.05 Ratio:0.09314147304807337
+ 2014-11-06 02:07:49,578 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.14322476291793318 Arrv:334 Success:329 Failed:0 Tput:41.125 PowerRatio:287.1361010635036 Cap:37.62093106332215 Lower:false Near:false Overload:true
+ 2014-11-06 02:07:57,575 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 307
+ 2014-11-06 02:07:57,577 [Timer-5] DEBUG [CapacityEstimator]  - Respt:0.1430835718849842 Arrv:307 Success:313 Failed:0 Tput:39.125 PowerRatio:273.44159419957805 Cap:37.62093106332215 Lower:false Near:true Overload:true
+ 2014-11-06 02:08:05,576 [Timer-5] DEBUG [PowerRatioData]  - request arrival count: 305
+ 2014-11-06 02:08:05,576 [Timer-5] INFO  [CapacityEstimator]  - capacityfound: stable epochs found. Finishing discovery. Scheduling capacity change module.
+ 2014-11-06 02:08:05,577 [Timer-5] DEBUG [CapacityEstimator]  - Max distance: 137.07778907774477
+ 
