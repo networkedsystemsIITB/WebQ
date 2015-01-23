@@ -1,5 +1,7 @@
 Configuration steps:
 
+install openssl-dev package (libssl-dev in ubuntu)
+
 1. Go inside "lighttpd" directory.
 2. Run "sudo make", and then "sudo make install"
 
