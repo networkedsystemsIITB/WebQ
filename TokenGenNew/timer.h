@@ -54,7 +54,7 @@ void start_timer();
 void init_logger() {
 	if (log_ptr != NULL)
 		return;
-	char log_file[] = "/home/webq/TokenGenNew/proxy1.log";
+	char log_file[] = "/home/webq/webq-repo/TokenGenNew/proxy1.log";
 	log_ptr = fopen(log_file, "a");
 
 	if (log_ptr == NULL) {
