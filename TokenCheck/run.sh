@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cd /home/webq/tokencheck/lighttpd;
-sudo lighttpd -f /home/webq/tokencheck/lighttpd/lighttpd.conf;
+cd /home/webq/webq-repo/TokenCheck/lighttpd;
+sudo lighttpd -f /home/webq/webq-repo/TokenCheck/lighttpd/lighttpd.conf;
+echo "successfully started lighttpd"
