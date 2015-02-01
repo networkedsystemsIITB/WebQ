@@ -1,4 +1,19 @@
-1. Install LAMP server, and configure FastCGI module in Apache (mod_fastcgi)(libapache2-mod-fastcgi)
+1. Install LAMP server, and configure FastCGI module in Apache
+(libapache2-mod-fastcgi, libfcgi-dev, libssl-dev, libevent-dev)
 2. Compile using "gcc proxy1.c -lfcgi -lssl -lcrypto -lpthread -levent -o proxy1"
 3. Copy to your cgi directory (usually /usr/lib/cgi-bin/)
 4. Start Apache server
+
+
+To Configure FastCGI 
+---------------------
+
+(http://stackoverflow.com/questions/3781979/how-to-config-apache2-and-fastcgi-to-run-my-c-application)
+	we have to modifiy apache2.conf ( /etc/apache2/apache2.conf)
+	and place the compiled CGI code in the directory specified in the conf file
+	we can either start the apache server locally or run as as service
+		
+	to run independantly: 
+
+		sudo /usr/sbin/apache2 -d . -f /path/to/apache2.conf -X
+

@@ -1,8 +1,10 @@
 #!/bin/sh
 
-tokencheck="wolverine2"
-tokengen="comp4new"
-server="comp1"
+#run from apache server(same as capacity estimator)
+
+tokencheck="10.129.41.67"
+tokengen="10.129.26.130"
+server="10.129.49.76"
 server2="comp4"
 
 if [ "$#" -ne 1 ];
