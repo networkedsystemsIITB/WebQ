@@ -147,7 +147,7 @@ void main(void) {
 			char* env_var = getenv("QUERY_STRING");
 			char* request_limit = strchr(env_var, '=') + 1;
 			char url_to_visit[100];
-			strcpy(url_to_visit, "http://wolverine2/query-test.php?limit=");
+			strcpy(url_to_visit, "http://wolverine2/test.php?limit=");
 			strcat(url_to_visit, (const char*) request_limit);
 
 			printf("Refresh: %d; url=%s&hash=%s&token=%s\n", time_to_wait,
