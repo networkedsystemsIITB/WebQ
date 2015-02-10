@@ -36,13 +36,13 @@
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">comp4new</stringProp>
-            <stringProp name="HTTPSampler.port">80</stringProp>
+            <stringProp name="HTTPSampler.domain">10.129.26.130</stringProp>
+            <stringProp name="HTTPSampler.port">8080</stringProp>
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol">HTTP</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/cgi-bin/proxy1?limit=1030000</stringProp>
+            <stringProp name="HTTPSampler.path">/proxy1?limit=1030000</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
