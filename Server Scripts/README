@@ -1,0 +1,9 @@
+put script in /var/www/html
+
+
+httperf commands
+    httperf --hog --timeout=5 --server=10.129.49.76 --rate 10 --num-conns=1000 --print-reply --add-header="Content-Type: application/x-www-form-urlencoded\n" --wsesslog=1000,100,httperf_content
+
+    make a file named "httperf_content" with contents
+    /test.php?limit=100 method=GET
+

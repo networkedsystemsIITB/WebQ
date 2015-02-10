@@ -12,6 +12,6 @@ for($i=0;$i<$limit;$i++) {
 $end = microtime(TRUE);
 //echo "<h1>" . $start . "</h1>";
 //echo "<h1>" .  $end . "</h1>";
-echo "<h1>".($end-$start)." Seconds</h1>";
+echo "<h1>".$limit."\n".($end-$start)." Seconds</h1>";
 ?>
 
