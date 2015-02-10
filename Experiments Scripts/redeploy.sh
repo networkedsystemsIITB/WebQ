@@ -42,7 +42,7 @@ sudo service apache2 start;
 
 #hit the URL once
 echo "Hitting the URL once";
-lynx -dump http://$tokengen/cgi-bin/proxy1?limit=100 > /dev/null;
+lynx -dump http://$tokengen:8080/cgi-bin/proxy1?limit=100 > /dev/null;
 sleep 5;
 
 #start java code
