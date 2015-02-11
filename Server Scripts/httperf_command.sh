@@ -1,14 +1,13 @@
  #!/bin/bash
- for i in $(seq 20 20 120);
+ for i in $(seq 20 20 160);
  do
-    respTime=`httperf  \
+    echo $i"**************"
+    httperf  \
         --hog                       \
-        --timeout=5                 \
+        --timeout=15                 \
         --server=10.129.49.76       \
         --rate=$i                   \
         --add-header="Content-Type: application/x-www-form-urlencoded\n" \
-        --wsesslog=$(($i*60)),1,httperf_content | \
-        grep Reply\ time | cut -d ' ' -f 5`
+        --wsesslog=1200,1,httperf_content | grep Reply
         # --print-reply                                                    \
-    echo $i" "$respTime
  done
