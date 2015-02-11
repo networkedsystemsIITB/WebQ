@@ -113,7 +113,7 @@ public class CapacityEstimator {
 	 * @throws IOException
 	 */
 	public void handleEpoch() {
-//		logger.debug("epoch called");
+		logger.debug("epoch called");
 		
 		if (bypassDiscovery) {
 			setCurrentCapacity(capacity);
