@@ -17,7 +17,8 @@ int sockfd;
 char buffr[256];
 
 int explode(char ***arr_ptr, char *str, char delimiter)
-{
+{ 
+    // {{{
   char *src = str, *end, *dst;
   char **arr;
   int size = 1, i;
@@ -46,8 +47,10 @@ int explode(char ***arr_ptr, char *str, char delimiter)
   *arr_ptr = arr;
 
   return size;
-}
+//}}}
+} 
 
+//{{{  Commented Block
 /***  Written to verify token (if user has actually waited for that amount of time or not) **/
 // returns 1 if token is correct
 
@@ -95,10 +98,13 @@ int verify_token(char* query)
   }
 }
 */
+//}}}
 
 
 int verify_token(char* query)
-{return 1;
+{
+    // {{{
+  return 1;
   char * pch;
   unsigned char token[100];
   unsigned char expected[100];
@@ -152,14 +158,17 @@ int verify_token(char* query)
   } else {
     return 0;
   }
-}
+//}}}
+} 
 
 
-void connect_proxy1(){
+void connect_proxy1()
+{
+//{{{
     struct sockaddr_in serv_addr;
     struct hostent *servr;
     int portno = 5006;
-    char* hostname = "10.129.79.152";
+    char* hostname = "10.129.26.130";
 
     /* Create a socket point */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -190,21 +199,28 @@ void connect_proxy1(){
          return;
          //exit(1);
     }
+//}}}
 }
 
-void disconnect_proxy1(){
+void disconnect_proxy1()
+{
+//{{{
     //close(sockfd);
+//}}}
 }
 
 
 void inform_proxy1_arrival(){
+//{{{
     bzero (buffr, 256);
     strcpy(buffr, "A\n");//buffr[1]='\0';
     /* Send message to the server */
     write(sockfd,buffr,strlen(buffr));    
+//}}}
 }
 
 void inform_proxy1_departure(unsigned long service_time, int http_status){
+//{{{
     //char* c[50];
     //c = itoa(service_time);
     //strcpy(buffr, c);
@@ -220,5 +236,6 @@ void inform_proxy1_departure(unsigned long service_time, int http_status){
     /* Send message to the server */
     write(sockfd,buffr,strlen(buffr));
     //fflush(sockfd);
+//}}}
 }
 
