@@ -6,7 +6,7 @@ TERM='urxvt'
 $TERM -g +0+400 -e ssh webq@10.129.26.130 &     #gen
 $TERM -g +800+0 -e ssh webq@10.129.41.67 &    #check
 $TERM -g +800+400 -e ssh webq@10.129.49.76 &    #server
-$TERM -g +0+400 -e ssh webq@10.129.2.55 &     #laod gen
+$TERM -g +0+0 -e ssh webq@10.129.2.55 &     #laod gen
 
 
 
