@@ -16,10 +16,10 @@ fi
 
 #kill all the components
 echo "Killing all components";
-killall java;
+ssh root@$tokengen "killall java;"
 # ps ax | grep CapacityManager | sed 's|  | |g' | cut -d' ' -f2 | xargs -I {} sudo kill -9 {}
 ssh root@$tokencheck "killall lighttpd &> /dev/null";
-sudo service apache2 stop;
+ssh root@$tokengen "killall apache2;"
 
 #stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
 #then start the server
@@ -36,21 +36,20 @@ sudo service apache2 stop;
 # ssh webq@$vachaspati rm /home/webq/summary110.csv &> /dev/null
 
 #start the apache server
-sudo service apache2 start
+ssh root@$tokengen "service apache2 start;"
 
 #hit the URL once
 echo "Hitting the URL once";
-lynx -dump http://$tokengen:8080/cgi-bin/proxy1?limit=100 > /dev/null;
+lynx -dump http://$tokengen:8080/proxy1\?limit\=100 > /dev/null;
 sleep 5;
 
 #start java code
 echo "Starting the java code"
-cd ../CapacityEstimator;
-bash run.sh;
+ssh root@$tokengen "cd /home/webq/webq-repo/CapacityEstimator;bash run.sh;"
 
 #start lighttpd
 echo "Starting the lighttpd server";
-ssh root@$tokencheck "bash /home/webq/tokencheck/"$tokencheckscript;
+ssh root@$tokencheck "bash /home/webq/webq-repo/TokenCheck/run.sh"
 
 # echo "Setting $server and $server2 governor to performance:"
 # for i in `seq 0 3`; do
