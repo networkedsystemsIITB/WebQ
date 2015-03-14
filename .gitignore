@@ -1,3 +1,7 @@
 TokenCheck/lighttpd/src/.libs/*.o
 *cscope*
+*.csv
+*.log
+*.dat
+*.png
 TokenCheck/lighttpd/confdfr0je/
