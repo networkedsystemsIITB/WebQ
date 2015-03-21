@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">500</stringProp>
+        <stringProp name="ThreadGroup.num_threads">750</stringProp>
         <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <longProp name="ThreadGroup.start_time">1425658274000</longProp>
         <longProp name="ThreadGroup.end_time">1425658274000</longProp>
@@ -92,7 +92,7 @@
               <sampleCount>true</sampleCount>
             </value>
           </objProp>
-          <stringProp name="filename">/home/webq/webq-repo/JMeter_test_configurations/march14-50.csv</stringProp>
+          <stringProp name="filename">/home/webq/webq-repo/JMeter_test_configurations/march14-75.csv</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
