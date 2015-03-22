@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">750</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1910</stringProp>
         <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <longProp name="ThreadGroup.start_time">1425658274000</longProp>
         <longProp name="ThreadGroup.end_time">1425658274000</longProp>
@@ -50,7 +50,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/moodle-performance-comparison/moodle/</stringProp>
+          <stringProp name="HTTPSampler.path">/moodle/</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -92,7 +92,7 @@
               <sampleCount>true</sampleCount>
             </value>
           </objProp>
-          <stringProp name="filename">/home/webq/webq-repo/JMeter_test_configurations/march14-75.csv</stringProp>
+          <stringProp name="filename">/home/webq/webq-repo/JMeter_test_configurations/open/march14-191.csv</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
