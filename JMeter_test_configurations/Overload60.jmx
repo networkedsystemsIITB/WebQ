@@ -141,7 +141,7 @@
           </LoopController>
           <hashTree>
             <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-              <stringProp name="ConstantTimer.delay">${__javaScript(${Refresh_g1} * 1000,)}</stringProp>
+              <stringProp name="ConstantTimer.delay">${__javaScript(&apos;${Refresh_g1}&apos;*1000)}</stringProp>
             </ConstantTimer>
             <hashTree/>
             <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
