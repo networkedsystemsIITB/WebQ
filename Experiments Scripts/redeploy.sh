@@ -23,9 +23,8 @@ ssh root@$tokengen "killall apache2;"
 
 #stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
 #then start the server
-# echo "Remaking the proxy1";
-# cd ../TokenGenNew;
-# ssh root@$tokengen 'cd /home/webq/webq-repo/TokenGenNew;make'
+echo "Remaking the proxy1";
+sshpass -p "webq" ssh root@10.129.26.130 "cd /home/webq/webq-repo/TokenGenNew; ./make_script.sh"
 
 #cleaning up all the log files
 # echo "Cleaning up the log files"
