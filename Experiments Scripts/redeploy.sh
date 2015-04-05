@@ -7,7 +7,7 @@ server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
 
-if [ "$1" == "run2" ];
+if [ "$1" != "run2" ];
 then
     echo "executed run.sh"
 	tokencheckscript="run.sh"
@@ -26,10 +26,12 @@ ssh root@$tokengen "killall apache2;"
 #stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
 #then start the server
 echo "Remaking the proxy1";
-if [ "$1" == "moodle" ];
+if [ "$1" = "moodle" ];
 then
+echo "remade moodle"
 sshpass -p "webq" ssh root@10.129.26.130 "cd /home/webq/webq-repo/TokenGenNew; ./make_script.sh moodle"
 else
+echo "remade php"
 sshpass -p "webq" ssh root@10.129.26.130 "cd /home/webq/webq-repo/TokenGenNew; ./make_script.sh"
 fi
 
