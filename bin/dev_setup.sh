@@ -14,7 +14,7 @@ fi
 echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.aliases.sh
 
 cat << EOF >> ~/.aliases.sh
-export PS1="$PS1 $2
+export PS1="\$PS1 $2
 "
 EOF
 
