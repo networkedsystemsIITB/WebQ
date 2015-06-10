@@ -11,7 +11,7 @@ then
     exit
 fi
 
-echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.aliases.sh
+echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
 
 cat << EOF >> ~/.aliases.sh
 export PS1="\$PS1 $2
