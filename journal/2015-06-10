@@ -1,0 +1,27 @@
+alias jl="vim ~/journal/`date --iso`"
+
+modified /etc/hosts 
+with
+10.129.49.76	server
+10.129.41.67	check
+10.129.26.130   gen
+10.129.2.55	vacha
+
+modified .ssh/config
+Host server
+	HostName 10.129.49.76
+	User	webq
+
+Host check
+	HostName 10.129.41.67
+	User	webq
+
+Host gen
+	HostName 10.129.26.130
+	User	webq
+
+Host vacha
+	HostName 10.129.2.55
+	User	webq
+
+
