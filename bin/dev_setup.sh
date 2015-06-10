@@ -13,7 +13,7 @@ fi
 
 echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
 
-cat << EOF >> ~/.aliases.sh
+cat << EOF >> ~/.localaliases.sh
 export PS1="\$PS1 $2
 "
 EOF
