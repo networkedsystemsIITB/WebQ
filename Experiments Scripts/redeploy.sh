@@ -36,10 +36,10 @@ sshpass -p "webq" ssh root@10.129.26.130 "cd /home/webq/webq-repo/TokenGenNew; .
 fi
 
 #cleaning up all the log files
-# echo "Cleaning up the log files"
-# sudo rm /home/webq/webq-repo/TokenGenNew/proxy1.log &> /dev/null
-# rm /home/webq/webq-repo/CapacityEstimator/javapersecond.log &> /dev/null
-# rm /home/webq/webq-repo/CapacityEstimator/javadebug.log &>/dev/null
+echo "Cleaning up the log files"
+ssh root@$tokengen "cat /dev/null > /home/webq/webq-repo/TokenGenNew/proxy1.log"
+ssh root@$tokengen "cat /dev/null > /home/webq/webq-repo/CapacityEstimator/javapersecond.log"
+ssh root@$tokengen "cat /dev/null > /home/webq/webq-repo/CapacityEstimator/javadebug.log"
 # ssh webq@$vachaspati rm /home/webq/summary60.csv &> /dev/null
 # ssh webq@$vachaspati rm /home/webq/summary110.csv &> /dev/null
 

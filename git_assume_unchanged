@@ -1,3 +1,0 @@
-git update-index --assume-unchanged \
-CapacityEstimator/src/com/webq/capest/cscope.files \
-CapacityEstimator/src/com/webq/capest/cscope.out

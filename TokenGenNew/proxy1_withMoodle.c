@@ -153,7 +153,7 @@ void main(void) {
             printf("Refresh: %d; url=%s?hash=%s&token=%s\n", time_to_wait,
                     url_to_visit,/*"aaa"*/getHash((unsigned char*) gt),
                     encrypt(gt));
-            printf("JMeter: %0.3f; url=%s&hash=%s&token=%s\n", float_wait_time,
+            printf("JMeter: %0.3f; url=%s?hash=%s&token=%s\n", float_wait_time,
                     url_to_visit,/*"aaa"*/getHash((unsigned char*) gt),
                     encrypt(gt));
             printf("Content-Type:text/html\n\n");
