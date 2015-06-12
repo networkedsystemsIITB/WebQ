@@ -7,15 +7,6 @@ server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
 
-if [ "$1" != "run2" ];
-then
-    echo "executed run.sh"
-	tokencheckscript="run.sh"
-else
-    echo "executed run2.sh"
-	tokencheckscript="run_twoservers.sh"
-fi
-
 #kill all the components
 echo "Killing all components";
 ssh root@$tokengen "killall java;"
