@@ -24,4 +24,8 @@ Host vacha
 	HostName 10.129.2.55
 	User	webq
 
+all consolidated into
+1) install Zsh
+2) clone dotfiles ; cd ; ./install
+3) clone webq ; ./bin/dev_setup
 
