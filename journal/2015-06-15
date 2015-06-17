@@ -1,1 +1,4 @@
 set hostname of the machine insted of modifying ps1
+
+the proxy.server in tokencheck conf reffers the final server in which 
+the app resides

@@ -2,22 +2,17 @@
 
 if [ -z "$1" ];
 then
-    echo "pass user account. eg ~/dev_setup <username> <systemname>"
+    echo "pass user account. eg ~/dev_setup <username>"
     exit
 fi
 if [ -z "$2" ];
 then
-    echo "pass user account. eg ~/dev_setup <username> <systemname>"
+    echo "pass user account. eg ~/dev_setup <username>"
     exit
 fi
 
 
 echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
-
-cat << EOF >> ~/.localaliases.sh
-export PS1="\$PS1 $2
-"
-EOF
 
 echo "10.129.49.76    server" | sudo tee -a /etc/hosts
 echo "10.129.41.67    check" | sudo tee -a /etc/hosts

@@ -6,3 +6,6 @@ TokenCheck/lighttpd/src/.libs/*.o
 *.png
 TokenCheck/lighttpd/confdfr0je/
 foo*
+TokenGenNew/apache.pid
+TokenGenNew/proxy1_withMoodle
+
