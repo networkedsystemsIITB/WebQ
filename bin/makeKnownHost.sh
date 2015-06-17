@@ -15,9 +15,11 @@ fi
 
 ssh ${1}@server 'mkdir -p ~/.ssh'
 ssh ${1}@gen 'mkdir -p ~/.ssh'
+ssh ${1}@gen2 'mkdir -p ~/.ssh'
 ssh ${1}@check 'mkdir -p ~/.ssh'
 ssh ${1}@vacha 'mkdir -p ~/.ssh'
 cat ~/.ssh/id_rsa.pub |ssh ${1}@server  'cat >> .ssh/authorized_keys'
 cat ~/.ssh/id_rsa.pub |ssh ${1}@gen 'cat >> .ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub |ssh ${1}@gen2 'cat >> .ssh/authorized_keys'
 cat ~/.ssh/id_rsa.pub |ssh ${1}@check 'cat >> .ssh/authorized_keys'
 cat ~/.ssh/id_rsa.pub |ssh ${1}@vacha  'cat >> .ssh/authorized_keys'

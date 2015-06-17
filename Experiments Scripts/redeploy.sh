@@ -3,9 +3,16 @@
 #run from proxy1 server(same as capacity estimator)
 tokencheck="10.129.41.67"
 tokengen="10.129.26.130"
+tokengen2="10.129.41.17"
 server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
+if [ -z "$1" ];
+then
+    echo "input username ./redeploy.sh <username> <port>"
+    $username = $1
+    $port = $2
+fi
 
 #kill all the components
 echo "Killing all components";
@@ -20,17 +27,17 @@ echo "Remaking the proxy1";
 if [ "$2" = "moodle" ];
 then
 echo "remade moodle"
-sshpass -p "webq" ssh root@10.129.26.130 "cd /home/webq/webq-repo/TokenGenNew; ./make_script.sh moodle"
+sshpass -p "webq" ssh root@10.129.26.130 "cd /home/${username}/webq-repo/TokenGenNew; ./make_script.sh moodle"
 else
 echo "remade php"
-sshpass -p "webq" ssh root@10.129.26.130 "cd /home/webq/webq-repo/TokenGenNew; ./make_script.sh"
+sshpass -p "webq" ssh root@10.129.26.130 "cd /home/${username}/webq-repo/TokenGenNew; ./make_script.sh"
 fi
 
 #cleaning up all the log files
 echo "Cleaning up the log files"
-ssh root@$tokengen "cat /dev/null > /home/webq/webq-repo/TokenGenNew/proxy1.log"
-ssh root@$tokengen "cat /dev/null > /home/webq/webq-repo/CapacityEstimator/javapersecond.log"
-ssh root@$tokengen "cat /dev/null > /home/webq/webq-repo/CapacityEstimator/javadebug.log"
+ssh root@$tokengen "cat /dev/null > /home/${username}/webq/TokenGenNew/proxy1.log"
+ssh root@$tokengen "cat /dev/null > /home/${uesrname}/webq/CapacityEstimator/javapersecond.log"
+ssh root@$tokengen "cat /dev/null > /home/${username}/webq/CapacityEstimator/javadebug.log"
 # ssh webq@$vachaspati rm /home/webq/summary60.csv &> /dev/null
 # ssh webq@$vachaspati rm /home/webq/summary110.csv &> /dev/null
 
@@ -44,11 +51,11 @@ sleep 5;
 
 #start java code
 echo "Starting the java code"
-ssh root@$tokengen "cd /home/webq/webq-repo/CapacityEstimator;bash run.sh;"
+ssh root@$tokengen "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 
 #start lighttpd
 echo "Starting the lighttpd server";
-ssh root@$tokencheck "bash /home/webq/webq-repo/TokenCheck/run.sh"
+ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
 
 # echo "Setting $server and $server2 governor to performance:"
 # for i in `seq 0 3`; do
@@ -61,4 +68,4 @@ ssh root@$tokencheck "bash /home/webq/webq-repo/TokenCheck/run.sh"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
-echo "$tokengen:8080/proxy1?limit=100"
+echo "$tokengen:$port/proxy1?limit=100"
