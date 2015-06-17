@@ -2,7 +2,8 @@
 (libapache2-mod-fastcgi, libfcgi-dev, libssl-dev, libevent-dev)
 2. Compile using "gcc proxy1.c -lfcgi -lssl -lcrypto -lpthread -levent -o proxy1"
 3. Copy to your cgi directory (usually /usr/lib/cgi-bin/)
-4. Start Apache server
+4. copy apache2_etc.conf to ( etc/apache2/apache2.conf or use apache2_local.conf )
+5. Start Apache server
 
 
 To Configure FastCGI 
@@ -15,5 +16,5 @@ To Configure FastCGI
 		
 	to run independantly: 
 
-		sudo /usr/sbin/apache2 -d . -f /path/to/apache2.conf -X
+		sudo /usr/sbin/apache2 -d . -f /path/to/apache2_local.conf -X
 
