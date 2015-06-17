@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cd /home/webq/webq-repo/TokenCheck/lighttpd;
-sudo lighttpd -f /home/webq/webq-repo/TokenCheck/lighttpd/lighttpd.conf;
+cd /home/${1}/webq/TokenCheck/lighttpd;
+sudo lighttpd -f lighttpd.conf;
 if (( "$?" == 0 ));
 then
     echo "SUCCESSFULLY STARTED LIGHTTPD"
