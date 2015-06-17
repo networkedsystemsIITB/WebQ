@@ -47,3 +47,10 @@ git update-index --assume-unchanged TokenCheck/lighttpd/src/.libs/**
 git update-index --assume-unchanged TokenCheck/lighttpd/**/Makefile
 git update-index --assume-unchanged CapacityEstimator/*.log
 git update-index --assume-unchanged TokenGenNew/proxy1
+git update-index --assume-unchanged TokenCheck/lighttpd/config.h
+git update-index --assume-unchanged TokenCheck/lighttpd/config.log
+git update-index --assume-unchanged TokenCheck/lighttpd/config.status
+git update-index --assume-unchanged TokenCheck/lighttpd/libtool
+git update-index --assume-unchanged TokenCheck/lighttpd/src/lighttpd
+git update-index --assume-unchanged TokenCheck/lighttpd/src/proc_open
+git update-index --assume-unchanged TokenCheck/lighttpd/src/spawn-fcgi

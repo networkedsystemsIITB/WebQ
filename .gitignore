@@ -5,3 +5,4 @@ TokenCheck/lighttpd/src/.libs/*.o
 *.dat
 *.png
 TokenCheck/lighttpd/confdfr0je/
+foo*
