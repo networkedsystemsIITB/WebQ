@@ -16,76 +16,76 @@ import static com.webq.capest.PropertiesFile.getInt;
  *
  */
 public class TokenCheckCommunicator {
-	
-	private ServerSocket serverSocket;
-	private BufferedReader reader;
-	private Socket socket = null;
-	private int port = getInt("webq.tokencheck.port");
-	Logger logger = Logger.getLogger("TokenCheckCommunicator");
-	
-	public TokenCheckCommunicator() {
-		connectWithTokenCheck();
-	}
 
-	private void connectWithTokenCheck() {
-		try {
-			serverSocket = new ServerSocket(port);
-			socket = serverSocket.accept();
-			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			logger.debug("connected with TokenCheck");
-		} catch (IOException e) {
-			logger.error("Something went wrong in creating the server socket.");
-			logger.error("", e);
-			System.exit(1);
-		}
-	}
-	
-	public void listenToProxy2() {
-		double responseTimes = 0;
-		long requestCount = 1;
-//		char[] charbuf = new char[255];
+    private ServerSocket serverSocket;
+    private BufferedReader reader;
+    private Socket socket = null;
+    private int port = getInt("webq.tokencheck.port");
+    Logger logger = Logger.getLogger("TokenCheckCommunicator");
 
-		// TODO: decide on what to do upon IOException
-		while (true) {
-			try {
-//				int count = reader.read(charbuf);
-				String line = reader.readLine();
-//				if(count > 0) {
-				if(line != null) {
-					// TODO: listen to socket and compute the two variables above
-					if(line.charAt(0) == 'A') {
-						PowerRatioData.handleArrival();
-					} else if(line.charAt(0) == 'F') {
-						PowerRatioData.handleFailure();
-					} else {
-						//String line = String.valueOf(charbuf);
-//						logger.debug("Received: " + line);
-//						logger.debug(line.charAt(0));
-//						logger.debug(line.charAt(line.length()-1));
-						responseTimes = Integer.parseInt(line);
-						requestCount = 1;
-						PowerRatioData.handleCompletion(responseTimes/1000000, requestCount);
-					}
-				} else {
-					logger.warn("Waiting for TokenCheck to reconnect.");
-					connectWithTokenCheck();
-					continue;
-				}
-			} catch (IOException | NumberFormatException e) {
-				logger.error("", e);
-				if (!socket.isConnected()) {
-					logger.error("TokenCheck connection lost. Waiting for tokencheck to reconnect.");
-					try {
-						serverSocket.close();
-						socket = serverSocket.accept();
-						continue;
-					} catch (IOException e1) {
-						logger.error("Something went wrong in recreating the server socket.");
-						logger.error("", e1);
-						System.exit(1);
-					}
-				}
-			}
-		}
-	}
+    public TokenCheckCommunicator() {
+        connectWithTokenCheck();
+    }
+
+    private void connectWithTokenCheck() {
+        try {
+            serverSocket = new ServerSocket(port);
+            socket = serverSocket.accept();
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            logger.debug("connected with TokenCheck");
+        } catch (IOException e) {
+            logger.error("Something went wrong in creating the server socket.");
+            logger.error("", e);
+            System.exit(1);
+        }
+    }
+
+    public void listenToProxy2() {
+        double responseTimes = 0;
+        long requestCount = 1;
+//      char[] charbuf = new char[255];
+
+        // TODO: decide on what to do upon IOException
+        while (true) {
+            try {
+//              int count = reader.read(charbuf);
+                String line = reader.readLine();
+//              if(count > 0) {
+                if(line != null) {
+                    // TODO: listen to socket and compute the two variables above
+                    if(line.charAt(0) == 'A') {
+                        PowerRatioData.handleArrival();
+                    } else if(line.charAt(0) == 'F') {
+                        PowerRatioData.handleFailure();
+                    } else {
+                        //String line = String.valueOf(charbuf);
+//                      logger.debug("Received: " + line);
+//                      logger.debug(line.charAt(0));
+//                      logger.debug(line.charAt(line.length()-1));
+                        responseTimes = Integer.parseInt(line);
+                        requestCount = 1;
+                        PowerRatioData.handleCompletion(responseTimes/1000000, requestCount);
+                    }
+                } else {
+                    logger.warn("Waiting for TokenCheck to reconnect.");
+                    connectWithTokenCheck();
+                    continue;
+                }
+            } catch (IOException | NumberFormatException e) {
+                logger.error("", e);
+                if (!socket.isConnected()) {
+                    logger.error("TokenCheck connection lost. Waiting for tokencheck to reconnect.");
+                    try {
+                        serverSocket.close();
+                        socket = serverSocket.accept();
+                        continue;
+                    } catch (IOException e1) {
+                        logger.error("Something went wrong in recreating the server socket.");
+                        logger.error("", e1);
+                        System.exit(1);
+                    }
+                }
+            }
+        }
+    }
 }

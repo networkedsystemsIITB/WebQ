@@ -49,5 +49,7 @@ git update-index --assume-unchanged TokenCheck/lighttpd/libtool
 git update-index --assume-unchanged TokenCheck/lighttpd/src/lighttpd
 git update-index --assume-unchanged TokenCheck/lighttpd/src/proc_open
 git update-index --assume-unchanged TokenCheck/lighttpd/src/spawn-fcgi
+git update-index --assume-unchanged TokenGenNew/waittimedebug.log
+git update-index --assume-unchanged TokenGenNew/proxy1.log
 
 sudo apt-get install sshpass lynx
