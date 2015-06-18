@@ -3,11 +3,12 @@
 #run from proxy1 server(same as capacity estimator)
 marker="=================================="
 tokencheck="10.129.41.67"
-tokengen="10.129.26.130"
+# tokengen="10.129.26.130"
 tokengen2="10.129.41.17"
 server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
+log_file=large_log.log
 if [ -z "$1" -o -z "$2" ];
 then
     echo "input username ./redeploy.sh <username> <port>"
@@ -19,23 +20,31 @@ else
     echo "port : ${port}"
 fi
 
-printf "%d %s%40s\n" $? $marker "Killing all components"
+printf "%d %s%40s\n" $? $marker "Killing all components" | tee -a $log_file
 for machine in $tokengen $tokengen2
 do
-    ssh root@$machine "killall java &> /dev/null"
-    ssh root@$machine "killall apache2 &> /dev/null"
+    ssh root@$machine "killall java"
+    ssh root@$machine "killall apache2"
 done
-ssh root@$tokencheck "killall lighttpd &> /dev/null";
+ssh root@$tokencheck "killall lighttpd";
 
 #stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
 #then start the server
 if [ "$2" = "moodle" ];
 then
-printf "%d %s%40s\n" $? $marker "remaking proxy1 -> moodle"
-sshpass -p "webq" ssh root@10.129.26.130 "cd /home/${username}/webq/TokenGenNew; ./make_script.sh moodle"
+    for machine in $tokengen $tokengen2
+    do
+        printf "%d %s%40s\n" $? $marker "remaking proxy1 -> moodle" | tee -a $log_file
+        sshpass -p "webq" ssh root@$machine \
+            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh moodle" > $log_file
+    done
 else
-printf "%d %s%40s\n" $? $marker "remade proxy1 -> php"
-sshpass -p "webq" ssh root@10.129.26.130 "cd /home/${username}/webq/TokenGenNew; ./make_script.sh"
+    for machine in $tokengen $tokengen2
+    do
+        printf "%d %s%40s\n" $? $marker "remade proxy1 -> php @ $machine" | tee -a $log_file
+        sshpass -p "webq" ssh root@$machine \
+            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh" > $log_file
+    done
 fi
 
 #cleaning up all the log files
@@ -46,24 +55,24 @@ fi
 #     ssh root@$machine "cat /dev/null > /home/${uesrname}/webq/CapacityEstimator/javapersecond.log"
 #     ssh root@$machine "cat /dev/null > /home/${username}/webq/CapacityEstimator/javadebug.log"
 # done
-# ssh webq@$vachaspati rm /home/webq/summary60.csv &> /dev/null
-# ssh webq@$vachaspati rm /home/webq/summary110.csv &> /dev/null
+# ssh webq@$vachaspati rm /home/webq/summary60.csv &> $log_file
+# ssh webq@$vachaspati rm /home/webq/summary110.csv &> $log_file
 
 for machine in $tokengen $tokengen2
 do
-    printf "%d %s%40s\n" $? $marker "start the apache server at $machine"
-    ssh root@$machine "service apache2 start &> /dev/null"
+    printf "%d %s%40s\n" $? $marker "start the apache server at $machine" | tee -a $log_file
+    ssh root@$machine "service apache2 start &> $log_file"
     #hit the URL once
-    printf "%d %s%40s\n" $? $marker "Hitting the URL once `grep $machine /etc/hosts`"
-    lynx -dump http://$machine:${port}/proxy1\?limit\=100 > /dev/null;
+    printf "%d %s%40s\n" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
+    lynx -dump http://$machine:${port}/proxy1\?limit\=100 > $log_file;
     # sleep 5;
     #start java code
-    printf "%d %s%40s\n" $? $marker "Starting the java code"
+    printf "%d %s%40s\n" $? $marker "Starting the java code" | tee -a $log_file
     ssh root@$machine "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 done
 
 #start lighttpd
-printf "%d %s%40s\n" $? $marker "Starting the lighttpd server"
+printf "%d %s%40s\n" $? $marker "Starting the lighttpd server" | tee -a $log_file
 ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
 
 # echo "Setting $server and $server2 governor to performance:"
