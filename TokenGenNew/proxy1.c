@@ -1,8 +1,10 @@
 #include "functions.h"
 #include "timer.h"
+#include "parser.h"
 #include <netinet/tcp.h>
 
 char log_format_string[256];
+int portno;
 
 void start_logging() {
     init_logger();
@@ -37,7 +39,7 @@ void* create_server_socket() { /*{{{*/
     //
     // Creates server socket for communication between Proxy1 and Proxy2
     //
-    int sockfd, newsockfd, portno, clilen;
+    int sockfd, newsockfd,  clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
     int bytes_read_count;
@@ -50,7 +52,9 @@ void* create_server_socket() { /*{{{*/
     }
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 5007;
+    /* portno = 5007; */
+
+
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(portno);
@@ -123,6 +127,11 @@ void* create_server_socket() { /*{{{*/
     }
 }/*}}}*/
 
+void handle_line(char * buffer) {
+    debug_log( buffer );
+}
+
+
 void main(void) {
 //  prev_ratio = 0;
     incoming = 0;
@@ -141,10 +150,14 @@ void main(void) {
     for (counter = 0; counter < LIMIT; counter++)
         visitor_count[counter] = 0;  // Initialize visitor_count
 
-    pthread_t make_connection;
-    pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
+
+    parse_config_file();
+
+
     pthread_t timer_log;
     pthread_create( &timer_log, NULL, start_logging, (void*) NULL);
+    pthread_t make_connection;
+    pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
 
     while (FCGI_Accept() >= 0) {
         change_values(&incoming, 1);
