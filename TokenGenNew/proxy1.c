@@ -1,9 +1,36 @@
 #include "functions.h"
 #include "timer.h"
 #include <netinet/tcp.h>
+
+char log_format_string[256];
+
 void start_logging() {
     init_logger();
     start_timer();
+}
+
+int talkToClient( int clientSocketFD )
+{
+    // make buffer to store the data from client
+    char buffer[256];
+    bzero(buffer,256);
+    while( read( clientSocketFD, &buffer, 255) > 0)
+    {
+        capacity = atol(buffer);
+        bzero(buffer,256);
+    }
+    debug_log( " gonna shutdown thread " );
+    // 2- shutdown both send and recieve functions
+    shutdown(clientSocketFD, 2);
+}
+
+void * ThreadWorker( void * threadArgs)
+{
+    int clientSocketFD = (int) threadArgs;
+    sprintf( log_format_string , "yo yo thread id %d\n", (int) threadArgs );
+    debug_log( log_format_string );
+    talkToClient( threadArgs);
+    pthread_exit(NULL);
 }
 
 void* create_server_socket() { /*{{{*/
@@ -48,24 +75,30 @@ void* create_server_socket() { /*{{{*/
     }
     //setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, (char *) &option, sizeof(int));
     /* Accept actual connection from the client */
-    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-    debug_log( "before while" );
+    pthread_t threadId;
     while (1) {
+        newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0) {
             perror("ERROR on accept");
             exit(1);
         }
+        if(pthread_create(&threadId, NULL, ThreadWorker, (void *)newsockfd) < 0)
+        {
+            debug_log("Thread creation failed");
+            exit(1);
+        }
+        
         /* If connection is established then start communicating */
 
-        bzero(buffer, 256);
-        bytes_read_count = read(newsockfd, buffer, 255);
-        if (bytes_read_count <= 0) {
-            perror("ERROR reading from socket. Waiting for TokenCheck to reconnect");
-            debug_log( "bytes_read_count < 0 " );
-            /* Accept actual connection from the client */
-            newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-            continue;
-        }
+        /* bzero(buffer, 256); */
+        /* bytes_read_count = read(newsockfd, buffer, 255); */
+        /* if (bytes_read_count <= 0) { */
+        /*     perror("ERROR reading from socket. Waiting for TokenCheck to reconnect"); */
+        /*     debug_log( "bytes_read_count < 0 " ); */
+        /*     /1* Accept actual connection from the client *1/ */
+        /*     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen); */
+        /*     continue; */
+        /* } */
 //      fprintf(log_ptr, "New capacity received from java: %s", buffer);
 //      char* pch = strtok(buffer, " ,.-");
 //      while (pch != NULL) {
@@ -79,7 +112,7 @@ void* create_server_socket() { /*{{{*/
 //              change_values(&outgoing, 1);
 //              //change_float_values(&alpha, penalty, initial_alpha);
 //          } else {
-                capacity = atol(buffer);
+                /* capacity = atol(buffer); */
 //              change_values(&outgoing, 1);
                 //change_long_values(&total_service_time, wait_time);
 //              total_out++;

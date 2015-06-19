@@ -47,14 +47,14 @@ else
     done
 fi
 
-#cleaning up all the log files
-# echo "Cleaning up the log files"
-# for machine in $tokengen $tokengen2
-# do
-#     ssh root@$machine "cat /dev/null > /home/${username}/webq/TokenGenNew/proxy1.log"
+# cleaning up all the log files
+for machine in $tokengen $tokengen2
+do
+    printf "%d %s%40s\n" $? $marker "Cleaning up the log files at $machine" | tee -a $log_file
+    ssh root@$machine "cat /dev/null > /home/${username}/webq/TokenGenNew/proxy1.log"
 #     ssh root@$machine "cat /dev/null > /home/${uesrname}/webq/CapacityEstimator/javapersecond.log"
 #     ssh root@$machine "cat /dev/null > /home/${username}/webq/CapacityEstimator/javadebug.log"
-# done
+done
 # ssh webq@$vachaspati rm /home/webq/summary60.csv &> $log_file
 # ssh webq@$vachaspati rm /home/webq/summary110.csv &> $log_file
 

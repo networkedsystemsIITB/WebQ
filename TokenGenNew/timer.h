@@ -35,6 +35,7 @@ extern int total_in = 0;
 extern int total_out = 0;
 extern int current_time = 0;
 int visitor_count[LIMIT];
+extern char log_format_string[256];
 FILE* log_ptr;
 struct queue q = { NULL, NULL, 0, 100, 0, 0, 0 };
 struct queue pr = { NULL, NULL, 0, 20, 0, 0, 0 };
@@ -62,7 +63,7 @@ void init_logger() {
     }
 }
 void debug_log(char * str ){
-    fprintf( log_ptr, "debug: %s ", str );
+    fprintf( log_ptr, "debug: %s \n", str );
 }
 
 void free_logger() {
