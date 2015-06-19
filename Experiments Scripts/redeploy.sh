@@ -36,14 +36,14 @@ then
     do
         printf "%d %s%40s\n" $? $marker "remaking proxy1 -> moodle" | tee -a $log_file
         sshpass -p "webq" ssh root@$machine \
-            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh moodle" > $log_file
+            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh moodle" >> $log_file
     done
 else
     for machine in $tokengen $tokengen2
     do
         printf "%d %s%40s\n" $? $marker "remade proxy1 -> php @ $machine" | tee -a $log_file
         sshpass -p "webq" ssh root@$machine \
-            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh" > $log_file
+            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh" >> $log_file
     done
 fi
 
@@ -61,10 +61,10 @@ fi
 for machine in $tokengen $tokengen2
 do
     printf "%d %s%40s\n" $? $marker "start the apache server at $machine" | tee -a $log_file
-    ssh root@$machine "service apache2 start &> $log_file"
+    ssh root@$machine "service apache2 start" >> $log_file
     #hit the URL once
     printf "%d %s%40s\n" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
-    lynx -dump http://$machine:${port}/proxy1\?limit\=100 > $log_file;
+    lynx -dump http://$machine:${port}/proxy1\?limit\=100 >> $log_file;
     # sleep 5;
     #start java code
     printf "%d %s%40s\n" $? $marker "Starting the java code" | tee -a $log_file
