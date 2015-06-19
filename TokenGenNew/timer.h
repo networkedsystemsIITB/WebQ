@@ -61,6 +61,9 @@ void init_logger() {
         fprintf(stderr, "Can't open output file %s!\n", log_file);
     }
 }
+void debug_log(char * str ){
+    fprintf( log_ptr, "debug: %s ", str );
+}
 
 void free_logger() {
     fclose(log_ptr);

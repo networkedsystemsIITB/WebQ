@@ -6,7 +6,10 @@ void start_logging() {
     start_timer();
 }
 
-void* create_server_socket() { // Creates server socket for communication between Proxy1 and Proxy2
+void* create_server_socket() { /*{{{*/
+    //
+    // Creates server socket for communication between Proxy1 and Proxy2
+    //
     int sockfd, newsockfd, portno, clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
@@ -46,6 +49,7 @@ void* create_server_socket() { // Creates server socket for communication betwee
     //setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, (char *) &option, sizeof(int));
     /* Accept actual connection from the client */
     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+    debug_log( "before while" );
     while (1) {
         if (newsockfd < 0) {
             perror("ERROR on accept");
@@ -56,8 +60,8 @@ void* create_server_socket() { // Creates server socket for communication betwee
         bzero(buffer, 256);
         bytes_read_count = read(newsockfd, buffer, 255);
         if (bytes_read_count <= 0) {
-            perror(
-                    "ERROR reading from socket. Waiting for TokenCheck to reconnect");
+            perror("ERROR reading from socket. Waiting for TokenCheck to reconnect");
+            debug_log( "bytes_read_count < 0 " );
             /* Accept actual connection from the client */
             newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
             continue;
@@ -84,7 +88,7 @@ void* create_server_socket() { // Creates server socket for communication betwee
 //      }
 
     }
-}
+}/*}}}*/
 
 void main(void) {
 //  prev_ratio = 0;
