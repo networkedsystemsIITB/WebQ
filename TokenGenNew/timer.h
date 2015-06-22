@@ -63,7 +63,9 @@ void init_logger() {
     }
 }
 void debug_log(char * str ){
-    fprintf( log_ptr, "debug: %s \n", str );
+    if( log_ptr != NULL ) {
+        fprintf( log_ptr, "debug: %s \n", str );
+    }
 }
 
 void free_logger() {

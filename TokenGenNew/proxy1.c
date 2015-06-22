@@ -131,6 +131,24 @@ void handle_line(char * buffer) {
     debug_log( buffer );
 }
 
+void timed_que_fn( int fd, short event , void* arg ){
+    // send the queue here
+    debug_log( "sending " );
+    queue_timer_init();
+}
+
+void queue_timer_init(){
+    struct event ev;
+    struct timeval tv;
+
+    tv.tv_sec = 1;
+    tv.tv_usec = 0;
+
+    event_init();
+    evtimer_set(&ev, timed_que_fn , NULL);
+    evtimer_add(&ev, &tv);
+    event_dispatch();
+}
 
 void main(void) {
 //  prev_ratio = 0;
@@ -158,6 +176,8 @@ void main(void) {
     pthread_create( &timer_log, NULL, start_logging, (void*) NULL);
     pthread_t make_connection;
     pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
+    pthread_t send_queue;
+    pthread_create( &send_queue , NULL , queue_timer_init , (void *) NULL );
 
     while (FCGI_Accept() >= 0) {
         change_values(&incoming, 1);
