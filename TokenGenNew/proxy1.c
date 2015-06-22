@@ -127,9 +127,6 @@ void* create_server_socket() { /*{{{*/
 
 #define MAX_INPUT_SIZE 256
 
-void start_q_timer();
-void talkToServer();
-
 void timed_q_function(int fd, short event, void *arg) { // Called every second
     talkToServer();
     start_q_timer();
@@ -148,7 +145,7 @@ void start_q_timer() {
     event_dispatch();
 }
 
-void talkToServer(){
+void talkToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     char * port = malloc( 5 * sizeof(char) );
@@ -159,7 +156,7 @@ void talkToServer(){
     portnum = atoi(port);
     /* Create client socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) 
+    if (sockfd < 0)
     {
         debug_log( "ERROR opening socket\n");
         exit(1);
@@ -195,10 +192,11 @@ void talkToServer(){
         /* exit(1); */
     }
 
-}
+}/*}}}*/
 
 void queue_sender( void * args) {/*{{{*/
     start_q_timer();
+    /* talkToServer(); */
 }/*}}}*/
 
 void main(void) {/*{{{*/
