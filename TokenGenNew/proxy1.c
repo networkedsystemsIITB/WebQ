@@ -6,13 +6,14 @@
 char log_format_string[256];
 int portno;
 
-void start_logging() {
+void start_logging() 
+{/*{{{*/
     init_logger();
     start_timer();
-}
+}/*}}}*/
 
 int talkToClient( int clientSocketFD )
-{
+{/*{{{*/
     // make buffer to store the data from client
     char buffer[256];
     bzero(buffer,256);
@@ -24,18 +25,19 @@ int talkToClient( int clientSocketFD )
     debug_log( " gonna shutdown thread " );
     // 2- shutdown both send and recieve functions
     shutdown(clientSocketFD, 2);
-}
+}/*}}}*/
 
 void * ThreadWorker( void * threadArgs)
-{
+{/*{{{*/
     int clientSocketFD = (int) threadArgs;
     sprintf( log_format_string , "yo yo thread id %d\n", (int) threadArgs );
     debug_log( log_format_string );
     talkToClient( threadArgs);
     pthread_exit(NULL);
-}
+}/*}}}*/
 
-void* create_server_socket() { /*{{{*/
+void* create_server_socket() 
+{ /*{{{*/
     //
     // Creates server socket for communication between Proxy1 and Proxy2
     //
@@ -127,17 +129,20 @@ void* create_server_socket() { /*{{{*/
     }
 }/*}}}*/
 
-void handle_line(char * buffer) {
+void handle_line(char * buffer) 
+{/*{{{*/
     debug_log( buffer );
-}
+}/*}}}*/
 
-void timed_que_fn( int fd, short event , void* arg ){
+void timed_que_fn( int fd, short event , void* arg )
+{/*{{{*/
     // send the queue here
     debug_log( "sending " );
     queue_timer_init();
-}
+}/*}}}*/
 
-void queue_timer_init(){
+void queue_timer_init()
+{/*{{{*/
     struct event ev;
     struct timeval tv;
 
@@ -148,9 +153,10 @@ void queue_timer_init(){
     evtimer_set(&ev, timed_que_fn , NULL);
     evtimer_add(&ev, &tv);
     event_dispatch();
-}
+}/*}}}*/
 
-void main(void) {
+void main(void) 
+{/*{{{*/
 //  prev_ratio = 0;
     incoming = 0;
 //  outgoing = 0;
@@ -257,4 +263,4 @@ void main(void) {
             free(gt);
         }
     }
-}
+}/*}}}*/
