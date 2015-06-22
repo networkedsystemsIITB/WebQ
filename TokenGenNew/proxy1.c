@@ -125,27 +125,51 @@ void* create_server_socket() { /*{{{*/
     }
 }/*}}}*/
 
-void handle_line(char * buffer) {/*{{{*/
-    debug_log( buffer );
-}/*}}}*/
+#define MAX_INPUT_SIZE 256
+void queue_sender( void * args) {/*{{{*/
+    int sockfd, portnum, n;
+    struct sockaddr_in server_addr;
+    char * port = malloc( 5 * sizeof(char) );
+    char * ip_str = malloc( 20 * sizeof(char) );
+    strcpy( ip_str , "10.129.41.17" );
+    strcpy( port , "10001" );
+    char inputbuf[MAX_INPUT_SIZE];
+    portnum = atoi(port);
+    /* Create client socket */
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+    {
+        debug_log( "ERROR opening socket\n");
+        exit(1);
+    }
+    bzero((char *) &server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    if(!inet_aton( ip_str  , &server_addr.sin_addr))
+    {
+        debug_log( "ERROR invalid server IP address\n");
+        exit(1);
+    }
+    server_addr.sin_port = htons(portnum);
+    while(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) < 0) 
+    {
+        debug_log( "ERROR connecting\n");
+        sleep(1);
+        /* exit(1); */
+    }
 
-void timed_que_fn( int fd, short event , void* arg ) {/*{{{*/
-    // send the queue here
-    debug_log( "sending " );
-    queue_timer_init();
-}/*}}}*/
-
-void queue_timer_init() {/*{{{*/
-    struct event ev;
-    struct timeval tv;
-
-    tv.tv_sec = 1;
-    tv.tv_usec = 0;
-
-    event_init();
-    evtimer_set(&ev, timed_que_fn , NULL);
-    evtimer_add(&ev, &tv);
-    event_dispatch();
+    while( 1)
+    {
+        bzero(inputbuf,MAX_INPUT_SIZE);
+        strcpy(inputbuf, "123");
+        n = write(sockfd,inputbuf,strlen(inputbuf));
+        if (n < 0) 
+        {
+            debug_log("ERROR writing to socket\n");
+            exit(1);
+        }
+        // connect as a client;
+        sleep(5);
+    }
 }/*}}}*/
 
 void main(void) {/*{{{*/
@@ -175,7 +199,7 @@ void main(void) {/*{{{*/
     pthread_t make_connection;
     pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
     pthread_t send_queue;
-    pthread_create( &send_queue , NULL , queue_timer_init , (void *) NULL );
+    pthread_create( &send_queue , NULL , queue_sender, (void *) NULL );
 
     while (FCGI_Accept() >= 0) {
         change_values(&incoming, 1);
@@ -183,7 +207,6 @@ void main(void) {/*{{{*/
 
         // Updated on 17.04
         time_t currtime = time(NULL); 
-    
 
         //int curr_backlog = get_values(&incoming) - get_values(&outgoing);
         //curr_backlog = curr_backlog > 0 ? curr_backlog : 0;
