@@ -1,11 +1,4 @@
 #!/bin/bash
 make
-
-if [ "$1" == "moodle" ];
-then
-    sudo cp proxy1_withMoodle /usr/lib/cgi-bin/proxy1
-    echo "copied moodle proxy1"
-else
-    sudo cp proxy1 /usr/lib/cgi-bin/proxy1
-    echo "copied old proxy1"
-fi
+sudo cp proxy1 /usr/lib/cgi-bin/proxy1
+echo "copied old proxy1"
