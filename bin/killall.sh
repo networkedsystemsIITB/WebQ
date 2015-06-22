@@ -3,6 +3,7 @@
 #run from proxy1 server(same as capacity estimator)
 tokencheck="10.129.41.67"
 tokengen="10.129.26.130"
+tokengen2="10.129.41.17"
 server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
@@ -22,6 +23,7 @@ echo "Killing all components";
 ssh root@$tokengen "killall java;"
 ssh root@$tokencheck "killall lighttpd &> /dev/null";
 ssh root@$tokengen "killall apache2;"
+ssh root@$tokengen2 "killall apache2;"
 
 exit;
 

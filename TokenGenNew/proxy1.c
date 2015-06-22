@@ -126,7 +126,29 @@ void* create_server_socket() { /*{{{*/
 }/*}}}*/
 
 #define MAX_INPUT_SIZE 256
-void queue_sender( void * args) {/*{{{*/
+
+void start_q_timer();
+void talkToServer();
+
+void timed_q_function(int fd, short event, void *arg) { // Called every second
+    talkToServer();
+    start_q_timer();
+}
+
+void start_q_timer() {
+    struct event ev;
+    struct timeval tv;
+
+    tv.tv_sec = 5;
+    tv.tv_usec = 0;
+
+    event_init();
+    evtimer_set(&ev, timed_q_function, NULL);
+    evtimer_add(&ev, &tv);
+    event_dispatch();
+}
+
+void talkToServer(){
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     char * port = malloc( 5 * sizeof(char) );
@@ -150,26 +172,33 @@ void queue_sender( void * args) {/*{{{*/
         exit(1);
     }
     server_addr.sin_port = htons(portnum);
-    while(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) < 0) 
+    if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0) 
     {
+        while( 1)
+        {
+            bzero(inputbuf,MAX_INPUT_SIZE);
+            strcpy(inputbuf, "123");
+            n = write(sockfd,inputbuf,strlen(inputbuf));
+            if (n < 0) 
+            {
+                debug_log("ERROR writing to socket\n");
+                /* exit(1); */
+                break;
+            }
+            // connect as a client;
+            sleep(5);
+        }
+    }
+    else{
         debug_log( "ERROR connecting\n");
-        sleep(1);
+        /* sleep(1); */
         /* exit(1); */
     }
 
-    while( 1)
-    {
-        bzero(inputbuf,MAX_INPUT_SIZE);
-        strcpy(inputbuf, "123");
-        n = write(sockfd,inputbuf,strlen(inputbuf));
-        if (n < 0) 
-        {
-            debug_log("ERROR writing to socket\n");
-            exit(1);
-        }
-        // connect as a client;
-        sleep(5);
-    }
+}
+
+void queue_sender( void * args) {/*{{{*/
+    start_q_timer();
 }/*}}}*/
 
 void main(void) {/*{{{*/
