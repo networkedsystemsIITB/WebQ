@@ -1,4 +1,5 @@
 extern int portno;
+extern char * ip;
 void parse_config_file(){
     int size = 1024, pos;
     int nl =0;
@@ -22,6 +23,8 @@ void parse_config_file(){
             while( c!= EOF && c != '\n') c=fgetc(f);
             buffer[pos] = 0;
             nl ++;
+            ip = (char*) malloc( 20 * sizeof(char) );
+            strcpy( ip ,  "10.129.41.17" );
             // line is now in buffer
             switch( nl ){
                 case 1:
