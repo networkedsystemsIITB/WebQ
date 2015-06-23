@@ -3,7 +3,6 @@
 #include "parser.h"
 #include <netinet/tcp.h>
 
-#define MAX_INPUT_SIZE 256
 char log_format_string[256];
 int portno;
 char ** ip_array ;
@@ -127,9 +126,7 @@ void* create_server_socket() { /*{{{*/
     }
 }/*}}}*/
 
-void* get_data_to_communicate( ){
-}
-
+#define MAX_INPUT_SIZE 256
 void talkToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
@@ -181,12 +178,12 @@ void talkToServer(){/*{{{*/
 
 void start_q_timer();
 
-void timed_q_function(int fd, short event, void *arg) { // Called every second/*{{{*/
-    talkToServer()
+void timed_q_function(int fd, short event, void *arg) { // Called every second
+    talkToServer();
     start_q_timer();
-}/*}}}*/
+}
 
-void start_q_timer() {/*{{{*/
+void start_q_timer() {
     struct event ev;
     struct timeval tv;
 
@@ -197,7 +194,7 @@ void start_q_timer() {/*{{{*/
     evtimer_set(&ev, timed_q_function, NULL);
     evtimer_add(&ev, &tv);
     event_dispatch();
-}/*}}}*/
+}
 
 
 void queue_sender( void * args) {/*{{{*/
