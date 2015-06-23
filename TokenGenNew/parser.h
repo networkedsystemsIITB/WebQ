@@ -1,4 +1,4 @@
-extern int portno;
+extern int listening_portno;
 extern char ** ip_array;
 void parse_config_file(){
     int size = 1024, pos;
@@ -29,7 +29,7 @@ void parse_config_file(){
             // line is now in buffer
             switch( nl ){
                 case 1:
-                    portno = atoi( buffer );
+                    listening_portno = atoi( buffer );
                     break;
                 default:
                     break;

@@ -7,7 +7,7 @@ void start_logging() {
 }
 
 void* create_server_socket() { // Creates server socket for communication between Proxy1 and Proxy2
-    int sockfd, newsockfd, portno, clilen;
+    int sockfd, newsockfd, listening_portno, clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
     int bytes_read_count;
@@ -20,10 +20,10 @@ void* create_server_socket() { // Creates server socket for communication betwee
     }
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 5007;
+    listening_portno = 5007;
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(portno);
+    serv_addr.sin_port = htons(listening_portno);
 
     /* Now bind the host address using bind() call.*/
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {

@@ -4,7 +4,7 @@
 #include <netinet/tcp.h>
 
 char log_format_string[256];
-int portno;
+int listening_portno;
 char ** ip_array ;
 
 void start_logging() {/*{{{*/
@@ -51,12 +51,12 @@ void* create_server_socket() { /*{{{*/
     }
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    /* portno = 5007; */
+    /* listening_portno = 5007; */
 
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(portno);
+    serv_addr.sin_port = htons(listening_portno);
 
     /* Now bind the host address using bind() call.*/
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
