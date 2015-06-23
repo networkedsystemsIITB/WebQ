@@ -127,25 +127,6 @@ void* create_server_socket() { /*{{{*/
 }/*}}}*/
 
 #define MAX_INPUT_SIZE 256
-
-void timed_q_function(int fd, short event, void *arg) { // Called every second
-    talkToServer();
-    start_q_timer();
-}
-
-void start_q_timer() {
-    struct event ev;
-    struct timeval tv;
-
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
-
-    event_init();
-    evtimer_set(&ev, timed_q_function, NULL);
-    evtimer_add(&ev, &tv);
-    event_dispatch();
-}
-
 void talkToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
@@ -194,6 +175,27 @@ void talkToServer(){/*{{{*/
     }
 
 }/*}}}*/
+
+void start_q_timer();
+
+void timed_q_function(int fd, short event, void *arg) { // Called every second
+    talkToServer();
+    start_q_timer();
+}
+
+void start_q_timer() {
+    struct event ev;
+    struct timeval tv;
+
+    tv.tv_sec = 5;
+    tv.tv_usec = 0;
+
+    event_init();
+    evtimer_set(&ev, timed_q_function, NULL);
+    evtimer_add(&ev, &tv);
+    event_dispatch();
+}
+
 
 void queue_sender( void * args) {/*{{{*/
     sleep(1);
