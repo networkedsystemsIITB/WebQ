@@ -1,10 +1,11 @@
 extern int portno;
-extern char * ip;
+extern char ** ip_array;
 void parse_config_file(){
     int size = 1024, pos;
     int nl =0;
     int c;
     char *buffer = (char *)malloc(size);
+    ip_array = malloc( 5 * sizeof( char* ) ); // allocate space for 5 ip
 
     FILE *f = fopen("/home/murali/webq/TokenGenNew/proxy.conf", "r");
     if(f) {
@@ -23,8 +24,8 @@ void parse_config_file(){
             while( c!= EOF && c != '\n') c=fgetc(f);
             buffer[pos] = 0;
             nl ++;
-            ip = (char*) malloc( 20 * sizeof(char) );
-            strcpy( ip ,  "10.129.41.17" );
+            ip_array[0] = (char*) malloc( 20 * sizeof(char) );
+            strcpy( ip_array[0] ,  "10.129.41.17" );
             // line is now in buffer
             switch( nl ){
                 case 1:

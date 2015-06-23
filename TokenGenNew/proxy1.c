@@ -5,7 +5,7 @@
 
 char log_format_string[256];
 int portno;
-char * ip ;
+char ** ip_array ;
 
 void start_logging() {/*{{{*/
     init_logger();
@@ -151,7 +151,7 @@ void talkToServer(){/*{{{*/
     struct sockaddr_in server_addr;
     char * port = malloc( 5 * sizeof(char) );
     char * ip_str = malloc( 20 * sizeof(char) );
-    strcpy( ip_str , ip );
+    strcpy( ip_str , ip_array[0] );
     strcpy( port , "10001" );
     char inputbuf[MAX_INPUT_SIZE];
     portnum = atoi(port);
