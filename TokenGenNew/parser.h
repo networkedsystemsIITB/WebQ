@@ -1,11 +1,13 @@
 extern int listening_portno;
 extern char ** ip_array;
+extern char * sending_port;
 void parse_config_file(){
     int size = 1024, pos;
     int nl =0;
     int c;
     char *buffer = (char *)malloc(size);
     ip_array = malloc( 5 * sizeof( char* ) ); // allocate space for 5 ip
+    sending_port = malloc( 8 * sizeof( char) ); 
 
     FILE *f = fopen("/home/murali/webq/TokenGenNew/proxy.conf", "r");
     if(f) {

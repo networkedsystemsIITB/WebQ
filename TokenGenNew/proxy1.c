@@ -6,6 +6,7 @@
 char log_format_string[256];
 int listening_portno;
 char ** ip_array ;
+char * sending_port;
 
 void start_logging() {/*{{{*/
     init_logger();
@@ -130,12 +131,9 @@ void* create_server_socket() { /*{{{*/
 void talkToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
-    char * port = malloc( 5 * sizeof(char) );
-    char * ip_str = malloc( 20 * sizeof(char) );
-    strcpy( ip_str , ip_array[0] );
-    strcpy( port , "10001" );
+    strcpy( sending_port , "10001" );
     char inputbuf[MAX_INPUT_SIZE];
-    portnum = atoi(port);
+    portnum = atoi(sending_port);
     /* Create client socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
@@ -145,7 +143,7 @@ void talkToServer(){/*{{{*/
     }
     bzero((char *) &server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
-    if(!inet_aton( ip_str  , &server_addr.sin_addr))
+    if(!inet_aton( ip_array[0]  , &server_addr.sin_addr))
     {
         debug_log( "ERROR invalid server IP address\n");
         exit(1);
