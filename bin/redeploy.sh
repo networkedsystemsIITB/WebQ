@@ -9,6 +9,8 @@ server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
 log_file=large_log.log
+
+# get command line arguments {{{
 if [ -z "$1" -o -z "$2" ];
 then
     echo "input username ./redeploy.sh <username> <port>"
@@ -19,7 +21,12 @@ else
     echo "username : ${username}"
     echo "port : ${port}"
 fi
+# }}}
 
+#stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
+#then start the server
+
+#{{{ kill all components
 printf " %d\n%s%43s" $? $marker "Killing all components" | tee -a $log_file
 for machine in $tokengen $tokengen2
 do
@@ -27,27 +34,9 @@ do
     ssh root@$machine "killall apache2"
 done
 ssh root@$tokencheck "killall lighttpd";
+#}}}
 
-#stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
-#then start the server
-if [ "$2" = "moodle" ];
-then
-    for machine in $tokengen $tokengen2
-    do
-        printf " %d\n%s%43s" $? $marker "remaking proxy1 -> moodle" | tee -a $log_file
-        sshpass -p "webq" ssh root@$machine \
-            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh moodle" >> $log_file
-    done
-else
-    for machine in $tokengen $tokengen2
-    do
-        printf " %d\n%s%43s" $? $marker "remade proxy1 -> php @ $machine" | tee -a $log_file
-        sshpass -p "webq" ssh root@$machine \
-            "cd /home/${username}/webq/TokenGenNew; ./make_script.sh" >> $log_file
-    done
-fi
-
-# cleaning up all the log files
+# cleaning up all the log files#{{{
 for machine in $tokengen $tokengen2
 do
     printf " %d\n%s%43s" $? $marker "Cleaning up the log files at $machine" | tee -a $log_file
@@ -57,12 +46,23 @@ do
 done
 # ssh webq@$vachaspati rm /home/webq/summary60.csv &> $log_file
 # ssh webq@$vachaspati rm /home/webq/summary110.csv &> $log_file
+#}}}
 
+# rebuild and copy tokengen(proxy1) to cgi-bin folder#{{{
+for machine in $tokengen $tokengen2
+do
+    printf " %d\n%s%43s" $? $marker "remade proxy1 -> php @ $machine" | tee -a $log_file
+    sshpass -p "webq" ssh root@$machine \
+        "cd /home/${username}/webq/TokenGenNew; ./make_script.sh" >> $log_file
+done
+#}}}
+
+#{{{
 for machine in $tokengen $tokengen2
 do
     printf " %d\n%s%43s" $? $marker "start the apache server at $machine" | tee -a $log_file
     ssh root@$machine "service apache2 start" >> $log_file
-    #hit the URL once
+    # #hit the URL once
     printf " %d\n%s%43s" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
     lynx -dump http://$machine:${port}/proxy1\?limit\=100 >> $log_file;
     # sleep 5;
@@ -70,21 +70,13 @@ do
     printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
     ssh root@$machine "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 done
+#}}}
 
-#start lighttpd
-printf " %d\n%s%46s" $? $marker "Starting the lighttpd server" | tee -a $log_file
-ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
+######start lighttpd
+# printf " %d\n%s%46s" $? $marker "Starting the lighttpd server" | tee -a $log_file
+# ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
 
-# echo "Setting $server and $server2 governor to performance:"
-# for i in `seq 0 3`; do
-# 	ssh root@$server "cpufreq-set -g performance -c $i";
-# 	ssh root@$server2 "cpufreq-set -g performance -c $i";
-# done;
-# echo "Checking if governor is set correctly:"
-# ssh root@$server "cpufreq-info | grep \"governor \"";
-# ssh root@$server2 "cpufreq-info | grep \"governor \"";
+# echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
-echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
-
-echo "$tokengen:$port/proxy1?limit=100"
-echo "$tokengen2:$port/proxy1?limit=100"
+# echo "$tokengen:$port/proxy1?limit=100"
+# echo "$tokengen2:$port/proxy1?limit=100"

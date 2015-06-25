@@ -1,5 +1,6 @@
 TokenCheck/lighttpd/src/.libs/*.o
 *cscope*
+nohup.out
 *.csv
 *.log
 *.dat
