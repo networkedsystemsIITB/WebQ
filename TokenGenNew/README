@@ -18,3 +18,6 @@ To Configure FastCGI
 
 		sudo /usr/sbin/apache2 -d . -f /path/to/apache2_local.conf -X
 
+Arch linux packages:
+mod_fastcgi
+fcgi
