@@ -11,15 +11,13 @@ server2="comp4"
 log_file=large_log.log
 
 # get command line arguments {{{
-if [ -z "$1" -o -z "$2" ];
+if [ -z "$1" ];
 then
-    echo "input username ./redeploy.sh <username> <port>"
+    echo "input username ./redeploy.sh <username>"
     exit
 else
     username=$1
-    port=$2
     echo "username : ${username}"
-    echo "port : ${port}"
 fi
 # }}}
 
@@ -69,7 +67,7 @@ do
     ssh root@$machine "service apache2 start" >> $log_file
     # #hit the URL once
     printf " %d\n%s%43s" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
-    lynx -dump http://$machine:${port}/proxy1\?limit\=100 >> $log_file;
+    lynx -dump http://$machine:8000/proxy1\?limit\=100 >> $log_file;
     #start java code
     printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
     ssh root@$machine "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
@@ -83,7 +81,7 @@ ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
-echo "$tokengen:$port/proxy1?limit=100"
-echo "$tokengen2:$port/proxy1?limit=100"
+echo "$tokengen:8000/proxy1?limit=100"
+echo "$tokengen2:8000/proxy1?limit=100"
 
 # }}}
