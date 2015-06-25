@@ -167,7 +167,7 @@ void talkToServer(){/*{{{*/
         }
     }
     else{
-        debug_log( "ERROR connecting\n");
+        debug_log( "ERROR connecting to a peer");
         /* sleep(1); */
         /* exit(1); */
     }
