@@ -168,7 +168,7 @@ void connect_proxy1()
     struct sockaddr_in serv_addr;
     struct hostent *servr;
     int portno = 5006;
-    char* hostname = "10.129.26.130";
+    char* hostname = "10.129.41.17";
 
     /* Create a socket point */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
