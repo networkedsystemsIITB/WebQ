@@ -23,18 +23,23 @@ else
 fi
 # }}}
 
-#stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
-#then start the server
+# The following is done in the script below
+# stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
+# then start the server
 
-#{{{ kill all components
-printf " %d\n%s%43s" $? $marker "Killing all components" | tee -a $log_file
-for machine in $tokengen $tokengen2
+bash ~/webq/bin/killall.sh                   #kill all components
+
+# {{{  now wait for some time as apache need some time to recover !! :P
+printf " %d\n%s%43s" $? $marker "wait for some time for apache to recover" | tee -a $log_file
+ttw=40  #time to wait
+printf "\n"
+for i in `seq $ttw -1 1`
 do
-    ssh root@$machine "killall java"
-    ssh root@$machine "killall apache2"
+    printf "$i "
+    sleep 1
 done
-ssh root@$tokencheck "killall lighttpd";
-#}}}
+printf "\n"
+# }}}
 
 # cleaning up all the log files#{{{
 for machine in $tokengen $tokengen2
@@ -65,18 +70,20 @@ do
     # #hit the URL once
     printf " %d\n%s%43s" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
     lynx -dump http://$machine:${port}/proxy1\?limit\=100 >> $log_file;
-    # sleep 5;
     #start java code
     printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
     ssh root@$machine "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 done
 #}}}
 
-######start lighttpd
-# printf " %d\n%s%46s" $? $marker "Starting the lighttpd server" | tee -a $log_file
-# ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
+# {{{ start lighttpd
+sleep 4
+printf " %d\n%s%46s\n" $? $marker "Starting the lighttpd server" | tee -a $log_file
+ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
 
-# echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
+echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
-# echo "$tokengen:$port/proxy1?limit=100"
-# echo "$tokengen2:$port/proxy1?limit=100"
+echo "$tokengen:$port/proxy1?limit=100"
+echo "$tokengen2:$port/proxy1?limit=100"
+
+# }}}

@@ -1,29 +1,22 @@
 #!/bin/sh
 
 #run from proxy1 server(same as capacity estimator)
+marker="=================================="
 tokencheck="10.129.41.67"
 # tokengen="10.129.26.130"
 tokengen2="10.129.41.17"
 server="10.129.49.76"
 vachaspati="10.129.2.55"
 server2="comp4"
-
-if [ "$1" != "run2" ];
-then
-    echo "executed run.sh"
-	tokencheckscript="run.sh"
-else
-    echo "executed run2.sh"
-	tokencheckscript="run_twoservers.sh"
-fi
-
-#kill all the components
-echo "Killing all components";
-# ps ax | grep CapacityManager | sed 's|  | |g' | cut -d' ' -f2 | xargs -I {} sudo kill -9 {}
-ssh root@$tokencheck "killall lighttpd &> /dev/null";
-ssh root@$tokengen2 "killall java;"
-ssh root@$tokengen2 "killall apache2;"
-
-exit;
+log_file=large_log.log
 
 
+#{{{ kill all components
+printf " %d\n%s%43s" $? $marker "Killing all components" | tee -a $log_file
+for machine in $tokengen $tokengen2
+do
+    ssh root@$machine "killall java"
+    ssh root@$machine "killall apache2"
+done
+ssh root@$tokencheck "killall lighttpd";
+#}}}

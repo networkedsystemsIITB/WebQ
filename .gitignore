@@ -1,6 +1,7 @@
 TokenCheck/lighttpd/src/.libs/*.o
 *cscope*
 nohup.out
+.ycm_extra_conf.py*
 *.csv
 *.log
 *.dat
