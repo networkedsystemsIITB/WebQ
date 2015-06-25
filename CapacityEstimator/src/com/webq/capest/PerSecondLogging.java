@@ -4,6 +4,8 @@ import static com.webq.capest.PropertiesFile.getString;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import org.apache.log4j.Logger;
 
@@ -13,7 +15,11 @@ public class PerSecondLogging {
     public static void log() {
         initLogger();
         PowerRatio powerRatio = PowerRatioData.getPerSecondPowerRatio();
-        pw.println(System.currentTimeMillis()/1000 + " Respt:" +
+
+        long ms = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+
+        pw.println(  sdf.format(new Date(ms)) + " Respt:" +
                 powerRatio.getAverageResponseTime() + " Arrv:" +
                 powerRatio.getArrivedRequestCount() + " Success:" +
                 powerRatio.getSuccessfulRequestCount() + " Failed:" +
