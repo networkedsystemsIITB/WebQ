@@ -11,7 +11,7 @@ tmux split-window
 tmux split-window
 tmux select-pane -t :.0
 tmux split-window -h
-tmux select-pane -t :2
+tmux select-pane -t :.2
 tmux split-window -h
 # select pane 0 of current window
 
