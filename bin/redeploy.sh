@@ -19,7 +19,7 @@ fi
 if [ -z "$2" ];
 then
     gens="$tokengen"
-else if [ "$2" -eq 2 ] 
+else
     case $2 in
         1)
             gens="$tokengen"
@@ -28,6 +28,7 @@ else if [ "$2" -eq 2 ]
             gens="$tokengen $tokengen2"
             ;;
         *)
+            gens="$tokengen2"
             ;;
     esac
 fi
