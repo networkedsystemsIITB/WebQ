@@ -127,12 +127,10 @@ void* create_server_socket() { /*{{{*/
     }
 }/*}}}*/
 
-#define MAX_INPUT_SIZE 256
 void talkToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     strcpy( sending_port , "10001" );
-    char inputbuf[MAX_INPUT_SIZE];
     portnum = atoi(sending_port);
     /* Create client socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -153,9 +151,7 @@ void talkToServer(){/*{{{*/
     {
         while( 1)
         {
-            bzero(inputbuf,MAX_INPUT_SIZE);
-            strcpy(inputbuf, "123");
-            n = write(sockfd,inputbuf,strlen(inputbuf));
+            n = write(sockfd, visitor_count , 100* sizeof(int) );
             if (n < 0) 
             {
                 debug_log("ERROR writing to socket\n");
