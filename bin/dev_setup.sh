@@ -8,31 +8,33 @@ fi
 
 echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
 
-echo "10.129.49.76    mserver" | sudo tee -a /etc/hosts
-echo "10.129.41.67    mcheck" | sudo tee -a /etc/hosts
-echo "10.129.26.130   mgen" | sudo tee -a /etc/hosts
-echo "10.129.41.17    mgen2" | sudo tee -a /etc/hosts
-echo "10.129.2.55     mvacha" | sudo tee -a /etc/hosts
+source ~/webq/bin/ips.sh
+
+echo "$server       mserver" | sudo tee -a /etc/hosts
+echo "$tokencheck   mcheck" | sudo tee -a /etc/hosts
+echo "$tokengen     mgen" | sudo tee -a /etc/hosts
+echo "$tokengen2    mgen2" | sudo tee -a /etc/hosts
+echo "$vachaspati   mvacha" | sudo tee -a /etc/hosts
 
 cat << EOF >> ~/.ssh/config
 Host server
-	HostName 10.129.49.76
+	HostName $server
 	User	$1
 
 Host check
-	HostName 10.129.41.67
+	HostName $tokencheck
 	User	$1
 
 Host gen
-	HostName 10.129.26.130
+	HostName $tokengen
 	User	$1
 
 Host gen2
-	HostName 10.129.41.17
+	HostName $tokengen2
 	User	$1
 
 Host vacha
-	HostName 10.129.2.55
+	HostName $vachaspati
 	User	$1
 EOF
 
