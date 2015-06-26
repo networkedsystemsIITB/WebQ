@@ -74,7 +74,7 @@ ssh root@$capacityEstimator "cd /home/${username}/webq/CapacityEstimator;bash ru
 # {{{ start lighttpd
 sleep 4
 printf " %d\n%s%46s\n" $? $marker "Starting the lighttpd server" | tee -a $log_file
-ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh murali"
+ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 

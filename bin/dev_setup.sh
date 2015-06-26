@@ -8,11 +8,11 @@ fi
 
 echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
 
-echo "10.129.49.76    server" | sudo tee -a /etc/hosts
-echo "10.129.41.67    check" | sudo tee -a /etc/hosts
-echo "10.129.26.130   gen" | sudo tee -a /etc/hosts
-echo "10.129.41.17   gen2" | sudo tee -a /etc/hosts
-echo "10.129.2.55 vacha" | sudo tee -a /etc/hosts
+echo "10.129.49.76    mserver" | sudo tee -a /etc/hosts
+echo "10.129.41.67    mcheck" | sudo tee -a /etc/hosts
+echo "10.129.26.130   mgen" | sudo tee -a /etc/hosts
+echo "10.129.41.17    mgen2" | sudo tee -a /etc/hosts
+echo "10.129.2.55     mvacha" | sudo tee -a /etc/hosts
 
 cat << EOF >> ~/.ssh/config
 Host server
