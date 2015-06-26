@@ -10,11 +10,11 @@ echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
 
 source ~/webq/bin/ips.sh
 
-echo "$server       ${username}server" | sudo tee -a /etc/hosts
-echo "$tokencheck   ${username}check" | sudo tee -a /etc/hosts
-echo "$tokengen     ${username}gen" | sudo tee -a /etc/hosts
-echo "$tokengen2    ${username}gen2" | sudo tee -a /etc/hosts
-echo "$vachaspati   ${username}vacha" | sudo tee -a /etc/hosts
+echo "$server       ${1}server" | sudo tee -a /etc/hosts
+echo "$tokencheck   ${1}check" | sudo tee -a /etc/hosts
+echo "$tokengen     ${1}gen" | sudo tee -a /etc/hosts
+echo "$tokengen2    ${1}gen2" | sudo tee -a /etc/hosts
+echo "$vachaspati   ${1}vacha" | sudo tee -a /etc/hosts
 
 cat << EOF >> ~/.ssh/config
 Host server
