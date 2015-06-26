@@ -176,12 +176,12 @@ void talkToServer(){/*{{{*/
 
 void start_q_timer();
 
-void timed_q_function(int fd, short event, void *arg) { // Called every second
+void timed_q_function(int fd, short event, void *arg) { // Called every second/*{{{*/
     talkToServer();
     start_q_timer();
-}
+}/*}}}*/
 
-void start_q_timer() {
+void start_q_timer() {/*{{{*/
     struct event ev;
     struct timeval tv;
 
@@ -192,7 +192,7 @@ void start_q_timer() {
     evtimer_set(&ev, timed_q_function, NULL);
     evtimer_add(&ev, &tv);
     event_dispatch();
-}
+}/*}}}*/
 
 
 void queue_sender( void * args) {/*{{{*/
