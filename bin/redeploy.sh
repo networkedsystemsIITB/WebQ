@@ -62,10 +62,13 @@ do
     # #hit the URL once
     printf " %d\n%s%43s" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
     lynx -dump http://$machine:8000/proxy1\?limit\=100 >> $log_file;
-    #start java code
-    printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
-    ssh root@$machine "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 done
+#}}}
+
+#start java code {{{
+printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
+ssh root@$capacityEstimator "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
+
 #}}}
 
 # {{{ start lighttpd

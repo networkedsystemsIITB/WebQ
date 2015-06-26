@@ -4,7 +4,7 @@ cd ~/webq/bin
 source ips.sh
 
 #{{{ kill all components
-printf " %d\n%s%43s" $? $marker "Killing all components" | tee -a $log_file
+printf " %d\n%s%43s\n" $? $marker "Killing all components" | tee -a $log_file
 for machine in $tokengen $tokengen2
 do
     ssh root@$machine "killall java"
