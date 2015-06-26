@@ -25,7 +25,7 @@ Host check
 	HostName $tokencheck
 	User	$1
 
-Host gen
+Host gen1
 	HostName $tokengen
 	User	$1
 

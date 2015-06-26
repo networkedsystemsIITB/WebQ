@@ -7,12 +7,31 @@ source ~/webq/bin/ips.sh
 # get command line arguments {{{
 if [ -z "$1" ];
 then
-    echo "input username ./redeploy.sh <username>"
+    echo "input username ./redeploy.sh <username> <no_of_tokengen>"
     exit
 else
     username=$1
     echo "username : ${username}"
 fi
+# }}}
+
+# {{{ put the number of tokengens
+if [ -z "$2" ];
+then
+    gens="$tokengen"
+else if [ "$2" -eq 2 ] 
+    case $2 in
+        1)
+            gens="$tokengen"
+            ;;
+        2)
+            gens="$tokengen $tokengen2"
+            ;;
+        *)
+            ;;
+    esac
+fi
+echo "gens = $gens"
 # }}}
 
 # The following is done in the script below
@@ -34,7 +53,7 @@ printf "\n"
 # }}}
 
 # cleaning up all the log files#{{{
-for machine in $tokengen $tokengen2
+for machine in $gens
 do
     printf " %d\n%s%43s" $? $marker "Cleaning up the log files at $machine" | tee -a $log_file
     ssh root@$machine "cat /dev/null > /home/${username}/webq/TokenGenNew/proxy1.log"
@@ -46,7 +65,7 @@ done
 #}}}
 
 # rebuild and copy tokengen(proxy1) to cgi-bin folder#{{{
-for machine in $tokengen $tokengen2
+for machine in $gens
 do
     printf " %d\n%s%43s" $? $marker "remade proxy1 -> php @ $machine" | tee -a $log_file
     sshpass -p "webq" ssh root@$machine \
@@ -55,7 +74,7 @@ done
 #}}}
 
 #{{{
-for machine in $tokengen $tokengen2
+for machine in $gens
 do
     printf " %d\n%s%43s" $? $marker "start the apache server at $machine" | tee -a $log_file
     ssh root@$machine "service apache2 start" >> $log_file
