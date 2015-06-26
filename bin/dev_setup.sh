@@ -12,7 +12,7 @@ source ~/webq/bin/ips.sh
 
 echo "$server       ${1}server" | sudo tee -a /etc/hosts
 echo "$tokencheck   ${1}check" | sudo tee -a /etc/hosts
-echo "$tokengen     ${1}gen" | sudo tee -a /etc/hosts
+echo "$tokengen1    ${1}gen" | sudo tee -a /etc/hosts
 echo "$tokengen2    ${1}gen2" | sudo tee -a /etc/hosts
 echo "$vachaspati   ${1}vacha" | sudo tee -a /etc/hosts
 
@@ -26,7 +26,7 @@ Host check
 	User	$1
 
 Host gen1
-	HostName $tokengen
+	HostName $tokengen1
 	User	$1
 
 Host gen2

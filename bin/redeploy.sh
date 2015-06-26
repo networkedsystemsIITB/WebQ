@@ -18,14 +18,14 @@ fi
 # {{{ put the number of tokengens
 if [ -z "$2" ];
 then
-    gens="$tokengen"
+    gens="$tokengen1"
 else
     case $2 in
         1)
-            gens="$tokengen"
+            gens="$tokengen1"
             ;;
         2)
-            gens="$tokengen $tokengen2"
+            gens="$tokengen1 $tokengen2"
             ;;
         *)
             gens="$tokengen2"
@@ -98,7 +98,7 @@ ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
-echo "$tokengen:8000/proxy1?limit=100"
+echo "$tokengen1:8000/proxy1?limit=100"
 echo "$tokengen2:8000/proxy1?limit=100"
 
 # }}}

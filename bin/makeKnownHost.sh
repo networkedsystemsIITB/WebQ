@@ -11,12 +11,12 @@ then
 fi
 
 ssh server 'mkdir -p ~/.ssh'
-ssh gen 'mkdir -p ~/.ssh'
+ssh gen1 'mkdir -p ~/.ssh'
 ssh gen2 'mkdir -p ~/.ssh'
 ssh check 'mkdir -p ~/.ssh'
 ssh vacha 'mkdir -p ~/.ssh'
 cat ~/.ssh/id_rsa.pub |ssh server  'cat >> .ssh/authorized_keys'
-cat ~/.ssh/id_rsa.pub |ssh gen 'cat >> .ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub |ssh gen1 'cat >> .ssh/authorized_keys'
 cat ~/.ssh/id_rsa.pub |ssh gen2 'cat >> .ssh/authorized_keys'
 cat ~/.ssh/id_rsa.pub |ssh check 'cat >> .ssh/authorized_keys'
 cat ~/.ssh/id_rsa.pub |ssh vacha  'cat >> .ssh/authorized_keys'

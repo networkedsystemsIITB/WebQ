@@ -1,7 +1,7 @@
 #!/bin/sh
 marker="=================================="
 tokencheck="10.129.41.67"
-tokengen="10.129.26.133"
+tokengen1="10.129.26.133"
 capacityEstimator="10.129.41.17"
 tokengen2="10.129.41.17"
 server="10.129.49.76"
