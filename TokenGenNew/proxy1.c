@@ -13,12 +13,17 @@ void start_logging() {/*{{{*/
     start_timer();
 }/*}}}*/
 
-int talkToClient( int clientSocketFD ) {/*{{{*/
+int readFromClient( int clientSocketFD ) {/*{{{*/
     // make buffer to store the data from client
+    // Two types of clients
+    //  1 Capacity Estimator
+    //  2 other peer proxy
     char buffer[256];
     bzero(buffer,256);
-    while( read( clientSocketFD, &buffer, 255) > 0)
+    int bytesRead;
+    while( ( bytesRead = read( clientSocketFD, &buffer, 255) ) > 0)
     {
+        debug_lognum( "bytesRead", bytesRead );
         capacity = atol(buffer);
         bzero(buffer,256);
     }
@@ -31,7 +36,7 @@ void * ThreadWorker( void * threadArgs) {/*{{{*/
     int clientSocketFD = (int) threadArgs;
     sprintf( log_format_string , "yo yo thread id %d\n", (int) threadArgs );
     debug_log( log_format_string );
-    talkToClient( threadArgs);
+    readFromClient( threadArgs);
     pthread_exit(NULL);
 }/*}}}*/
 
@@ -127,7 +132,7 @@ void* create_server_socket() { /*{{{*/
     }
 }/*}}}*/
 
-void talkToServer(){/*{{{*/
+void writeToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     strcpy( sending_port , "10001" );
@@ -151,7 +156,7 @@ void talkToServer(){/*{{{*/
     {
         while( 1)
         {
-            n = write(sockfd, visitor_count , 100* sizeof(int) );
+            n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0) 
             {
                 debug_log("ERROR writing to socket\n");
@@ -173,7 +178,7 @@ void talkToServer(){/*{{{*/
 void start_q_timer();
 
 void timed_q_function(int fd, short event, void *arg) { // Called every second/*{{{*/
-    talkToServer();
+    writeToServer();
     start_q_timer();
 }/*}}}*/
 

@@ -62,6 +62,13 @@ void init_logger() {
         fprintf(stderr, "Can't open output file %s!\n", log_file);
     }
 }
+
+void debug_lognum(char * str , int n){
+    if( log_ptr != NULL ) {
+        fprintf( log_ptr, "debug: %s %d \n", str , n );
+    }
+}
+
 void debug_log(char * str ){
     if( log_ptr != NULL ) {
         fprintf( log_ptr, "debug: %s \n", str );
