@@ -87,6 +87,7 @@ done
 
 #start java code {{{
 printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
+ssh root@$capacityEstimator "cd /home/${username}/webq/CapacityEstimator;bash Makefile"
 ssh root@$capacityEstimator "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 
 #}}}
