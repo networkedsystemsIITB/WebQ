@@ -23,6 +23,7 @@ int readFromClient( int clientSocketFD ) {/*{{{*/
     int bytesRead;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
+        if( bytesRead > 5 ) continue;
         debug_lognum( "bytesRead", bytesRead );
         debug_lognum( "data*", *buffer );
         capacity = *buffer;
@@ -135,7 +136,7 @@ void* create_server_socket() { /*{{{*/
 void writeToServer(){/*{{{*/
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
-    strcpy( sending_port , "10001" );
+    // sending_port is already filled by the parser
     portnum = atoi(sending_port);
     /* Create client socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
