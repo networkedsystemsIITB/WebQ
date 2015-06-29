@@ -18,14 +18,14 @@ int readFromClient( int clientSocketFD ) {/*{{{*/
     // Two types of clients
     //  1 Capacity Estimator
     //  2 other peer proxy
-    char buffer[256];
-    bzero(buffer,256);
+    int bytes = LIMIT * sizeof(int);
+    int*  buffer = malloc( bytes );
     int bytesRead;
-    while( ( bytesRead = read( clientSocketFD, &buffer, 255) ) > 0)
+    while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
         debug_lognum( "bytesRead", bytesRead );
-        capacity = atol(buffer);
-        bzero(buffer,256);
+        debug_lognum( "data*", *buffer );
+        capacity = *buffer;
     }
     debug_log( " gonna shutdown thread " );
     // 2- shutdown both send and recieve functions

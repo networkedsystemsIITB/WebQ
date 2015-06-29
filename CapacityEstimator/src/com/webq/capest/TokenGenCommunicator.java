@@ -4,7 +4,7 @@ import static com.webq.capest.PropertiesFile.getInt;
 import static com.webq.capest.PropertiesFile.getString;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -13,7 +13,7 @@ public class TokenGenCommunicator {
 
     static Socket socket = null;
     static Logger logger = Logger.getLogger("TokenGenCommunicator");
-    static PrintWriter toProxy1;
+    static OutputStream out;
     public static void init() {
         try {
             String ip = getString("webq.proxy1.ip");
@@ -21,7 +21,7 @@ public class TokenGenCommunicator {
             logger.debug("Proxy1 IP: " + ip);
             logger.debug("Proxy1 port: " + port);
             socket = new Socket(ip, port);
-            toProxy1 = new PrintWriter(socket.getOutputStream(), true);
+            out = socket.getOutputStream();
             logger.debug("connected to proxy1");
         } catch (IOException e) {
             logger.error("", e);
@@ -30,11 +30,14 @@ public class TokenGenCommunicator {
 
     public static void conveyNewCapacity(String value) {
         logger.debug("To TokenGen: >" + value + "<");
-        toProxy1.println(value);
-        toProxy1.flush();
     }
 
     public static void conveyNewCapacity(double value) {
-        conveyNewCapacity(Integer.toString((int)value));
+        try{
+            out.write((int) value );
+            out.flush();
+        } catch (IOException e) {
+            logger.error("", e);
+        }
     }
 }
