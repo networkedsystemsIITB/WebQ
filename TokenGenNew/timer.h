@@ -141,10 +141,10 @@ void log_data() {
 //  /*fprintf(log_ptr, "%lld %d %d %d %0.5f %ld %d %d %0.2f %d %d %d \n", (long long int) time(NULL),
 //   incoming, outgoing, failing, avg_waiting_time, avg_service_time, proxy2_in, capacity, current_ratio, ctr, flag);*/
     time_t rawtime;
-    char buf[256];
+    char time_buf[256];
     time(&rawtime);
-    strcpy(buf,ctime(&rawtime));
-    buf[strlen(buf)-1]='\0';
+    strcpy(time_buf,ctime(&rawtime));
+    time_buf[strlen(time_buf)-1]='\0';
 
 
     if(!no_log) {
@@ -161,7 +161,7 @@ void log_data() {
                 "%d %d "
 //              "%lld %lld"
                 "\n",
-                buf,
+                time_buf,
                 incoming,
 //              outgoing, failing,
                 avg_waiting_time,  //logging the avg_waiting_time parameter
