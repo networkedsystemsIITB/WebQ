@@ -19,16 +19,20 @@ public class PerSecondLogging {
         long ms = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
 
-        pw.println(  sdf.format(new Date(ms)) + " Respt:" +
-                powerRatio.getAverageResponseTime() + " Arrv:" +
-                powerRatio.getArrivedRequestCount() + " Success:" +
-                powerRatio.getSuccessfulRequestCount() + " Failed:" +
-                powerRatio.getFailedRequestCount() + " Tput:" +
-                powerRatio.getArrivedRequestCount() + " PowerRatio:" +
-                powerRatio.getPowerRatio() + " Capacity:" +
-                CapacityEstimator.currentCapacity + " Discarded%:" +
-                powerRatio.getDiscardedResponseTimePercent() + " " +
-                powerRatio.minId);
+        pw.printf(
+                "%s Respt:%.7f Arrv:%d Success:%d Failed:%d Tput:%d "+
+                "PowerRatio:%.2f Capacity:%.2f Discarded:%.2f %d\n",
+                sdf.format(new Date(ms)),
+                powerRatio.getAverageResponseTime(),
+                powerRatio.getArrivedRequestCount(),
+                powerRatio.getSuccessfulRequestCount(),
+                powerRatio.getFailedRequestCount(),
+                powerRatio.getArrivedRequestCount(),
+                powerRatio.getPowerRatio(),
+                CapacityEstimator.currentCapacity,
+                powerRatio.getDiscardedResponseTimePercent(),
+                powerRatio.minId
+                );
         pw.flush();
     }
     private static void initLogger() {

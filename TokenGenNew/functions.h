@@ -110,6 +110,11 @@ void update_array(int* variable, int num) {   // n can be +1 or -1
         *variable = (*variable + num);
     pthread_mutex_unlock(&serialize_values4);
 }
+void set_array(int* variable, int num) {
+    pthread_mutex_lock(&serialize_values4);
+    *variable = num;
+    pthread_mutex_unlock(&serialize_values4);
+}
 int get_array(int* variable) {   // n can be +1 or -1
     pthread_mutex_lock(&serialize_values4);
     int temp = *variable;

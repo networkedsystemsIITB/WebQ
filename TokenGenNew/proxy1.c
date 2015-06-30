@@ -219,7 +219,10 @@ void main(void) {/*{{{*/
     current_time = 0;
     int counter;
     for (counter = 0; counter < LIMIT; counter++)
+    {
         visitor_count[counter] = 0;  // Initialize visitor_count
+        peer_v_count[counter] = 0;
+    }
 
 
     parse_config_file();
@@ -246,7 +249,11 @@ void main(void) {/*{{{*/
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
         for (iter = 0; iter < LIMIT; iter++) {
-            if (get_array(&visitor_count[(current_time + iter) % LIMIT])
+            if (
+                    (
+                     get_array(&visitor_count[(current_time + iter) % LIMIT]) +
+                     get_array(&peer_v_count[(current_time + iter) % LIMIT])
+                    )
                     < capacity) {
                 //visitor_count[(current_time+iter)%LIMIT]++;
                 update_array(&visitor_count[(current_time + iter) % LIMIT], 1); // increment by 1
