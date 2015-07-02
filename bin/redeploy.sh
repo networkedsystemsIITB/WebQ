@@ -22,10 +22,10 @@ then
 else
     case $2 in
         1)
-            gens="$tokengen1"
+            gens="$tokengen2"
             ;;
         2)
-            gens="$tokengen1 $tokengen2"
+            gens="$tokengen2 $tokengen1"
             ;;
         *)
             gens="$tokengen2"
@@ -33,6 +33,7 @@ else
     esac
 fi
 echo "gens = $gens"
+export gens
 # }}}
 
 # The following is done in the script below
@@ -40,18 +41,6 @@ echo "gens = $gens"
 # then start the server
 
 bash ~/webq/bin/killall.sh                   #kill all components
-
-# {{{  now wait for some time as apache need some time to recover !! :P
-printf " %d\n%s%43s" $? $marker "wait for some time for apache to recover" | tee -a $log_file
-ttw=40  #time to wait
-printf "\n"
-for i in `seq $ttw -1 1`
-do
-    printf "$i "
-    sleep 1
-done
-printf "\n"
-# }}}
 
 # cleaning up all the log files#{{{
 for machine in $gens
@@ -74,14 +63,31 @@ do
 done
 #}}}
 
-#{{{
+# {{{  now wait for some time as apache need some time to recover !! :P
+printf " %d\n%s%43s" $? $marker "wait for some time for apache to recover" | tee -a $log_file
+ttw=40  #time to wait
+printf "\n"
+for i in `seq $ttw -1 1`
+do
+    printf "$i "
+    sleep 1
+done
+printf "\n"
+# }}}
+
+#{{{ start apache and hence the proxy and hit url
 for machine in $gens
 do
     printf " %d\n%s%43s" $? $marker "start the apache server at $machine" | tee -a $log_file
     ssh root@$machine "service apache2 start" >> $log_file
+done
+# we need a separate for loop here so that we can hit the machines 
+# in parellel at the same time 
+for machine in $gens
+do
     # #hit the URL once
     printf " %d\n%s%43s" $? $marker "Hitting the URL once `grep $machine /etc/hosts`" | tee -a $log_file
-    lynx -dump http://$machine:8000/proxy1\?limit\=100 >> $log_file;
+    lynx -dump http://$machine:8000/proxy1\?limit\=100 >> $log_file &
 done
 #}}}
 
