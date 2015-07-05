@@ -69,8 +69,11 @@ ttw=40  #time to wait
 printf "\n"
 for i in `seq $ttw -1 1`
 do
-    printf "$i "
+    printf "%3d" $i
     sleep 1
+    if (( i%10 == 0)) ; then
+        printf "\n"
+    fi
 done
 printf "\n"
 # }}}
