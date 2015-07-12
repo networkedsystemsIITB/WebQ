@@ -8,6 +8,7 @@
 #include "queue.h"
 /************* GLOBAL VARIABLES *********/
 #define LIMIT 1000 // Keep a track of 1000 seconds only
+#define PEERS 5 // max no of peers
 #define SIZE 7 // interval size
 #define IGNORE 1
 //#define FACTOR 1.3//Our ratio (alpha)
@@ -25,6 +26,8 @@ extern int failing = 0;
 
 //changes made to enable logging of avg wait time (following two lines are uncommented)
 extern float total_waiting_time = 0;
+extern float avg_waiting_time = 0;
+extern float peer_avg_waiting_time = 0;
 extern float old_waiting_time = 0;
 //extern float old_service_time = 0;
 //extern unsigned long total_service_time = 0;
@@ -35,7 +38,7 @@ extern int total_in = 0;
 extern int total_out = 0;
 extern int current_time = 0;
 int visitor_count[LIMIT];
-int peer_v_count[LIMIT];
+int peer_v_count[PEERS][LIMIT];
 extern char log_format_string[256];
 FILE* log_ptr;
 struct queue q = { NULL, NULL, 0, 100, 0, 0, 0 };
@@ -61,6 +64,16 @@ void init_logger() {
 
     if (log_ptr == NULL) {
         fprintf(stderr, "Can't open output file %s!\n", log_file);
+    }
+}
+
+void debug_printf(const char *fmt, ...) {
+    // one debug function to rule them all !!
+    if( log_ptr != NULL ) {
+        va_list args;
+        va_start(args, fmt);
+        vfprintf(log_ptr, fmt, args);
+        va_end(args);
     }
 }
 
@@ -103,13 +116,6 @@ void log_data() {
     push_back(&q, incoming, outgoing, failing);
 //  unsigned long avg_service_time = 0;
 
-    //changes made to enable logging of avg wait time (following few lines are uncommented)
-    float avg_waiting_time = 0.0;
-    if (incoming > 0)
-        avg_waiting_time = total_waiting_time / incoming;
-    else
-        avg_waiting_time = old_waiting_time;
-    //end of change
 
 //  if (outgoing > 0)
 //      avg_service_time = (unsigned long) total_service_time / outgoing;
@@ -154,6 +160,7 @@ void log_data() {
                 "%d "
 //              "%d %d "
                 "%0.5f "    //logging the avg_waiting_time parameter
+                "%0.5f "    //logging the avg_waiting_time parameter
 //              %ld %d "
                 "%d "
 //              "%0.2f "
@@ -166,6 +173,7 @@ void log_data() {
                 incoming,
 //              outgoing, failing,
                 avg_waiting_time,  //logging the avg_waiting_time parameter
+                peer_avg_waiting_time,  //logging the avg_waiting_time parameter
 //              avg_service_time, proxy2_in,
                 capacity,
 //              current_ratio,

@@ -1,6 +1,6 @@
 
 todo:
-Move ip seeings to a configuration file.
+Move ip seeings to a configuration file. done
 Calculate average wait time from peer_waiting_time[]
 decide capacity based on average wait times.
 

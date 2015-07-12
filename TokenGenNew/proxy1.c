@@ -23,10 +23,18 @@ int readFromClient( int clientSocketFD ) {/*{{{*/
     int bytesRead;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
-        if( bytesRead > 5 ) continue;
         debug_lognum( "bytesRead", bytesRead );
-        debug_lognum( "data*", *buffer );
-        capacity = *buffer;
+        if( bytesRead > 5 ) {
+            debug_log( "gonna write memory" );
+            int j;
+            memcpy( peer_v_count[clientSocketFD%PEERS] , buffer , bytesRead );
+            float i , sum_peer=0;
+            //calculate peer_avg_waiting_time here with locks
+        }
+        else{
+            debug_lognum( "data*", *buffer );
+            capacity = *buffer;
+        }
     }
     debug_log( " gonna shutdown thread " );
     // 2- shutdown both send and recieve functions
@@ -92,6 +100,11 @@ void* create_server_socket() { /*{{{*/
             perror("ERROR on accept");
             exit(1);
         }
+        debug_printf("%d.%d.%d.%d\n",
+                (int)(cli_addr.sin_addr.s_addr&0xFF),
+                (int)((cli_addr.sin_addr.s_addr&0xFF00)>>8),
+                    (int)((cli_addr.sin_addr.s_addr&0xFF0000)>>16),
+                    (int)((cli_addr.sin_addr.s_addr&0xFF000000)>>24));
         if(pthread_create(&threadId, NULL, ThreadWorker, (void *)newsockfd) < 0)
         {
             debug_log("Thread creation failed");
@@ -150,6 +163,7 @@ void writeToServer(){/*{{{*/
     if(!inet_aton( ip_array[0]  , &server_addr.sin_addr))
     {
         debug_log( "ERROR invalid server IP address\n");
+        debug_log( ip_array[0]);
         exit(1);
     }
     server_addr.sin_port = htons(portnum);
@@ -165,7 +179,7 @@ void writeToServer(){/*{{{*/
                 break;
             }
             // connect as a client;
-            sleep(5);
+            sleep(1);
         }
     }
     else{
@@ -221,7 +235,9 @@ void main(void) {/*{{{*/
     for (counter = 0; counter < LIMIT; counter++)
     {
         visitor_count[counter] = 0;  // Initialize visitor_count
-        peer_v_count[counter] = 0;
+        int i ;
+        for( i = 0 ; i < PEERS; i++ )
+        peer_v_count[i][counter] = 0; // replace with memset
     }
 
 
@@ -248,13 +264,48 @@ void main(void) {/*{{{*/
 
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
+        int j;
+        peer_avg_waiting_time = 0;
+        avg_waiting_time = 0;
+        int reqInHost =0;
+        int reqInPeers=0;
         for (iter = 0; iter < LIMIT; iter++) {
-            if (
-                    (
-                     get_array(&visitor_count[(current_time + iter) % LIMIT]) +
-                     get_array(&peer_v_count[(current_time + iter) % LIMIT])
-                    )
-                    < capacity) {
+            reqInHost += visitor_count[iter];
+            if( iter - current_time > 0 )
+            {
+                // sum the times .. actual avg found later outside the loop
+                avg_waiting_time += ( iter - current_time ) * visitor_count[ iter ];
+                for( j=0; j<PEERS; j++)
+                {
+                    peer_avg_waiting_time += (iter-current_time) * peer_v_count[j][iter];
+                    reqInPeers += peer_v_count[j][iter];
+                    if( peer_v_count[j][iter] != 0 ) 
+                    {
+                        /* debug_printf( "%d|%d||%d|%d \n", */ 
+                        /*         (iter -current_time), visitor_count[ iter ], */
+                        /*         (iter -current_time),peer_v_count[j][iter] ); */
+                    }
+                }
+            }
+        }
+        avg_waiting_time /= reqInHost;
+        peer_avg_waiting_time /= reqInPeers;
+        /* debug_printf( "%.0f %d, %.0f %d \n" , */ 
+        /*         avg_waiting_time , */
+        /*         reqInHost, */ 
+        /*         peer_avg_waiting_time , */
+        /*         reqInPeers ); */
+        int usedCapacity = 0;
+        for (iter = 0; iter < LIMIT; iter++) {
+            // find the current used capacity for this "iter"
+            usedCapacity = 0;
+            usedCapacity += get_array(&visitor_count[(current_time + iter) % LIMIT]);
+            for( j=0; j<PEERS; j++)
+            {
+                usedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
+            }
+            if ( ( capacity - usedCapacity ) > 0 )
+            {
                 //visitor_count[(current_time+iter)%LIMIT]++;
                 update_array(&visitor_count[(current_time + iter) % LIMIT], 1); // increment by 1
                 break;
