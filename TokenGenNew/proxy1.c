@@ -28,7 +28,9 @@ int readFromClient( int clientSocketFD ) {/*{{{*/
             debug_log( "gonna write memory" );
             int j;
             memcpy( peer_v_count[clientSocketFD%PEERS] , buffer , bytesRead );
-            float i , sum_peer=0;
+            for( j =0 ; j < LIMIT ; j++ ){
+                debug_printf( "%d,%d", peer_v_count[clientSocketFD%PEERS][j], visitor_count[j] );
+            }
             //calculate peer_avg_waiting_time here with locks
         }
         else{
