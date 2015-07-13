@@ -3,7 +3,6 @@
 #include "parser.h"
 #include <netinet/tcp.h>
 
-char log_format_string[256];
 int listening_portno;
 char ** ip_array ;
 char * sending_port;
@@ -23,9 +22,9 @@ int readFromClient( int clientSocketFD ) {/*{{{*/
     int bytesRead;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
-        debug_lognum( "bytesRead", bytesRead );
+        /* debug_lognum( "bytesRead", bytesRead ); */
         if( bytesRead > 5 ) {
-            debug_log( "gonna write memory" );
+            /* debug_log( "gonna write memory" ); */
             int j;
             memcpy( peer_v_count[clientSocketFD%PEERS] , buffer , bytesRead );
             for( j =0 ; j < LIMIT ; j++ ){
@@ -40,7 +39,7 @@ int readFromClient( int clientSocketFD ) {/*{{{*/
     }
     debug_log( " gonna shutdown thread " );
     // 2- shutdown both send and recieve functions
-    shutdown(clientSocketFD, 2);
+    return shutdown(clientSocketFD, 2);
 }/*}}}*/
 
 void * ThreadWorker( void * threadArgs) {/*{{{*/
@@ -56,9 +55,7 @@ void* create_server_socket() { /*{{{*/
     // Creates server socket for communication between Proxy1 and Proxy2
     //
     int sockfd, newsockfd,  clilen;
-    char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
-    int bytes_read_count;
 
     /* First call to socket() function */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -171,18 +168,18 @@ void writeToServer(){/*{{{*/
     server_addr.sin_port = htons(portnum);
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0) 
     {
-        while( 1)
-        {
+        /* while( 1) */
+        /* { */
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0) 
             {
                 debug_log("ERROR writing to socket\n");
                 /* exit(1); */
-                break;
+                /* break; */
             }
             // connect as a client;
-            sleep(1);
-        }
+            /* sleep(1); */
+        /* } */
     }
     else{
         debug_log( "ERROR connecting to a peer");
