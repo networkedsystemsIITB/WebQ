@@ -1,0 +1,5 @@
+
+aim : to get the graphs of performance of multiple tokengens:
+
+1) get correct avg wait times 
+2) check if the avg wait times correcty dictate the capacity
