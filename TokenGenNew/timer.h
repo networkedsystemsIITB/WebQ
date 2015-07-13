@@ -2,6 +2,7 @@
 #define TIMER_H
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h> // to stop compiler cribing on read()
 #include <time.h>
 #include <event.h>
 #include <math.h>
@@ -160,7 +161,7 @@ void log_data() {
                 "%d "
 //              "%d %d "
                 "%0.5f "    //logging the avg_waiting_time parameter
-                "%0.5f "    //logging the avg_waiting_time parameter
+                "p%0.5f "    //logging the avg_waiting_time parameter
 //              %ld %d "
                 "%d "
 //              "%0.2f "
