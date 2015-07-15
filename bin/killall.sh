@@ -24,5 +24,5 @@ do
     ssh root@$machine "killall java" 2>&1 | tee -a $log_file > /dev/null
     ssh root@$machine "killall apache2" 2>&1 | tee -a $log_file > /dev/null
 done
-ssh root@$tokencheck "killall lighttpd" 2>&1  | tee -a $log_file > /dev/null
+ssh root@${tokencheck[$1]} "killall lighttpd" 2>&1  | tee -a $log_file > /dev/null
 #}}}
