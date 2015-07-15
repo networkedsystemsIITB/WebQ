@@ -10,11 +10,11 @@ echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
 
 source ~/webq/bin/ips.sh
 
-echo "$server       ${1}server" | sudo tee -a /etc/hosts
-echo "$tokencheck   ${1}check" | sudo tee -a /etc/hosts
-echo "$tokengen1    ${1}gen" | sudo tee -a /etc/hosts
-echo "$tokengen2    ${1}gen2" | sudo tee -a /etc/hosts
-echo "$vachaspati   ${1}vacha" | sudo tee -a /etc/hosts
+echo "$server           ${1}server" | sudo tee -a /etc/hosts
+echo "${tokencheck[$1]} ${1}check" | sudo tee -a /etc/hosts
+echo "${tokengen1[$1]}  ${1}gen" | sudo tee -a /etc/hosts
+echo "${tokengen2[$1]}  ${1}gen2" | sudo tee -a /etc/hosts
+echo "$vachaspati       ${1}vacha" | sudo tee -a /etc/hosts
 
 cat << EOF >> ~/.ssh/config
 Host server
@@ -22,15 +22,15 @@ Host server
 	User	$1
 
 Host check
-	HostName $tokencheck
+	HostName ${tokencheck[$1]}
 	User	$1
 
 Host gen1
-	HostName $tokengen1
+	HostName ${tokengen1[$1]}
 	User	$1
 
 Host gen2
-	HostName $tokengen2
+	HostName ${tokengen2[$1]}
 	User	$1
 
 Host vacha
