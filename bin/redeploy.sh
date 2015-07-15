@@ -18,17 +18,17 @@ fi
 # {{{ put the number of tokengens
 if [ -z "$2" ];
 then
-    gens="$tokengen1"
+    gens="${tokengen1[$username]}"
 else
     case $2 in
         1)
-            gens="$tokengen2"
+            gens="${tokengen2[$username]}"
             ;;
         2)
-            gens="$tokengen2 $tokengen1"
+            gens="${tokengen2[$username]} ${tokengen1[$username]}"
             ;;
         *)
-            gens="$tokengen2"
+            gens="${tokengen2[$username]}"
             ;;
     esac
 fi
@@ -104,7 +104,7 @@ ssh root@$capacityEstimator "cd /home/${username}/webq/CapacityEstimator;bash ru
 # {{{ start lighttpd
 sleep 4
 printf " %d\n%s%46s\n" $? $marker "Starting the lighttpd server" | tee -a $log_file
-ssh root@$tokencheck "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
+ssh root@${tokencheck[$username]} "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
