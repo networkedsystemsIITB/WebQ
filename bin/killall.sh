@@ -8,7 +8,7 @@ printf "`date`" | tee -a $log_file
 printf " %d\n%s%43s\n" $? $marker "Killing all components" | tee -a $log_file
 if [ -z "$gens" ];
 then
-    gens="$tokengen1 $tokengen2"
+    gens="${tokengen2[$username]} ${tokengen1[$username]}"
 fi
 echo "in kilall, gens considered are: $gens"
 for machine in $gens
