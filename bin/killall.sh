@@ -1,5 +1,12 @@
 #!/bin/bash
 
+
+if [ -z "$1" ];
+then
+    echo "input username ./killall.sh <username>"
+    exit
+fi
+
 cd ~/webq/bin
 source ips.sh
 printf "`date`" | tee -a $log_file
@@ -8,7 +15,7 @@ printf "`date`" | tee -a $log_file
 printf " %d\n%s%43s\n" $? $marker "Killing all components" | tee -a $log_file
 if [ -z "$gens" ];
 then
-    gens="${tokengen2[$username]} ${tokengen1[$username]}"
+    gens="${tokengen2[$1]} ${tokengen1[$1]}"
 fi
 echo "in kilall, gens considered are: $gens"
 for machine in $gens

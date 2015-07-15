@@ -40,7 +40,7 @@ export gens
 # stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
 # then start the server
 
-bash ~/webq/bin/killall.sh                   #kill all components
+bash ~/webq/bin/killall.sh $username                  #kill all components 
 
 # cleaning up all the log files#{{{
 for machine in $gens
