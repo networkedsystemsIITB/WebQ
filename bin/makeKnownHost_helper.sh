@@ -6,18 +6,20 @@ then
     echo "input username ./makeKnownHost_helper.sh <username>"
     exit
 else
-    USER=$1
+    user=$1
 fi
 
-./ips.sh
+source ips.sh
+
 
 for IP in ${tokencheck[$user]} ${tokengen2[$user]} ${tokengen1[$user]} ${vachaspati} ${server}
 do
+    echo setting: $IP
     ./makeKnownHost.sh $user $IP
 done
 
 echo "now enable pasword less login for root account"
-for IP in ${tokencheck[$user]} ${tokengen2[$user]} ${tokengen1[$user]} ${vachaspati} ${server}
+for IP in ${tokencheck[$user]} ${tokengen2[$user]} ${tokengen1[$user]} ${server}
 do
     ./makeKnownHost.sh root $IP
 done
