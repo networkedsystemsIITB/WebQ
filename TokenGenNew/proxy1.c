@@ -301,7 +301,7 @@ void main(void) {/*{{{*/
                     {
                         debug_printf( "%d|%d||%d|%d \n",
                                 (iter -current_time), visitor_count[ iter ],
-                                (iter -current_time),peer_v_count[j][iter] );
+                                (iter -current_time), peer_v_count[j][iter] );
                     }
                 }
             }
