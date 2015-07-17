@@ -146,22 +146,23 @@ void log_data() {
     char time_buf[256];
     time(&rawtime);
     strcpy(time_buf,ctime(&rawtime));
-    time_buf[strlen(time_buf)-1]='\0';
+    strftime( time_buf, 80, "%H:%M:%S" , localtime(&rawtime) );
 
 
     if(!no_log) {
         fprintf(log_ptr,
                 "%s "
-                "%d "
+                "inc %d "
 //              "%d %d "
-                "%0.2f "    //logging the avg_waiting_time parameter
-                "%0.2f "    //logging the avg_waiting_time parameter
+                "hostWt %0.2f "    //logging the avg_waiting_time parameter
+                "peerWt %0.2f "    //logging the avg_waiting_time parameter
 //              %ld %d "
-                "%d "
+                "Cap %d "
 //              "%0.2f "
 //              "%d "
 //              "%d %d %0.2f "
-                "%d %d "
+                "expVisitors %d "
+                "%d "
 //              "%lld %lld"
                 "\n",
                 time_buf,

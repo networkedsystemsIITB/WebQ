@@ -7,10 +7,10 @@ int listening_portno;
 char ** ip_array ;
 char * sending_port;
 
-void start_logging() {/*{{{*/
+void start_logging() {
     init_logger();
     start_timer();
-}/*}}}*/
+}
 
 struct clientDetails{
     int sockfd;
@@ -21,7 +21,7 @@ struct clientDetails{
     int port;
 };
 
-int readFromClient( struct clientDetails * cd ) {/*{{{*/
+int readFromClient( struct clientDetails * cd ) {
     // make buffer to store the data from client
     // Two types of clients
     //  1 Capacity Estimator
@@ -49,17 +49,17 @@ int readFromClient( struct clientDetails * cd ) {/*{{{*/
             capacity = *buffer;
         }
     }
-    debug_log( " gonna shutdown thread " );
+    debug_printf( " gonna shutdown thread \n" );
     // 2- shutdown both send and recieve functions
     return shutdown(clientSocketFD, 2);
-}/*}}}*/
+}
 
-void * ThreadWorker( void * threadArgs) {/*{{{*/
+void * ThreadWorker( void * threadArgs) {
     readFromClient( (struct clientDetails *) threadArgs);
     pthread_exit(NULL);
-}/*}}}*/
+}
 
-void* create_server_socket() { /*{{{*/
+void* create_server_socket() { 
     //
     // Creates server socket for communication between Proxy1 and Proxy2
     //
@@ -109,7 +109,7 @@ void* create_server_socket() { /*{{{*/
             exit(1);
         }
         // print the ip
-        debug_printf("%d.%d.%d.%d\n",
+        debug_printf("peer connected: %d.%d.%d.%d\n",
                 (int)(cli_addr.sin_addr.s_addr&0xFF),
                 (int)((cli_addr.sin_addr.s_addr&0xFF00)>>8),
                     (int)((cli_addr.sin_addr.s_addr&0xFF0000)>>16),
@@ -160,9 +160,9 @@ void* create_server_socket() { /*{{{*/
 //      }
 
     }
-}/*}}}*/
+}
 
-void writeToServer(){/*{{{*/
+void writeToServer(){
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     // sending_port is already filled by the parser
@@ -203,10 +203,10 @@ void writeToServer(){/*{{{*/
         /* sleep(1); */
         /* exit(1); */
     }
-    debug_printf( "Closing socket\n");
+    /* debug_printf( "Closing socket\n"); */
     shutdown(sockfd, 2);
 
-}/*}}}*/
+}
 
 void start_q_timer();
 
