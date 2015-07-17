@@ -36,10 +36,11 @@ echo "gens = $gens"
 export gens
 # }}}
 
-# The following is done in the script below
+# The following is done in the following code
 # stop server, make the proxy1 code, and copy it in /usr/lib/cgi-bin
 # then start the server
 
+# killall.sh will stop all tokenGens and TokenChecks
 bash ~/webq/bin/killall.sh $username                  #kill all components 
 
 # cleaning up all the log files#{{{
@@ -63,19 +64,28 @@ do
 done
 #}}}
 
-# {{{  now wait for some time as apache need some time to recover !! :P
-printf " %d\n%s%43s" $? $marker "wait for some time for apache to recover" | tee -a $log_file
-ttw=40  #time to wait
-printf "\n"
-for i in `seq $ttw -1 1`
-do
-    printf "%3d" $i
-    sleep 1
-    if (( i%10 == 0)) ; then
-        printf "\n"
-    fi
-done
-printf "\n"
+# {{{  now wait for some time 
+# as apache need some time to recover !! :P
+# if "SOME" thrid parameter is passed do not wait
+if [ -z "$3" ];
+then
+    # unset
+    printf " %d\n%s%43s" $? $marker "wait for some time for apache to recover" | tee -a $log_file
+    ttw=40  #time to wait
+    printf "\n"
+    for i in `seq $ttw -1 1`
+    do
+        printf "%3d" $i
+        sleep 1
+        if (( i%10 == 0)) ; then
+            printf "\n"
+        fi
+    done
+    printf "\n"
+else
+    # empty statement | do nothing
+    :
+fi
 # }}}
 
 #{{{ start apache and hence the proxy and hit url
