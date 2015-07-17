@@ -45,7 +45,7 @@ int readFromClient( struct clientDetails * cd ) {/*{{{*/
             //calculate peer_avg_waiting_time here with locks
         }
         else{
-            debug_lognum( "data*", *buffer );
+            debug_printf( "data* %d \n", *buffer );
             capacity = *buffer;
         }
     }

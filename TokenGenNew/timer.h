@@ -78,12 +78,6 @@ void debug_printf(const char *fmt, ...) {
     }
 }
 
-void debug_lognum(char * str , int n){
-    if( log_ptr != NULL ) {
-        fprintf( log_ptr, "debug: %s %d \n", str , n );
-    }
-}
-
 void debug_log(char * str ){
     if( log_ptr != NULL ) {
         fprintf( log_ptr, "debug: %s \n", str );
