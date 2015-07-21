@@ -69,6 +69,9 @@ done
 # if "SOME" thrid parameter is passed do not wait
 if [ -z "$3" ];
 then
+    # empty statement | do nothing
+    :
+else
     # unset
     printf " %d\n%s%43s" $? $marker "wait for some time for apache to recover" | tee -a $log_file
     ttw=40  #time to wait
@@ -82,9 +85,6 @@ then
         fi
     done
     printf "\n"
-else
-    # empty statement | do nothing
-    :
 fi
 # }}}
 

@@ -27,7 +27,7 @@ int readFromClient( struct clientDetails * cd ) {
     //  1 Capacity Estimator
     //  2 other peer proxy
     int clientSocketFD = cd->sockfd;
-    debug_printf( "yo yo thread id %d\n", clientSocketFD );
+    /* debug_printf( "yo yo thread id %d\n", clientSocketFD ); */
     int bytes = LIMIT * sizeof(int);
     int*  buffer = malloc( bytes );
     int bytesRead;
@@ -49,7 +49,7 @@ int readFromClient( struct clientDetails * cd ) {
             capacity = *buffer;
         }
     }
-    debug_printf( " gonna shutdown thread \n" );
+    /* debug_printf( "gonna shutdown thread \n" ); */
     // 2- shutdown both send and recieve functions
     return shutdown(clientSocketFD, 2);
 }
@@ -109,11 +109,11 @@ void* create_server_socket() {
             exit(1);
         }
         // print the ip
-        debug_printf("peer connected: %d.%d.%d.%d\n",
-                (int)(cli_addr.sin_addr.s_addr&0xFF),
-                (int)((cli_addr.sin_addr.s_addr&0xFF00)>>8),
-                    (int)((cli_addr.sin_addr.s_addr&0xFF0000)>>16),
-                    (int)((cli_addr.sin_addr.s_addr&0xFF000000)>>24));
+        /* debug_printf("peer connected: %d.%d.%d.%d\n", */
+        /*         (int)(cli_addr.sin_addr.s_addr&0xFF), */
+        /*         (int)((cli_addr.sin_addr.s_addr&0xFF00)>>8), */
+        /*             (int)((cli_addr.sin_addr.s_addr&0xFF0000)>>16), */
+        /*             (int)((cli_addr.sin_addr.s_addr&0xFF000000)>>24)); */
         struct clientDetails * cd;
         cd = malloc( sizeof( struct clientDetails ) );
         cd->sockfd = newsockfd;
@@ -123,7 +123,7 @@ void* create_server_socket() {
         cd->ip4 = (int)((cli_addr.sin_addr.s_addr&0xFF000000)>>24);
         if(pthread_create(&threadId, NULL, ThreadWorker, (void *)cd) < 0)
         {
-            debug_log("Thread creation failed");
+            debug_printf("Thread creation failed");
             exit(1);
         }
 
@@ -171,15 +171,15 @@ void writeToServer(){
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
     {
-        debug_log( "ERROR opening socket\n");
+        debug_printf( "ERROR opening socket\n");
         exit(1);
     }
     bzero((char *) &server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     if(!inet_aton( ip_array[0]  , &server_addr.sin_addr))
     {
-        debug_log( "ERROR invalid server IP address\n");
-        debug_log( ip_array[0]);
+        debug_printf( "ERROR invalid server IP address\n");
+        debug_printf( ip_array[0]);
         exit(1);
     }
     server_addr.sin_port = htons(portnum);
@@ -190,7 +190,7 @@ void writeToServer(){
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
-                debug_log("ERROR writing to socket\n");
+                debug_printf("ERROR writing to socket\n");
                 /* exit(1); */
                 /* break; */
             }
@@ -199,7 +199,7 @@ void writeToServer(){
         /* } */
     }
     else{
-        debug_log( "ERROR connecting to a peer");
+        debug_printf( "ERROR connecting to a peer");
         /* sleep(1); */
         /* exit(1); */
     }

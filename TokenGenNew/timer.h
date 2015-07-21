@@ -78,11 +78,11 @@ void debug_printf(const char *fmt, ...) {
     }
 }
 
-void debug_log(char * str ){
-    if( log_ptr != NULL ) {
-        fprintf( log_ptr, "debug: %s \n", str );
-    }
-}
+/* void debug_log(char * str ){ */
+/*     if( log_ptr != NULL ) { */
+/*         fprintf( log_ptr, "debug: %s \n", str ); */
+/*     } */
+/* } */
 
 void free_logger() {
     fclose(log_ptr);
