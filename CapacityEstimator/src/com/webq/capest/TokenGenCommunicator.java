@@ -13,7 +13,7 @@ public class TokenGenCommunicator {
 
     static Socket socket = null;
     static Logger logger = Logger.getLogger("TokenGenCommunicator");
-    static OutputStream out;
+    static OutputStream[] out = new OutputStream[getInt("webq.noOfProxy")];
     public static void init() {
         try {
             String ip = getString("webq.proxy1.ip");

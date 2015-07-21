@@ -1,4 +1,5 @@
 #!/bin/bash
+# script to allow passwordless entry
 # echo "dev setup should be run before runnign this file"
 
 if [ -z "$1" ];
