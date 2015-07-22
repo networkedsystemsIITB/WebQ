@@ -51,7 +51,7 @@ int readFromClient( struct clientDetails * cd ) {
     }
     /* debug_printf( "gonna shutdown thread \n" ); */
     // 2- shutdown both send and recieve functions
-    return shutdown(clientSocketFD, 2);
+    return close( clientSocketFD );
 }
 
 void * ThreadWorker( void * threadArgs) {
@@ -203,9 +203,7 @@ void writeToServer(){
         /* sleep(1); */
         /* exit(1); */
     }
-    /* debug_printf( "Closing socket\n"); */
-    shutdown(sockfd, 2);
-
+    close( sockfd );
 }
 
 void start_q_timer();
