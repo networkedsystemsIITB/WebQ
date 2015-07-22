@@ -26,6 +26,7 @@ extern int outgoing = 0;
 extern int failing = 0;
 
 //changes made to enable logging of avg wait time (following two lines are uncommented)
+extern int share = 0;
 extern float total_waiting_time = 0;
 extern float avg_waiting_time = 0;
 extern float peer_avg_waiting_time = 0;
@@ -161,7 +162,7 @@ void log_data() {
 //              "%0.2f "
 //              "%d "
 //              "%d %d %0.2f "
-                "expVisitors %d "
+                "expVisitors %d + %d "
                 "%d "
 //              "%lld %lld"
                 "\n",
@@ -175,7 +176,9 @@ void log_data() {
 //              current_ratio,
 //              ctr,
 //              flag, wait_for, prev_ratio2,
-                get_array(&visitor_count[current_time]), current_time//,
+                get_array(&visitor_count[current_time]), 
+                share,
+                current_time//,
 //              total_time_interval, total_in_interval
                 );
         fflush(log_ptr);

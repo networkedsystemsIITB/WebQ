@@ -317,7 +317,7 @@ void main(void) {/*{{{*/
         /*         reqInPeers ); */
         int usedCapacity = 0;
         for (iter = 0; iter < LIMIT; iter++) {
-            // find the current used capacity for this "iter"
+            // find the current used capacity for THIS "iter"
             usedCapacity = 0;
             usedCapacity += get_array(&visitor_count[(current_time + iter) % LIMIT]);
             for( j=0; j<PEERS; j++)
@@ -328,11 +328,10 @@ void main(void) {/*{{{*/
             // share = total_capacity /2 if visitor_waiting_time == peer_wt; else
             // share = total_capacity * visitor_waiting_time/(sum peer_wt and avg) if peer_wt != 0;
             // share = total_capacity  if peer_wt == 0;
-            int share;
             int total_usable_capacity = (capacity - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( avg_waiting_time == peer_avg_waiting_time )
             {
-                share = total_usable_capacity/2;
+                share = total_usable_capacity/2; //todo : 2-> no of peers
             }
             else if( peer_avg_waiting_time != 0 )
             {
