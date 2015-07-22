@@ -1,0 +1,28 @@
+done:
+-----
+    1 added a configuration file for TokenGen with which we can easily add more TokenGen peers to the system.
+    2 send and recieve queue lengths to peer tokenGen
+    3 better way to calucuate the average wait time for both peers and hosts.
+    4 Algorithm to allocate capacity to the gen based on the transfered queue:
+
+                                                    (host wait time)
+        >  share = total_usable_capacity * ------------------------------
+                                            (host wait time+peer wait time)
+    5 Capacity Estimator communicates with all the TokenGens
+tested:
+-------
+    1) Capacity fixed at 15. Each of the TokenGen has a load rate of 15 req/sec.
+    2) Capacity is discoverd by the CapEst. Each TokenGen has  a load rate of 15 req/sec
+
+Inferances:
+-----------
+    1) result is averaged over 2 seconds.
+    2) Dont allocate to full capacity ( to take care of the n/w delay )
+        Overallocation happending: due to n/w delay .. actual allocated capcity 
+        should be less than the available capacity.
+
+to Test:
+-------
+    Test with more token gens, for higher duration/load
+
+

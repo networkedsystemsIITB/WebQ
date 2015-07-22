@@ -39,13 +39,13 @@ int readFromClient( struct clientDetails * cd ) {
             int j;
             memcpy( peer_v_count[cd->ip4%PEERS] , buffer , bytesRead );
             for( j =0 ; j < LIMIT ; j++ ){
-                if (peer_v_count[cd->ip4%PEERS][j] != 0 ||  visitor_count[j]!= 0 )
-                    debug_printf( "(%d)%d,%d", j, peer_v_count[cd->ip4%PEERS][j], visitor_count[j] );
+                /* if (peer_v_count[cd->ip4%PEERS][j] != 0 ||  visitor_count[j]!= 0 ) */
+                    /* debug_printf( "(%d)%d,%d", j, peer_v_count[cd->ip4%PEERS][j], visitor_count[j] ); */
             }
             //calculate peer_avg_waiting_time here with locks
         }
         else{
-            debug_printf( "data* %d \n", *buffer );
+            /* debug_printf( "data* %d \n", *buffer ); */
             capacity = *buffer;
         }
     }
@@ -299,9 +299,9 @@ void main(void) {/*{{{*/
                     reqInPeers += peer_v_count[j][iter];
                     if( peer_v_count[j][iter] != 0 )
                     {
-                        debug_printf( "%d|%d||%d|%d \n",
-                                (iter -current_time), visitor_count[ iter ],
-                                (iter -current_time), peer_v_count[j][iter] );
+                        /* debug_printf( "%d|%d||%d|%d \n", */
+                        /*         (iter -current_time), visitor_count[ iter ], */
+                        /*         (iter -current_time), peer_v_count[j][iter] ); */
                     }
                 }
             }
