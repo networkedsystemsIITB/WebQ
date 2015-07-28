@@ -326,7 +326,8 @@ void main(void) {/*{{{*/
             // share = total_capacity /2 if visitor_waiting_time == peer_wt; else
             // share = total_capacity * visitor_waiting_time/(sum peer_wt and avg) if peer_wt != 0;
             // share = total_capacity  if peer_wt == 0;
-            int total_usable_capacity = (capacity - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
+            int margin = 2;
+            int total_usable_capacity = (capacity - margin  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( avg_waiting_time == peer_avg_waiting_time )
             {
                 share = total_usable_capacity/2; //todo : 2-> no of peers
