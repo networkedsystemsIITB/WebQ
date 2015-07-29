@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1500</stringProp>
+        <stringProp name="ThreadGroup.num_threads">3000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">100</stringProp>
         <longProp name="ThreadGroup.start_time">1379925933000</longProp>
         <longProp name="ThreadGroup.end_time">1379925933000</longProp>
@@ -267,7 +267,7 @@
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">
-              <time>true</time>
+              <time>false</time>
               <latency>true</latency>
               <timestamp>true</timestamp>
               <success>true</success>
@@ -288,9 +288,6 @@
               <responseDataOnError>false</responseDataOnError>
               <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
               <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <hostname>true</hostname>
-              <threadCounts>true</threadCounts>
               <sampleCount>true</sampleCount>
             </value>
           </objProp>
