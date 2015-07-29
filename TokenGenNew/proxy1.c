@@ -185,8 +185,8 @@ void writeToServer(){
     server_addr.sin_port = htons(portnum);
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
-        /* while( 1) */
-        /* { */
+        while( 1)
+        {
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
@@ -195,8 +195,8 @@ void writeToServer(){
                 /* break; */
             }
             // connect as a client;
-            /* sleep(1); */
-        /* } */
+            nanosleep((struct timespec[]){{0, 500000000}}, NULL);
+        }
     }
     else{
         debug_printf( "ERROR connecting to a peer");
