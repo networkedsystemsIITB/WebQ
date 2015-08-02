@@ -313,7 +313,10 @@ void log_data() {
 //  change_values(&proxy2_in, 0);
 }
 void timed_function(int fd, short event, void *arg) { // Called every second
+    while( 1 ){
     log_data();
+    nanosleep((struct timespec[]){{1, 000000000}}, NULL);
+    }
     start_timer();
 }
 void start_timer() {

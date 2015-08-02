@@ -301,13 +301,12 @@ void main(void) {/*{{{*/
                 {
                     peer_avg_waiting_time += (iter-current_time) * peer_v_count[j][iter];
                     reqInPeers += peer_v_count[j][iter];
-                    if( peer_v_count[j][iter] != 0 )
-                    {
-                        debug_printf( "%d %d|%d||%d|%d \n",
-                                iter,
-                                (iter -current_time), visitor_count[ iter ],
-                                (iter -current_time), peer_v_count[j][iter] );
-                    }
+                    /* if( visitor_count[iter] != 0 && peer_v_count[j][iter] != 0) */
+                    /* { */
+                    /*     debug_printf( "%d|%d||%d|%d \n", */
+                    /*             (iter -current_time), visitor_count[ iter ], */
+                    /*             (iter -current_time), peer_v_count[j][iter] ); */
+                    /* } */
                 }
             }
         }
@@ -315,18 +314,32 @@ void main(void) {/*{{{*/
             avg_waiting_time /= reqInHost;
         if( reqInPeers != 0 )
             peer_avg_waiting_time /= reqInPeers;
-        debug_printf( "%.2f %d, %.2f %d \n" ,
-                avg_waiting_time ,
-                reqInHost,
-                peer_avg_waiting_time ,
-                reqInPeers );
+        /* debug_printf( "%.2f %d, %.2f %d \n" , */
+        /*         avg_waiting_time , */
+        /*         reqInHost, */
+        /*         peer_avg_waiting_time , */
+        /*         reqInPeers ); */
         int usedCapacity = 0;
         // calculate the share :
         // reserve a min value of capacity (0.1) for each servers
-        if( avg_waiting_time == 0 ){ avg_waiting_time = 0.1; }
-        if( peer_avg_waiting_time == 0 ){ peer_avg_waiting_time = 0.1; }
+        int percent = 10;
+        if( avg_waiting_time == 0 && peer_avg_waiting_time == 0 )
+        { 
+            avg_waiting_time = 1; 
+            peer_avg_waiting_time = 1; 
+        }
+        else if ( avg_waiting_time == 0 ){
+            avg_waiting_time = percent * peer_avg_waiting_time / ( 100 - percent );
+        }
+        else if ( peer_avg_waiting_time == 0 ){
+            peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
+        }
         share = capacity * avg_waiting_time/(avg_waiting_time + peer_avg_waiting_time);
         // share found
+        if ( share == 0 ) { 
+            // share can never be 0
+            share = 1;
+        }
 
         for (iter = 0; iter < LIMIT; iter++) {
             // find the current used capacity for THIS "iter"
