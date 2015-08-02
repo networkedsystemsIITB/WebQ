@@ -31,16 +31,22 @@ int readFromClient( struct clientDetails * cd ) {
     int bytes = LIMIT * sizeof(int);
     int*  buffer = malloc( bytes );
     int bytesRead;
+    int prev_bytesRead=0;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
-        /* debug_lognum( "bytesRead", bytesRead ); */
+        /* debug_printf( "bytesRead %d \n", bytesRead ); */
         if( bytesRead > 5 ) {
             /* debug_log( "gonna write memory" ); */
             int j;
-            memcpy( peer_v_count[cd->ip4%PEERS] , buffer , bytesRead );
-            for( j =0 ; j < LIMIT ; j++ ){
-                /* if (peer_v_count[cd->ip4%PEERS][j] != 0 ||  visitor_count[j]!= 0 ) */
-                    /* debug_printf( "(%d)%d,%d", j, peer_v_count[cd->ip4%PEERS][j], visitor_count[j] ); */
+            memcpy( peer_v_count[cd->ip4%PEERS]+(prev_bytesRead/4) , buffer , bytesRead );
+            prev_bytesRead += bytesRead;
+            prev_bytesRead = (prev_bytesRead >= 4000 ) ? 0:prev_bytesRead;
+            if( prev_bytesRead == 0 ) {
+                /* debug_printf( "once cycle done \n"); */
+                /* for( j =0 ; j < LIMIT ; j++ ){ */
+                    /* if (peer_v_count[cd->ip4%PEERS][j] != 0 ||  visitor_count[j]!= 0 ) */
+                    /*     debug_printf( "(%d)%d,%d", j, peer_v_count[cd->ip4%PEERS][j], visitor_count[j] ); */
+                /* } */
             }
             //calculate peer_avg_waiting_time here with locks
         }
@@ -49,7 +55,7 @@ int readFromClient( struct clientDetails * cd ) {
             capacity = *buffer;
         }
     }
-    /* debug_printf( "gonna shutdown thread \n" ); */
+    debug_printf( "gonna shutdown read thread \n" );
     // 2- shutdown both send and recieve functions
     return close( clientSocketFD );
 }
@@ -297,9 +303,10 @@ void main(void) {/*{{{*/
                     reqInPeers += peer_v_count[j][iter];
                     if( peer_v_count[j][iter] != 0 )
                     {
-                        /* debug_printf( "%d|%d||%d|%d \n", */
-                        /*         (iter -current_time), visitor_count[ iter ], */
-                        /*         (iter -current_time), peer_v_count[j][iter] ); */
+                        debug_printf( "%d %d|%d||%d|%d \n",
+                                iter,
+                                (iter -current_time), visitor_count[ iter ],
+                                (iter -current_time), peer_v_count[j][iter] );
                     }
                 }
             }
@@ -308,39 +315,33 @@ void main(void) {/*{{{*/
             avg_waiting_time /= reqInHost;
         if( reqInPeers != 0 )
             peer_avg_waiting_time /= reqInPeers;
-        /* debug_printf( "%.0f %d, %.0f %d \n" , */
-        /*         avg_waiting_time , */
-        /*         reqInHost, */
-        /*         peer_avg_waiting_time , */
-        /*         reqInPeers ); */
+        debug_printf( "%.2f %d, %.2f %d \n" ,
+                avg_waiting_time ,
+                reqInHost,
+                peer_avg_waiting_time ,
+                reqInPeers );
         int usedCapacity = 0;
+        // calculate the share :
+        // reserve a min value of capacity (0.1) for each servers
+        if( avg_waiting_time == 0 ){ avg_waiting_time = 0.1; }
+        if( peer_avg_waiting_time == 0 ){ peer_avg_waiting_time = 0.1; }
+        share = capacity * avg_waiting_time/(avg_waiting_time + peer_avg_waiting_time);
+        // share found
+
         for (iter = 0; iter < LIMIT; iter++) {
             // find the current used capacity for THIS "iter"
             usedCapacity = 0;
             usedCapacity += get_array(&visitor_count[(current_time + iter) % LIMIT]);
-            for( j=0; j<PEERS; j++)
-            {
-                usedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
-            }
+            /* for( j=0; j<PEERS; j++) */
+            /* { */
+            /*     usedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] ); */
+            /* } */
             // find share of the current proxy
             // share = total_capacity /2 if visitor_waiting_time == peer_wt; else
             // share = total_capacity * visitor_waiting_time/(sum peer_wt and avg) if peer_wt != 0;
             // share = total_capacity  if peer_wt == 0;
-            int margin = 2;
-            int total_usable_capacity = (capacity - margin  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
-            if( avg_waiting_time == peer_avg_waiting_time )
-            {
-                share = total_usable_capacity/2; //todo : 2-> no of peers
-            }
-            else if( peer_avg_waiting_time != 0 )
-            {
-                share = total_usable_capacity * avg_waiting_time/(avg_waiting_time + peer_avg_waiting_time);
-            }
-            else if( peer_avg_waiting_time == 0 )
-            {
-                share = total_usable_capacity;
-            }
-            if ( share > 0 )
+            int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
+            if ( total_usable_capacity > 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;
                 update_array(&visitor_count[(current_time + iter) % LIMIT], 1); // increment by 1
