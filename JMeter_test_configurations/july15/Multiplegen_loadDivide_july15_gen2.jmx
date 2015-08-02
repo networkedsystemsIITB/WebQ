@@ -17,8 +17,8 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">3000</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">100</stringProp>
+        <stringProp name="ThreadGroup.num_threads">12000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">200</stringProp>
         <longProp name="ThreadGroup.start_time">1379925933000</longProp>
         <longProp name="ThreadGroup.end_time">1379925933000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -288,11 +288,13 @@
               <responseDataOnError>false</responseDataOnError>
               <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
               <assertionsResultsToSave>0</assertionsResultsToSave>
+              <hostname>true</hostname>
+              <threadCounts>true</threadCounts>
               <sampleCount>true</sampleCount>
             </value>
           </objProp>
           <stringProp name="filename">/home/murali/webq/JMeter_test_configurations/july15/Multiplegen_loadDivide_july15_gen2.csv</stringProp>
-          <longProp name="interval_grouping">2000</longProp>
+          <longProp name="interval_grouping">5000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="include_sample_labels"></stringProp>
           <stringProp name="exclude_sample_labels"></stringProp>
