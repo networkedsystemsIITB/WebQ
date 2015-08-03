@@ -41,13 +41,13 @@ int readFromClient( struct clientDetails * cd ) {
             memcpy( peer_v_count[cd->ip4%PEERS]+(prev_bytesRead/4) , buffer , bytesRead );
             prev_bytesRead += bytesRead;
             prev_bytesRead = (prev_bytesRead >= 4000 ) ? 0:prev_bytesRead;
-            if( prev_bytesRead == 0 ) {
+            /* if( prev_bytesRead == 0 ) { */
                 /* debug_printf( "once cycle done \n"); */
                 /* for( j =0 ; j < LIMIT ; j++ ){ */
                     /* if (peer_v_count[cd->ip4%PEERS][j] != 0 ||  visitor_count[j]!= 0 ) */
                     /*     debug_printf( "(%d)%d,%d", j, peer_v_count[cd->ip4%PEERS][j], visitor_count[j] ); */
                 /* } */
-            }
+            /* } */
             //calculate peer_avg_waiting_time here with locks
         }
         else{
@@ -55,7 +55,7 @@ int readFromClient( struct clientDetails * cd ) {
             capacity = *buffer;
         }
     }
-    debug_printf( "gonna shutdown read thread \n" );
+    debug_printf( "gonna shutdown read thread \n");
     // 2- shutdown both send and recieve functions
     return close( clientSocketFD );
 }
