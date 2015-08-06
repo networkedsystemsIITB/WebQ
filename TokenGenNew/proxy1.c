@@ -65,7 +65,7 @@ void * ThreadWorker( void * threadArgs) {
     pthread_exit(NULL);
 }
 
-void* create_server_socket() { 
+void* create_server_socket() {
     //
     // Creates server socket for communication between Proxy1 and Proxy2
     //
@@ -203,8 +203,7 @@ void writeToServer(){
             // connect as a client;
             nanosleep((struct timespec[]){{0, 500000000}}, NULL);
         }
-    }
-    else{
+    }else{
         debug_printf( "ERROR connecting to a peer");
         /* sleep(1); */
         /* exit(1); */
@@ -320,13 +319,14 @@ void main(void) {/*{{{*/
         /*         peer_avg_waiting_time , */
         /*         reqInPeers ); */
         int usedCapacity = 0;
+        int peerUsedCapacity = 0;
         // calculate the share :
         // reserve a min value of capacity (0.1) for each servers
         int percent = 10;
         if( avg_waiting_time == 0 && peer_avg_waiting_time == 0 )
-        { 
-            avg_waiting_time = 1; 
-            peer_avg_waiting_time = 1; 
+        {
+            avg_waiting_time = 1;
+            peer_avg_waiting_time = 1;
         }
         else if ( avg_waiting_time == 0 ){
             avg_waiting_time = percent * peer_avg_waiting_time / ( 100 - percent );
@@ -336,24 +336,31 @@ void main(void) {/*{{{*/
         }
         share = capacity * avg_waiting_time/(avg_waiting_time + peer_avg_waiting_time);
         // share found
-        if ( share == 0 ) { 
+        if ( share == 0 ) {
             // share can never be 0
             share = 1;
         }
 
+        int excess_used;
         for (iter = 0; iter < LIMIT; iter++) {
             // find the current used capacity for THIS "iter"
-            usedCapacity = 0;
-            usedCapacity += get_array(&visitor_count[(current_time + iter) % LIMIT]);
-            /* for( j=0; j<PEERS; j++) */
-            /* { */
-            /*     usedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] ); */
-            /* } */
+            // for subsequent reqests at same time
+            peerUsedCapacity = 0;
+            usedCapacity = get_array(&visitor_count[(current_time + iter) % LIMIT]);
+            for( j=0; j<PEERS; j++)
+            {
+                peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
+            }
             // find share of the current proxy
             // share = total_capacity /2 if visitor_waiting_time == peer_wt; else
             // share = total_capacity * visitor_waiting_time/(sum peer_wt and avg) if peer_wt != 0;
             // share = total_capacity  if peer_wt == 0;
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
+            if( peerUsedCapacity > 0 ){
+                excess_used = (capacity - share)-peerUsedCapacity;
+                total_usable_capacity += excess_used < 0 ? excess_used : 0;
+            }
+            debug_printf( "share %d - %d , %d - %d - %d , %d\n" , share ,usedCapacity, capacity ,usedCapacity ,peerUsedCapacity , total_usable_capacity);
             if ( total_usable_capacity > 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;

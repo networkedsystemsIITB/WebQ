@@ -31,6 +31,6 @@ else
     tmux send-keys -tHaystack:1.1 "ssh server" C-m
     tmux send-keys -tHaystack:1.3 "ssh spare1" C-m
     tmux send-keys -tHaystack:1.5 "ssh spare2" C-m
-    tmux send-keys -tHaystack:1.7 "" C-m
+    tmux send-keys -tHaystack:1.7 "ssh murali@10.14.15.22" C-m
 fi
 tmux attach-session -d -tHaystack
