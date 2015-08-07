@@ -211,31 +211,9 @@ void writeToServer(){
     close( sockfd );
 }
 
-void start_q_timer();
-
-void timed_q_function(int fd, short event, void *arg) { // Called every second/*{{{*/
-    writeToServer();
-    start_q_timer();
-}/*}}}*/
-
-void start_q_timer() {/*{{{*/
-    struct event ev;
-    struct timeval tv;
-
-    tv.tv_sec = 0;
-    tv.tv_usec = 500000;
-
-    event_init();
-    evtimer_set(&ev, timed_q_function, NULL);
-    evtimer_add(&ev, &tv);
-    event_dispatch();
-}/*}}}*/
-
-
 void queue_sender( void * args) {/*{{{*/
     sleep(1);
-    start_q_timer();
-    /* talkToServer(); */
+    writeToServer();
 }/*}}}*/
 
 void main(void) {/*{{{*/
@@ -360,7 +338,6 @@ void main(void) {/*{{{*/
                 excess_used = (capacity - share)-peerUsedCapacity;
                 total_usable_capacity += excess_used < 0 ? excess_used : 0;
             }
-            debug_printf( "share %d - %d , %d - %d - %d , %d\n" , share ,usedCapacity, capacity ,usedCapacity ,peerUsedCapacity , total_usable_capacity);
             if ( total_usable_capacity > 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;
