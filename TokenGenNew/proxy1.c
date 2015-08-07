@@ -168,7 +168,7 @@ void* create_server_socket() {
     }
 }
 
-void writeToServer(){
+void writeToServer(char *ip_array_n){
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     // sending_port is already filled by the parser
@@ -182,10 +182,10 @@ void writeToServer(){
     }
     bzero((char *) &server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
-    if(!inet_aton( ip_array[0]  , &server_addr.sin_addr))
+    if(!inet_aton( ip_array_n  , &server_addr.sin_addr))
     {
         debug_printf( "ERROR invalid server IP address\n");
-        debug_printf( ip_array[0]);
+        debug_printf( ip_array_n);
         exit(1);
     }
     server_addr.sin_port = htons(portnum);
@@ -213,7 +213,7 @@ void writeToServer(){
 
 void queue_sender( void * args) {/*{{{*/
     sleep(1);
-    writeToServer();
+    writeToServer( args  );
 }/*}}}*/
 
 void main(void) {/*{{{*/
@@ -247,8 +247,8 @@ void main(void) {/*{{{*/
     pthread_create( &timer_log, NULL, start_logging, (void*) NULL);
     pthread_t make_connection;
     pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
-    pthread_t send_queue;
-    pthread_create( &send_queue , NULL , queue_sender, (void *) NULL );
+    pthread_t send_queue[PEERS];
+    pthread_create( &send_queue[0] , NULL , queue_sender, (void *) ip_array[0] );
 
     while (FCGI_Accept() >= 0) {
         change_values(&incoming, 1);
