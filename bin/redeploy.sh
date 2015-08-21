@@ -25,7 +25,7 @@ else
             gens="${tokengen2[$username]}"
             ;;
         2)
-            gens="${tokengen2[$username]} ${tokengen1[$username]}"
+            gens="${tokengen2[$username]} ${tokengen1[$username]} 10.129.26.133"
             ;;
         *)
             gens="${tokengen2[$username]}"
@@ -41,7 +41,7 @@ export gens
 # then start the server
 
 # killall.sh will stop all tokenGens and TokenChecks
-bash ~/webq/bin/killall.sh $username                  #kill all components 
+bash ~/webq/bin/killall.sh $username                  #kill all components
 
 # cleaning up all the log files#{{{
 for machine in $gens
@@ -65,7 +65,7 @@ do
 done
 #}}}
 
-# {{{  now wait for some time 
+# {{{  now wait for some time
 # as apache need some time to recover !! :P
 # if "SOME" thrid parameter is passed do not wait
 if [ -z "$3" ];
@@ -95,8 +95,8 @@ do
     printf " %d\n%s%43s" $? $marker "start the apache server at $machine" | tee -a $log_file
     ssh root@$machine "service apache2 start" >> $log_file
 done
-# we need a separate for loop here so that we can hit the machines 
-# in parellel at the same time 
+# we need a separate for loop here so that we can hit the machines
+# in parellel at the same time
 for machine in $gens
 do
     # #hit the URL once

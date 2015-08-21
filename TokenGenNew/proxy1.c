@@ -6,6 +6,7 @@
 int listening_portno;
 char ** ip_array ;
 char * sending_port;
+int no_of_proxy;
 
 void start_logging() {
     init_logger();
@@ -191,8 +192,10 @@ void writeToServer(char *ip_array_n){
     server_addr.sin_port = htons(portnum);
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
+        debug_printf( "connected %s \n" , ip_array_n);
         while( 1)
         {
+            debug_printf( "writing to %s \n" , ip_array_n);
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
@@ -208,6 +211,7 @@ void writeToServer(char *ip_array_n){
         /* sleep(1); */
         /* exit(1); */
     }
+    debug_printf( "disconnected %s \n" , ip_array_n);
     close( sockfd );
 }
 
@@ -249,6 +253,7 @@ void main(void) {/*{{{*/
     pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
     pthread_t send_queue[PEERS];
     pthread_create( &send_queue[0] , NULL , queue_sender, (void *) ip_array[0] );
+    pthread_create( &send_queue[1] , NULL , queue_sender, (void *) ip_array[1] );
 
     while (FCGI_Accept() >= 0) {
         change_values(&incoming, 1);

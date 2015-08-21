@@ -4,10 +4,12 @@
 extern int listening_portno;
 extern char ** ip_array;
 extern char * sending_port;
+extern int no_of_proxy;
 void parse_config_file(){
     int size = 1024, pos;
     int nl =0;
     int c;
+    int i = 0;
     char *buffer = (char *)malloc(size);
     ip_array = malloc( 5 * sizeof( char* ) ); // allocate space for 5 ip
     sending_port = malloc( 8 * sizeof( char) );
@@ -35,11 +37,20 @@ void parse_config_file(){
                     listening_portno = atoi( buffer );
                     strcpy( sending_port, buffer );
                     break;
-                case 4:
-                    ip_array[0] = (char*) malloc( 20 * sizeof(char) );
-                    strcpy( ip_array[0] , buffer );
+                case 2:
+                    //no op
+                    ;
+                    break;
+                case 3:
+                    no_of_proxy = atoi( buffer );
                     break;
                 default:
+                    /* if( i < no_of_proxy ) */
+                    /* { */
+                        ip_array[i] = (char*) malloc( 20 * sizeof(char) );
+                        strcpy( ip_array[i] , buffer );
+                        i++;
+                    /* } */
                     break;
             }
             /* handle_line(buffer); */
