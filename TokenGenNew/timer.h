@@ -148,32 +148,21 @@ void log_data() {
         fprintf(log_ptr,
                 "%s "
                 "inc %d "
-//              "%d %d "
                 "hostWt %0.2f "    //logging the avg_waiting_time parameter
                 "peerWt %0.2f "    //logging the avg_waiting_time parameter
-//              %ld %d "
                 "Cap %d "
-//              "%0.2f "
-//              "%d "
-//              "%d %d %0.2f "
-                "expVisitors %d + %d "
+                "expVisitors %d "
+                "share %d "
                 "%d "
-//              "%lld %lld"
                 "\n",
                 time_buf,
                 incoming,
-//              outgoing, failing,
                 avg_waiting_time,  //logging the avg_waiting_time parameter
                 peer_avg_waiting_time,  //logging the avg_waiting_time parameter
-//              avg_service_time, proxy2_in,
                 capacity,
-//              current_ratio,
-//              ctr,
-//              flag, wait_for, prev_ratio2,
-                get_array(&visitor_count[current_time]), 
+                get_array(&visitor_count[current_time]),
                 share,
                 current_time//,
-//              total_time_interval, total_in_interval
                 );
         fflush(log_ptr);
     }

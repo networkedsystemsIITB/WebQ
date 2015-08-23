@@ -37,7 +37,7 @@ int readFromClient( struct clientDetails * cd ) {
     {
         /* debug_printf( "bytesRead %d \n", bytesRead ); */
         if( bytesRead > 5 ) {
-            /* debug_log( "gonna write memory" ); */
+            /* debug_printf( "read from %d.%d.%d.%d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 ); */
             int j;
             memcpy( peer_v_count[cd->ip4%PEERS]+(prev_bytesRead/4) , buffer , bytesRead );
             prev_bytesRead += bytesRead;
@@ -52,7 +52,7 @@ int readFromClient( struct clientDetails * cd ) {
             //calculate peer_avg_waiting_time here with locks
         }
         else{
-            /* debug_printf( "data* %d \n", *buffer ); */
+            debug_printf( "data from capacity estimator %d \n", *buffer );
             capacity = *buffer;
         }
     }
@@ -195,7 +195,7 @@ void writeToServer(char *ip_array_n){
         debug_printf( "connected %s \n" , ip_array_n);
         while( 1)
         {
-            debug_printf( "writing to %s \n" , ip_array_n);
+            /* debug_printf( "writing to %s \n" , ip_array_n); */
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
@@ -312,6 +312,7 @@ void main(void) {/*{{{*/
             peer_avg_waiting_time = 1;
         }
         else if ( avg_waiting_time == 0 ){
+            //      awt/( awt + p_awt ) * 100 = percent;
             avg_waiting_time = percent * peer_avg_waiting_time / ( 100 - percent );
         }
         else if ( peer_avg_waiting_time == 0 ){
@@ -334,10 +335,8 @@ void main(void) {/*{{{*/
             {
                 peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
             }
-            // find share of the current proxy
-            // share = total_capacity /2 if visitor_waiting_time == peer_wt; else
-            // share = total_capacity * visitor_waiting_time/(sum peer_wt and avg) if peer_wt != 0;
-            // share = total_capacity  if peer_wt == 0;
+            /* debug_printf( "%d puc %d usedC %d\n" ,iter,peerUsedCapacity, usedCapacity ); */
+
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( peerUsedCapacity > 0 ){
                 excess_used = (capacity - share)-peerUsedCapacity;

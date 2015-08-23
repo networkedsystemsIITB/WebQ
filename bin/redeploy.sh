@@ -109,6 +109,10 @@ done
 printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
 ssh root@${capacityEstimator[$username]} "cd /home/${username}/webq/CapacityEstimator;bash Makefile"
 ssh root@${capacityEstimator[$username]} "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
+printf " %d\n%s%43s" $? $marker "foo.out" | tee -a $log_file
+ssh root@${capacityEstimator[$username]} "cat /home/${username}/webq/CapacityEstimator/foo.out;"| tee -a $log_file
+printf " %d\n%s%43s" $? $marker "foo.err" | tee -a $log_file
+ssh root@${capacityEstimator[$username]} "cat /home/${username}/webq/CapacityEstimator/foo.err;"| tee -a $log_file
 
 #}}}
 
