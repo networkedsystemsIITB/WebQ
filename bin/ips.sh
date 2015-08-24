@@ -6,7 +6,7 @@ log_file=large_log.log
 
 
 declare -A tokencheck
-tokencheck[stanly]="10.129.41.17"
+tokencheck[stanly]="10.129.28.160"
 tokencheck[murali]="10.129.41.67"
 tokencheck[ravi]="10.129.26.133"
 
@@ -17,17 +17,17 @@ tokengen1[ravi]="10.129.41.67"
 
 declare -A capacityEstimator
 capacityEstimator[stanly]="10.129.26.133"
-capacityEstimator[murali]="10.129.41.17"
+capacityEstimator[murali]="10.129.28.160"
 capacityEstimator[ravi]="10.129.41.67"
 
 declare -A tokengen2
 tokengen2[stanly]=""
-tokengen2[murali]="10.129.41.17"
+tokengen2[murali]="10.129.28.160"
 tokengen2[ravi]=""
 
 #                          |murali   |  stan      ravi
 #--------------------------|---------|------------------
-#      | 10.129.41.17      | gen2    |  check
+#      | 10.129.28.160      | gen2    |  check
 #      | 10.129.41.67      | check   |            gen1
 #      | 10.129.26.133     |         |  gen1      check
 #      | 10.129.2.55       | vacha   |  vacha     vacha
