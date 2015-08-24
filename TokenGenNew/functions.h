@@ -16,7 +16,7 @@
 #include <openssl/hmac.h>
 #include <openssl/evp.h>
 #include <stdio.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -56,7 +56,7 @@ char* getHash(unsigned char *data) {
     int i;
     static char res_hexstring[32];
 
-    result = HMAC(EVP_md5(), key, strlen(key), data, strlen(data), NULL, NULL);
+    result = HMAC(EVP_md5(), key, strlen((const char*) key), data, strlen((const char*) data), NULL, NULL);
     for (i = 0; i < result_len; i++) {
         sprintf(&(res_hexstring[i * 2]), "%02x", result[i]);
     }

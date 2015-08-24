@@ -1,14 +1,18 @@
+#include <unordered_map>
+#include <string>
 #include "functions.h"
 #include "timer.h"
 #include "parser.h"
 #include <netinet/tcp.h>
+#include <arpa/inet.h>   //for inet_aton
+using namespace std;
 
 int listening_portno;
 char ** ip_array ;
 char * sending_port;
 int no_of_proxy;
 
-void start_logging() {
+void* start_logging( void* ) {
     init_logger();
     start_timer();
 }
@@ -30,7 +34,7 @@ int readFromClient( struct clientDetails * cd ) {
     int clientSocketFD = cd->sockfd;
     /* debug_printf( "yo yo thread id %d\n", clientSocketFD ); */
     int bytes = LIMIT * sizeof(int);
-    int*  buffer = malloc( bytes );
+    int*  buffer = (int *) malloc( bytes );
     int bytesRead;
     int prev_bytesRead=0;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
@@ -66,11 +70,12 @@ void * ThreadWorker( void * threadArgs) {
     pthread_exit(NULL);
 }
 
-void* create_server_socket() {
+void* create_server_socket(void*) {
     //
     // Creates server socket for communication between Proxy1 and Proxy2
     //
-    int sockfd, newsockfd,  clilen;
+    int sockfd, newsockfd;
+    socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
 
     /* First call to socket() function */
@@ -122,7 +127,7 @@ void* create_server_socket() {
         /*             (int)((cli_addr.sin_addr.s_addr&0xFF0000)>>16), */
         /*             (int)((cli_addr.sin_addr.s_addr&0xFF000000)>>24)); */
         struct clientDetails * cd;
-        cd = malloc( sizeof( struct clientDetails ) );
+        cd = (clientDetails * ) malloc( sizeof( struct clientDetails ) );
         cd->sockfd = newsockfd;
         cd->ip1 = (int)(cli_addr.sin_addr.s_addr&0xFF);
         cd->ip2 = (int)((cli_addr.sin_addr.s_addr&0xFF00)>>8);
@@ -193,6 +198,9 @@ void writeToServer(char *ip_array_n){
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
         debug_printf( "connected %s \n" , ip_array_n);
+        struct timespec tim, rem;
+        tim.tv_sec = 0;
+        tim.tv_nsec = 500000000;
         while( 1)
         {
             /* debug_printf( "writing to %s \n" , ip_array_n); */
@@ -204,7 +212,7 @@ void writeToServer(char *ip_array_n){
                 /* break; */
             }
             // connect as a client;
-            nanosleep((struct timespec[]){{0, 500000000}}, NULL);
+            nanosleep( &tim, &rem );
         }
     }else{
         debug_printf( "ERROR connecting to a peer");
@@ -215,12 +223,12 @@ void writeToServer(char *ip_array_n){
     close( sockfd );
 }
 
-void queue_sender( void * args) {/*{{{*/
+void* queue_sender( void * args) {/*{{{*/
     sleep(1);
-    writeToServer( args  );
+    writeToServer( (char *) args  );
 }/*}}}*/
 
-void main(void) {/*{{{*/
+int main(void) {/*{{{*/
 //  prev_ratio = 0;
     incoming = 0;
 //  outgoing = 0;

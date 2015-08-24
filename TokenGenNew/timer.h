@@ -302,9 +302,12 @@ void log_data() {
 //  change_values(&proxy2_in, 0);
 }
 void timed_function(int fd, short event, void *arg) { // Called every second
+    struct timespec tim, rem;
+    tim.tv_sec = 1;
+    tim.tv_nsec = 000000000;
     while( 1 ){
     log_data();
-    nanosleep((struct timespec[]){{1, 000000000}}, NULL);
+    nanosleep( &tim, &rem );
     }
     start_timer();
 }

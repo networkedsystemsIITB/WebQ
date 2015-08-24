@@ -47,7 +47,15 @@ void insert(struct queue *q, int in, int out, int fail) {
 	q->tot_fail += fail;
 }
 
-int delete(struct queue *q)
+int isEmpty(struct queue *q) {
+	if (q->root == NULL)
+		return 1;
+	else
+		return 0;
+}
+
+
+int deleteq(struct queue *q)
 {
 	struct node *tmp;
 	int in;
@@ -72,12 +80,6 @@ int delete(struct queue *q)
 	return in;
 }
 
-int isEmpty(struct queue *q) {
-	if (q->root == NULL)
-		return 1;
-	else
-		return 0;
-}
 
 int size(struct queue *q) {
 	return q->len;
@@ -104,7 +106,7 @@ void set_limit(struct queue *q, int l) {
 
 void push_back(struct queue *q, int in, int out, int fail) {
 	if (size(q) == q->limit) {
-		delete (q);
+		deleteq(q);
 		insert(q, in, out, fail);
 	} else {
 		insert(q, in, out, fail);
