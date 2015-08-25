@@ -43,7 +43,7 @@ int readFromClient( struct clientDetails * cd ) {
     {
         /* debug_printf( "bytesRead %d \n", bytesRead ); */
         if( bytesRead > 5 ) {
-            debug_printf( "read from %d.%d.%d.%d id %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] );
+            /* debug_printf( "read from %d.%d.%d.%d id %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
             int j;
             memcpy( peer_v_count[ ipToid[cd] ]+(prev_bytesRead/4) , buffer , bytesRead );
             prev_bytesRead += bytesRead;
@@ -208,7 +208,7 @@ void writeToServer(char *ip_array_n){
         tim.tv_nsec = 500000000;
         while( 1)
         {
-            debug_printf( "writing to %s \n" , ip_array_n);
+            /* debug_printf( "writing to %s \n" , ip_array_n); */
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
@@ -266,8 +266,10 @@ int main(void) {/*{{{*/
     pthread_t make_connection;
     pthread_create(&make_connection, NULL, create_server_socket, (void*) NULL);
     pthread_t send_queue[PEERS];
-    pthread_create( &send_queue[0] , NULL , queue_sender, (void *) ip_array[0] );
-    pthread_create( &send_queue[1] , NULL , queue_sender, (void *) ip_array[1] );
+    for (counter = 0; counter < no_of_proxy ; counter++)
+    {
+        pthread_create( &send_queue[ counter ] , NULL , queue_sender, (void *) ip_array[ counter ] );
+    }
 
     while (FCGI_Accept() >= 0) {
         change_values(&incoming, 1);
@@ -350,7 +352,7 @@ int main(void) {/*{{{*/
             {
                 peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
             }
-            debug_printf( "%d puc %d usedC %d\n" ,iter,peerUsedCapacity, usedCapacity );
+            /* debug_printf( "%d puc %d usedC %d\n" ,iter,peerUsedCapacity, usedCapacity ); */
 
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( peerUsedCapacity > 0 ){
