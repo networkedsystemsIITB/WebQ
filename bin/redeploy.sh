@@ -25,7 +25,13 @@ else
             gens="${tokengen2[$username]}"
             ;;
         2)
+            gens="${tokengen2[$username]} ${tokengen1[$username]} "
+            ;;
+        3)
             gens="${tokengen2[$username]} ${tokengen1[$username]} 10.129.26.133"
+            ;;
+        4)
+            gens="${tokengen2[$username]} ${tokengen1[$username]} 10.129.26.133 10.129.49.76"
             ;;
         *)
             gens="${tokengen2[$username]}"

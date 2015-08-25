@@ -12,12 +12,6 @@ char ** ip_array ;
 char * sending_port;
 int no_of_proxy;
 char * tokenCheckIp;
-
-void* start_logging( void* ) {
-    init_logger();
-    start_timer();
-}
-
 struct clientDetails{
     int sockfd;
     int ip1;
@@ -26,6 +20,13 @@ struct clientDetails{
     int ip4;
     int port;
 };
+unordered_map<clientDetails *,int> ipToid;
+int connectedClients;
+
+void* start_logging( void* ) {
+    init_logger();
+    start_timer();
+}
 
 int readFromClient( struct clientDetails * cd ) {
     // make buffer to store the data from client
@@ -42,9 +43,9 @@ int readFromClient( struct clientDetails * cd ) {
     {
         /* debug_printf( "bytesRead %d \n", bytesRead ); */
         if( bytesRead > 5 ) {
-            /* debug_printf( "read from %d.%d.%d.%d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 ); */
+            debug_printf( "read from %d.%d.%d.%d id %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] );
             int j;
-            memcpy( peer_v_count[cd->ip4%PEERS]+(prev_bytesRead/4) , buffer , bytesRead );
+            memcpy( peer_v_count[ ipToid[cd] ]+(prev_bytesRead/4) , buffer , bytesRead );
             prev_bytesRead += bytesRead;
             prev_bytesRead = (prev_bytesRead >= 4000 ) ? 0:prev_bytesRead;
             /* if( prev_bytesRead == 0 ) { */
@@ -134,6 +135,9 @@ void* create_server_socket(void*) {
         cd->ip2 = (int)((cli_addr.sin_addr.s_addr&0xFF00)>>8);
         cd->ip3 = (int)((cli_addr.sin_addr.s_addr&0xFF0000)>>16);
         cd->ip4 = (int)((cli_addr.sin_addr.s_addr&0xFF000000)>>24);
+        // add cd to a hash
+        ipToid[ cd ] = connectedClients;
+        connectedClients++;
         if(pthread_create(&threadId, NULL, ThreadWorker, (void *)cd) < 0)
         {
             debug_printf("Thread creation failed");
@@ -240,6 +244,7 @@ int main(void) {/*{{{*/
     total_out = 0;
 //  proxy2_in = 0;
     capacity = 15;
+    connectedClients = 0;
 //  initial_alpha = (float) 1 / 15.0; //  Initial factor by which we multiply the number of pending requests to get waiting
 //  alpha = (float) 1 / 15.0; //  Factor by which we multiply the number of pending requests to get waiting time time
     current_time = 0;
@@ -327,7 +332,8 @@ int main(void) {/*{{{*/
         else if ( peer_avg_waiting_time == 0 ){
             peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
         }
-        share = capacity * avg_waiting_time/(avg_waiting_time + peer_avg_waiting_time);
+        // we need to multiply by no_of_proxy so as to normalize .
+        share = capacity * avg_waiting_time/(avg_waiting_time + no_of_proxy * peer_avg_waiting_time);
         // share found
         if ( share == 0 ) {
             // share can never be 0
@@ -344,7 +350,7 @@ int main(void) {/*{{{*/
             {
                 peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
             }
-            /* debug_printf( "%d puc %d usedC %d\n" ,iter,peerUsedCapacity, usedCapacity ); */
+            debug_printf( "%d puc %d usedC %d\n" ,iter,peerUsedCapacity, usedCapacity );
 
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( peerUsedCapacity > 0 ){
