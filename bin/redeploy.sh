@@ -33,6 +33,7 @@ else
     esac
 fi
 echo "gens = $gens"
+echo "log file = `pwd` $log_file"
 export gens
 # }}}
 

@@ -203,7 +203,7 @@ void writeToServer(char *ip_array_n){
         tim.tv_nsec = 500000000;
         while( 1)
         {
-            /* debug_printf( "writing to %s \n" , ip_array_n); */
+            debug_printf( "writing to %s \n" , ip_array_n);
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
