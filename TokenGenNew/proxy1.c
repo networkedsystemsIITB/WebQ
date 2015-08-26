@@ -12,6 +12,8 @@ char ** ip_array ;
 char * sending_port;
 int no_of_proxy;
 char * tokenCheckIp;
+float peer_avg_waiting_time[PEERS];
+float sum_peer_avg_waiting_time;
 struct clientDetails{
     int sockfd;
     int ip1;
@@ -21,7 +23,7 @@ struct clientDetails{
     int port;
 };
 unordered_map<clientDetails *,int> ipToid;
-int connectedClients;
+int connectedClients; // for asigining array indices to ipToid
 
 void* start_logging( void* ) {
     init_logger();
@@ -285,10 +287,15 @@ int main(void) {/*{{{*/
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
         int j;
-        peer_avg_waiting_time = 0;
+        /* peer_avg_waiting_time = 0; */
         avg_waiting_time = 0;
         int reqInHost =0;
-        int reqInPeers=0;
+        int reqInPeers[PEERS];
+        for( j=0; j<PEERS; j++)
+        {
+            peer_avg_waiting_time[j] = 0;
+            reqInPeers[j] = 0;
+        }
         for (iter = 0; iter < LIMIT; iter++) {
             reqInHost += visitor_count[iter];
             if( iter - current_time > 0 )
@@ -297,8 +304,8 @@ int main(void) {/*{{{*/
                 avg_waiting_time += ( iter - current_time ) * visitor_count[ iter ];
                 for( j=0; j<PEERS; j++)
                 {
-                    peer_avg_waiting_time += (iter-current_time) * peer_v_count[j][iter];
-                    reqInPeers += peer_v_count[j][iter];
+                    peer_avg_waiting_time[j] += (iter-current_time) * peer_v_count[j][iter];
+                    reqInPeers[j] += peer_v_count[j][iter];
                     /* if( visitor_count[iter] != 0 && peer_v_count[j][iter] != 0) */
                     /* { */
                     /*     debug_printf( "%d|%d||%d|%d \n", */
@@ -310,8 +317,13 @@ int main(void) {/*{{{*/
         }
         if( reqInHost != 0 )
             avg_waiting_time /= reqInHost;
-        if( reqInPeers != 0 )
-            peer_avg_waiting_time /= reqInPeers;
+        sum_peer_avg_waiting_time = 0;
+        for( j=0; j<PEERS; j++)
+        {
+            if( reqInPeers[j] != 0 )
+                peer_avg_waiting_time[j] /= reqInPeers[j];
+            sum_peer_avg_waiting_time += peer_avg_waiting_time[j];
+        }
         /* debug_printf( "%.2f %d, %.2f %d \n" , */
         /*         avg_waiting_time , */
         /*         reqInHost, */
@@ -322,21 +334,20 @@ int main(void) {/*{{{*/
         // calculate the share :
         // reserve a min value of capacity (0.1) for each servers
         int percent = 10;
-        if( avg_waiting_time == 0 && peer_avg_waiting_time == 0 )
+        if( avg_waiting_time == 0 && sum_peer_avg_waiting_time == 0 )
         {
             avg_waiting_time = 1;
-            peer_avg_waiting_time = 1;
+            sum_peer_avg_waiting_time = 1;
         }
         else if ( avg_waiting_time == 0 ){
             //      awt/( awt + p_awt ) * 100 = percent;
-            avg_waiting_time = percent * peer_avg_waiting_time / ( 100 - percent );
+            avg_waiting_time = percent * sum_peer_avg_waiting_time / ( 100 - percent );
         }
-        else if ( peer_avg_waiting_time == 0 ){
-            peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
+        else if ( sum_peer_avg_waiting_time == 0 ){
+            sum_peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
         }
         // we need to multiply by no_of_proxy so as to normalize .
-        share = capacity * avg_waiting_time/(avg_waiting_time + connectedClients * peer_avg_waiting_time);
-        debug_printf( "cc %d\n", connectedClients );
+        share = capacity * avg_waiting_time/(avg_waiting_time + sum_peer_avg_waiting_time);
         // share found
         if ( share == 0 ) {
             // share can never be 0
