@@ -14,7 +14,7 @@ void parse_config_file(){
     char *buffer = (char *)malloc(size);
     ip_array = (char **) malloc( 5 * sizeof( char* ) ); // allocate space for 5 ip ) )
     sending_port = (char *) malloc( 8 * sizeof( char) );
-    tokenCheck = (char *) malloc( 8 * sizeof( char) );
+    tokenCheckIp = (char *) malloc( 8 * sizeof( char) );
 
     FILE *f = fopen("/home/murali/webq/TokenGenNew/proxy.conf", "r");
     if(f) {

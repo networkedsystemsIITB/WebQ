@@ -335,7 +335,8 @@ int main(void) {/*{{{*/
             peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
         }
         // we need to multiply by no_of_proxy so as to normalize .
-        share = capacity * avg_waiting_time/(avg_waiting_time + no_of_proxy * peer_avg_waiting_time);
+        share = capacity * avg_waiting_time/(avg_waiting_time + connectedClients * peer_avg_waiting_time);
+        debug_printf( "cc %d\n", connectedClients );
         // share found
         if ( share == 0 ) {
             // share can never be 0
@@ -352,7 +353,6 @@ int main(void) {/*{{{*/
             {
                 peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
             }
-            /* debug_printf( "%d puc %d usedC %d\n" ,iter,peerUsedCapacity, usedCapacity ); */
 
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( peerUsedCapacity > 0 ){
@@ -382,9 +382,7 @@ int main(void) {/*{{{*/
             char* env_var = getenv("QUERY_STRING");
             char* request_limit = strchr(env_var, '=') + 1;
             char url_to_visit[100];
-            strcpy(url_to_visit, "http://");
-            strcat(url_to_visit, tokenCheckIp );
-            strcat(url_to_visit, "/test.php?limit=");
+            strcpy(url_to_visit, "http://10.129.41.67:9000/test.php?limit=");
             strcat(url_to_visit, (const char*) request_limit);
 
             printf("Refresh: %d; url=%s&hash=%s&token=%s\n", time_to_wait,
