@@ -393,7 +393,14 @@ int main(void) {/*{{{*/
             char* env_var = getenv("QUERY_STRING");
             char* request_limit = strchr(env_var, '=') + 1;
             char url_to_visit[100];
-            strcpy(url_to_visit, "http://10.129.41.67:9000/test.php?limit=");
+            if( strchr(env_var, 'M') > 0 || strchr(env_var, 'S') > 0 ){
+                strcpy(url_to_visit, "http://10.129.41.67:9000/");
+            }
+            else{
+                /* fired url http://10.129.28.32:8000/proxy1?limit=moodleS/moodle/ */
+                /* http://10.129.49.76/moodleS/moodle/ */
+                strcpy(url_to_visit, "http://10.129.41.67:9000/test.php?limit=");
+            }
             strcat(url_to_visit, (const char*) request_limit);
 
             printf("Refresh: %d; url=%s&hash=%s&token=%s\n", time_to_wait,
