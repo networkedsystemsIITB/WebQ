@@ -14,7 +14,7 @@ public class TokenGenCommunicator {
     static Socket socket = null;
     static Logger logger = Logger.getLogger("TokenGenCommunicator");
     static int noOfProxy = getInt("webq.noOfProxy");
-    static OutputStream[] out = new OutputStream[noOfProxy];
+    static PrintWriter[] toProxy1 = new PrintWriter[noOfProxy];
     public static void init() {
         try {
             for( int i = 0; i < noOfProxy; i++ ){
@@ -22,7 +22,7 @@ public class TokenGenCommunicator {
                 String ip = getString("webq.proxy"+proxyNo+".ip");
                 int port = getInt("webq.proxy"+proxyNo+".port");
                 socket = new Socket(ip, port);
-                out[i] = socket.getOutputStream();
+                toProxy1[i] = new PrintWriter(socket.getOutputStream(), true);
                 logger.debug("Proxy"+proxyNo+" IP: " + ip);
                 logger.debug("Proxy"+proxyNo+" port: " + port);
                 logger.debug("connected to proxy"+proxyNo);
@@ -34,16 +34,17 @@ public class TokenGenCommunicator {
 
     public static void conveyNewCapacity(String value) {
         logger.debug("To TokenGen: >" + value + "<");
+        try{
+            for( int i = 0; i < noOfProxy; i++ ){
+                toProxy1[i].println(value);
+                toProxy1[i].flush();
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+        }
     }
 
     public static void conveyNewCapacity(double value) {
-        try{
-            for( int i = 0; i < noOfProxy; i++ ){
-                out[i].write((int) value );
-                out[i].flush();
-            }
-        } catch (IOException e) {
-            logger.error("", e);
-        }
+        conveyNewCapacity(Integer.toString((int)value));
     }
 }
