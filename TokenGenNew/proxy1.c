@@ -44,24 +44,25 @@ int readFromClient( struct clientDetails * cd ) {
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
         /* debug_printf( "bytesRead %d \n", bytesRead ); */
-        if( bytesRead > 5 ) {
-            /* debug_printf( "read from %d.%d.%d.%d id %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
+        if( bytesRead > 10 ) {
+            /* debug_printf( "read from %d.%d.%d.%d arrayIdx %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
             int j;
             memcpy( peer_v_count[ ipToid[cd] ]+(prev_bytesRead/4) , buffer , bytesRead );
             prev_bytesRead += bytesRead;
             prev_bytesRead = (prev_bytesRead >= 4000 ) ? 0:prev_bytesRead;
-            /* if( prev_bytesRead == 0 ) { */
+            if( prev_bytesRead == 0 ) {
                 /* debug_printf( "once cycle done \n"); */
+                // debug print the array being read
                 /* for( j =0 ; j < LIMIT ; j++ ){ */
-                    /* if (peer_v_count[cd->ip4%PEERS][j] != 0 ||  visitor_count[j]!= 0 ) */
-                    /*     debug_printf( "(%d)%d,%d", j, peer_v_count[cd->ip4%PEERS][j], visitor_count[j] ); */
+                /*     if (peer_v_count[ ipToid[cd] ][j] != 0 ||  visitor_count[j]!= 0 ) */
+                /*         debug_printf( "(%d)%d,%d\n", j, peer_v_count[ ipToid[cd] ][j], visitor_count[j] ); */
                 /* } */
-            /* } */
+            }
             //calculate peer_avg_waiting_time here with locks
         }
         else{
-            debug_printf( "data from capacity estimator %d \n", *buffer );
-            capacity = *buffer;
+            /* debug_printf( "data from capacity estimator %d \n", *buffer ); */
+            capacity = stoi((char*)buffer );
         }
     }
     debug_printf( "gonna shutdown read thread \n");
@@ -204,13 +205,20 @@ void writeToServer(char *ip_array_n){
     server_addr.sin_port = htons(portnum);
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
+        float sec= 2;
+        float sec_frac = 0.0;
         debug_printf( "connected %s \n" , ip_array_n);
         struct timespec tim, rem;
-        tim.tv_sec = 0;
-        tim.tv_nsec = 500000000;
+        tim.tv_sec = sec;
+        tim.tv_nsec = sec_frac*1000000000;
         while( 1)
         {
             /* debug_printf( "writing to %s \n" , ip_array_n); */
+            // debug print the visitor_count being written
+            /* for(int j =0 ; j < LIMIT ; j++ ){ */
+            /*     if ( visitor_count[j]!= 0 ) */
+            /*         debug_printf( "(%d) vc %d\n", j, visitor_count[j] ); */
+            /* } */
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
@@ -293,7 +301,7 @@ int main(void) {/*{{{*/
         int reqInPeers[PEERS];
         for( j=0; j<PEERS; j++)
         {
-            peer_avg_waiting_time[j] = 0;
+            peer_avg_waiting_time[j] = 0; // TODO use memset
             reqInPeers[j] = 0;
         }
         for (iter = 0; iter < LIMIT; iter++) {
@@ -402,7 +410,7 @@ int main(void) {/*{{{*/
                 strcpy(url_to_visit, "http://10.129.41.67:9000/test.php?limit=");
             }
             strcat(url_to_visit, (const char*) request_limit);
-
+            /* debug_printf("%d %d\n", time_to_wait, (currtime+iter)%LIMIT ) ; */
             printf("Refresh: %d; url=%s&hash=%s&token=%s\n", time_to_wait,
                     url_to_visit,/*"aaa"*/getHash((unsigned char*) gt),
                     encrypt(gt));
