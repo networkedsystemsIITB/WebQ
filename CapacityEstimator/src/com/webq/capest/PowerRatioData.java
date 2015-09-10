@@ -35,7 +35,8 @@ public class PowerRatioData {
                 duplicate = currentPowerRatio.clone();
                 currentPowerRatio = new PowerRatio();
             }
-            logger.debug("request arrival count: " + duplicate.getArrivedRequestCount());
+            logger.debug("request arrival count for type 1: " + duplicate.getArrivedRequestCount(0));
+            logger.debug("request arrival count for type 2: " + duplicate.getArrivedRequestCount(1));
             return duplicate;
         } catch (CloneNotSupportedException e) {
             //never ever be called
@@ -64,32 +65,32 @@ public class PowerRatioData {
     /**
      * Handles the request, and records its response time for power ratio calculation.
      */
-    public static void handleCompletion(double responseTimes, long countOfRequests) {
+    public static void handleCompletion(double responseTimes, long countOfRequests, int url) {
         synchronized(currentPowerRatioLock) {
-        currentPowerRatio.recordCompletion(id, responseTimes, countOfRequests);
+        currentPowerRatio.recordCompletion(id, responseTimes, countOfRequests, url);
         }
         synchronized(perSecondPowerRatioLock) {
-            perSecondPowerRatio.recordCompletion(id, responseTimes, countOfRequests);
+            perSecondPowerRatio.recordCompletion(id, responseTimes, countOfRequests, url);
         }
         id++;
     }
 
-    public static void handleFailure() {
+    public static void handleFailure(int url) {
         synchronized(currentPowerRatioLock) {
-            currentPowerRatio.recordFailure(id);
+            currentPowerRatio.recordFailure(id, url);
         }
         synchronized(perSecondPowerRatioLock) {
-            perSecondPowerRatio.recordFailure(id);
+            perSecondPowerRatio.recordFailure(id, url);
         }
         id++;
     }
 
-    public static void handleArrival() {
+    public static void handleArrival(int url) {
         synchronized(currentPowerRatioLock) {
-            currentPowerRatio.recordArrival(id);
+            currentPowerRatio.recordArrival(id, url);
         }
         synchronized(perSecondPowerRatioLock) {
-            perSecondPowerRatio.recordArrival(id);
+            perSecondPowerRatio.recordArrival(id, url);
         }
         id++;
     }

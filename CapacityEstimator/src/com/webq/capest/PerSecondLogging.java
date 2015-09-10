@@ -20,14 +20,19 @@ public class PerSecondLogging {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
 
         pw.printf(
-                "%s Respt:%.7f Arrv:%d Success:%d Failed:%d Tput:%d "+
+                "%s Respt:%.7f Arrv1:%d Success1:%d Failed1:%d Tput1:%d "+
+                        "Arrv2:%d Success2:%d Failed2:%d Tput2:%d "+
                 "PowerRatio:%.2f Capacity:%.2f Discarded:%.2f %d\n",
                 sdf.format(new Date(ms)),
                 powerRatio.getAverageResponseTime(),
-                powerRatio.getArrivedRequestCount(),
-                powerRatio.getSuccessfulRequestCount(),
-                powerRatio.getFailedRequestCount(),
-                powerRatio.getArrivedRequestCount(),
+                powerRatio.getArrivedRequestCount(0),
+                powerRatio.getSuccessfulRequestCount(0),
+                powerRatio.getFailedRequestCount(0),
+                powerRatio.getArrivedRequestCount(0),
+                powerRatio.getArrivedRequestCount(1),
+                powerRatio.getSuccessfulRequestCount(1),
+                powerRatio.getFailedRequestCount(1),
+                powerRatio.getArrivedRequestCount(1),
                 powerRatio.getPowerRatio(),
                 CapacityEstimator.currentCapacity,
                 powerRatio.getDiscardedResponseTimePercent(),

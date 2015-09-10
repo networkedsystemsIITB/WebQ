@@ -14,10 +14,12 @@ public class CapacityManager {
     private static Logger logger = Logger.getLogger("CapacityManager");
 
     private static Timer capacityEstimationTimer = new Timer();
+    private static Timer TrainingPeriodTimer = new Timer();
     private static Timer capacityChangeDetectionTimer = new Timer();
     private static Timer loggingTimer = new Timer();
 
     public static long epoch = getInt("webq.logic.epoch");
+    public static long trainingperiod = getInt("webq.logic.trainingperiod");
 
     public static void main(String[] args) throws InterruptedException {
         logger.debug("Epoch: " + epoch);
@@ -40,7 +42,7 @@ public class CapacityManager {
         logger.debug("Exit startTokenCheckListener");
     }
 
-    public static void scheduleCapacityEstimation() {
+    /* public static void scheduleCapacityEstimation() {
         logger.debug("enter scheduleCapacityEstimation");
         capacityEstimator = new CapacityEstimator();
         TimerTask estimationTask = new TimerTask() {
@@ -51,7 +53,20 @@ public class CapacityManager {
 
         capacityEstimationTimer.schedule(estimationTask, 0, (long) epoch*1000);
         logger.debug("exit scheduleCapacityEstimation");
-    }
+    } */
+
+    public static void scheduleCapacityEstimation() {
+        logger.debug("enter scheduleCapacityEstimation");
+        capacityEstimator = new CapacityEstimator();
+        TimerTask estimationTask = new TimerTask() {
+            public void run() {
+                capacityEstimator.handleEndofTrainingPeriod();
+           }
+       };
+
+       capacityEstimationTimer.schedule(estimationTask, 0, (long) trainingperiod*1000);
+       logger.debug("exit scheduleCapacityEstimation");
+   }
 
     public static void scheduleCapacityChangeDetection() {
         capacityEstimationTimer.cancel();

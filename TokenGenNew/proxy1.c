@@ -14,6 +14,7 @@ int no_of_proxy;
 char * tokenCheckIp;
 float peer_avg_waiting_time[PEERS];
 float sum_peer_avg_waiting_time;
+double hardness[2];
 struct clientDetails{
     int sockfd;
     int ip1;
@@ -63,6 +64,8 @@ int readFromClient( struct clientDetails * cd ) {
         else{
             /* debug_printf( "data from capacity estimator %d \n", *buffer ); */
             capacity = stoi((char*)buffer );
+            // get hardness from CapacityEstimator
+            // Add Code
         }
     }
     debug_printf( "gonna shutdown read thread \n");
@@ -378,10 +381,16 @@ int main(void) {/*{{{*/
                 excess_used = (capacity - share)-peerUsedCapacity;
                 total_usable_capacity += excess_used < 0 ? excess_used : 0;
             }
-            if ( total_usable_capacity > 0 )
+            char* req_url = getenv("QUERY_STRING");
+            int url;
+            if(strcmp(req_url,"req1.php")==0)
+                url=0;
+            else
+                url=1;
+            if ( total_usable_capacity - hardness[url]> 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;
-                update_array(&visitor_count[(current_time + iter) % LIMIT], 1); // increment by 1
+                update_array(&visitor_count[(current_time + iter) % LIMIT], hardness[url]); // increment by hardness
                 break;
             }
         }

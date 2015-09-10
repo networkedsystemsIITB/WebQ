@@ -43,6 +43,9 @@ public class TokenGenCommunicator {
             logger.error("", e);
         }
     }
+    public static void conveyHardness(String value) {
+        conveyNewCapacity(value);
+    }
 
     public static void conveyNewCapacity(double value) {
         conveyNewCapacity(Integer.toString((int)value));

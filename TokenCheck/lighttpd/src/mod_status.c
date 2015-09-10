@@ -778,7 +778,7 @@ static int mod_status_patch_connection(server *srv, connection *con, plugin_data
 }
 
 static handler_t mod_status_handler(server *srv, connection *con, void *p_d) {
-    inform_proxy1_arrival();   // Communicating arrival of a request to Proxy1 (BTP)
+    inform_proxy1_arrival(con->uri.query);   // Communicating arrival of a request to Proxy1 (BTP)
     
     //For verifying if token is authentic
     //if(verify_token((con->uri.query)->ptr) == 0) 
@@ -844,7 +844,7 @@ REQUESTDONE_FUNC(mod_status_account) {
 	if(strstr((con->uri.path)->ptr, "favicon") == NULL) {
 		gettimeofday(&(con->tv_temp),NULL);
         unsigned long temp = ((con->tv_temp).tv_sec)*1000000 + ((con->tv_temp).tv_usec);
-		inform_proxy1_departure((temp - con->start_time), con->http_status);    
+		inform_proxy1_departure((temp - con->start_time), con->http_status,con->uri.query);    
     }
 	plugin_data *p = p_d;
 

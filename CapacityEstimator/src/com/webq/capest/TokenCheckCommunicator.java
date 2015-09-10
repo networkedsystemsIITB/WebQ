@@ -43,6 +43,7 @@ public class TokenCheckCommunicator {
     public void listenToProxy2() {
         double responseTimes = 0;
         long requestCount = 1;
+        int url;
 //      char[] charbuf = new char[255];
 
         // TODO: decide on what to do upon IOException
@@ -54,17 +55,20 @@ public class TokenCheckCommunicator {
                 if(line != null) {
                     // TODO: listen to socket and compute the two variables above
                     if(line.charAt(0) == 'A') {
-                        PowerRatioData.handleArrival();
+                        url=Integer.parseInt(line.substring(line.indexOf('_')));
+                        PowerRatioData.handleArrival(url);
                     } else if(line.charAt(0) == 'F') {
-                        PowerRatioData.handleFailure();
+                        url=Integer.parseInt(line.substring(line.indexOf('_')));
+                        PowerRatioData.handleFailure(url);
                     } else {
                         //String line = String.valueOf(charbuf);
 //                      logger.debug("Received: " + line);
 //                      logger.debug(line.charAt(0));
 //                      logger.debug(line.charAt(line.length()-1));
                         responseTimes = Integer.parseInt(line);
+                        url=Integer.parseInt(line.substring(line.indexOf('_')));
                         requestCount = 1;
-                        PowerRatioData.handleCompletion(responseTimes/1000000, requestCount);
+                        PowerRatioData.handleCompletion(responseTimes/1000000, requestCount,url);
                     }
                 } else {
                     logger.warn("Waiting for TokenCheck to reconnect.");

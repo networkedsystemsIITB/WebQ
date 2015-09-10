@@ -115,7 +115,24 @@ public class CapacityEstimator {
     public void handleEpoch() {
         logger.debug("epoch called");
 
-        if (bypassDiscovery) {
+        //collect all the data - goodput, resp time and ip load
+        PrintWriter currentPw = null;
+        try {
+            currentPw = new PrintWriter(new File("capacityEstimator.inp"));
+        }
+        catch (FileNotFoundException e) {
+            logger.error("cant create input file. exiting.");
+            System.exit(1);
+        }
+        PowerRatio currentPowerRatio = PowerRatioData.getCurrentPowerRatio();
+        currentPw.printf("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n",
+        currentPowerRatio.getArrivedRequestCount(0),
+        currentPowerRatio.getArrivedRequestCount(1),
+        currentPowerRatio.getThroughput(0),
+        currentPowerRatio.getThroughput(1),
+        currentPowerRatio.getAverageResponseTime());
+        currentPw.flush();
+       /* if (bypassDiscovery) {
             setCurrentCapacity(capacity);
             scheduleCapacityDiscoveryEnds();
             return;
@@ -309,7 +326,7 @@ public class CapacityEstimator {
 
         if (!activityEnded) {
             scheduleNextEpoch();
-        }
+        }*/
     }
 
     /**
@@ -341,19 +358,24 @@ public class CapacityEstimator {
         } else {
             currentPw = pwOverload;
         }
-        currentPw.printf("%.2f\t%.2f\t%.4f\t%.2f    \t%s\t%s\t%s\t%d\t%d\n",
+        currentPw.printf("%.2f\t%.2f\t%.2f\t%.4f\t%.2f    \t%s\t%s\t%s\t%d\t%d\n",
                 currentCapacity,
-                currentPowerRatio.getThroughput(),
+                currentPowerRatio.getThroughput(0),
+                currentPowerRatio.getThroughput(1),
                 currentPowerRatio.getAverageResponseTime(),
                 currentPowerRatio.getPowerRatio(),
                 overload, isLower, isNear, currentPowerRatio.minId, System.currentTimeMillis());
         currentPw.flush();
 
-        logger.debug("Respt:" + currentPowerRatio.getAverageResponseTime() + " Arrv:" +
-                currentPowerRatio.getArrivedRequestCount() + " Success:" +
-                currentPowerRatio.getSuccessfulRequestCount() + " Failed:" +
-                currentPowerRatio.getFailedRequestCount() + " Tput:" +
-                currentPowerRatio.getThroughput() + " PowerRatio:" +
+        logger.debug("Respt:" + currentPowerRatio.getAverageResponseTime() + " Arrv1:" +
+                currentPowerRatio.getArrivedRequestCount(0) + " Arrv2:" +
+                currentPowerRatio.getArrivedRequestCount(1) + " Success1:" +
+                currentPowerRatio.getSuccessfulRequestCount(0) + " Success2:" +
+                currentPowerRatio.getSuccessfulRequestCount(1) + " Failed1:" +
+                currentPowerRatio.getFailedRequestCount(0) + " Failed2:" +
+                currentPowerRatio.getFailedRequestCount(1) + " Tput1:" +
+                currentPowerRatio.getThroughput(0) + " Tput2:" +
+                currentPowerRatio.getThroughput(1) + " PowerRatio:" +
                 currentPowerRatio.getPowerRatio() + " Cap:" +
                 CapacityEstimator.currentCapacity + " " +
                 "Lower:" + isLower + " " +
@@ -390,5 +412,11 @@ public class CapacityEstimator {
     public void handleCapacityDiscoveryEnds() {
         CapacityManager.scheduleCapacityChangeDetection();
         //TODO: give necessary information to capacity change detector
+    }
+
+    public void handleEndofTrainingPeriod(){
+        //Call findParams.java to estimate capacity and hardness
+        findParams fp = new findParams();
+        fp.findCapacity();
     }
 }

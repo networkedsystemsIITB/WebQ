@@ -9,9 +9,13 @@ import org.apache.log4j.Logger;
  */
 class PowerRatio implements Cloneable {
     private double totalResponseTime = 0;
-    private int totalSuccessfulRequests = 0;
-    private int totalArrivedRequests = 0;
-    private int totalFailedRequests = 0;
+    //private int totalSuccessfulRequests = 0;
+    //private int totalArrivedRequests = 0;
+    //private int totalFailedRequests = 0;
+    private int totalCompletedRequests = 0;
+    private int[] totalSuccessfulRequests=new int[2];
+    private int[] totalArrivedRequests=new int[2];
+    private int[] totalFailedRequests=new int[2];
 
     private static double responseTimeHardCut = getDouble("webq.logic.responsetime.hardcut");
 
@@ -30,24 +34,25 @@ class PowerRatio implements Cloneable {
         return totalResponseTime / totalResponseTimeCount;
     }
 
-    public int getSuccessfulRequestCount() {
-        return totalSuccessfulRequests;
+    public int getSuccessfulRequestCount(int url) {
+        return totalSuccessfulRequests[url];
     }
 
-    public int getArrivedRequestCount() {
-        return totalArrivedRequests;
+    public int getArrivedRequestCount(int url) {
+        return totalArrivedRequests[url];
     }
 
-    public int getFailedRequestCount() {
-        return totalFailedRequests;
+    public int getFailedRequestCount(int url) {
+        return totalFailedRequests[url];
     }
 
-    public void recordCompletion(int id, double responseTimes, long countOfRequests) {
+    public void recordCompletion(int id, double responseTimes, long countOfRequests, int url) {
 //      logger.debug("Completion recorded: " + responseTimes);
         if(minId < id) {
             minId = id;
         }
-        totalSuccessfulRequests += countOfRequests;
+        totalCompletedRequests += countOfRequests;
+        totalSuccessfulRequests[url] += countOfRequests;
         if(responseTimes < responseTimeHardCut) {
             totalResponseTime += responseTimes;
             totalResponseTimeCount += countOfRequests;
@@ -56,45 +61,57 @@ class PowerRatio implements Cloneable {
         }
     }
 
-    public void recordArrival(int id) {
+    public void recordArrival(int id, int url) {
 //      logger.debug("Arrival recorded");
         if(minId < id) {
             minId = id;
         }
-        totalArrivedRequests++;
+        totalArrivedRequests[url]++;
     }
 
-    public void recordFailure(int id) {
+    public void recordFailure(int id, int url) {
         if(minId < id) {
             minId = id;
         }
         logger.debug("Failure recorded");
-        totalFailedRequests++;
+        totalFailedRequests[url]++;
     }
 
 
 
-    public double getPowerRatio() {
+    /*public double getPowerRatio() {
         //power ratio is goodput / avg response time
         return (totalSuccessfulRequests == 0 || totalResponseTimeCount == 0)
                 ? -1
                 //goodput / respt
                 : (totalSuccessfulRequests / epoch) / (totalResponseTime / totalResponseTimeCount);
+    }*/
+
+    public double getPowerRatio() {
+        //power ratio is goodput / avg response time
+        return (totalCompletedRequests == 0 || totalResponseTimeCount == 0)
+                ? -1
+                //goodput / respt
+                : (totalCompletedRequests / epoch) / (totalResponseTime / totalResponseTimeCount);
     }
 
-    public double getThroughput() {
-        return totalSuccessfulRequests*1.0 / epoch;
+    public double getThroughput(int url) {
+        return totalSuccessfulRequests[url]*1.0 / epoch;
     }
 
     public long getResponseTimeCount() {
         return totalResponseTimeCount;
     }
 
-    public double getDiscardedResponseTimePercent() {
+    /*public double getDiscardedResponseTimePercent() {
         if(totalSuccessfulRequests > 0) return totalResponseTimeDiscarded/totalSuccessfulRequests * 100.0;
         else return 0;
-    }
+    }*/
 
+    public double getDiscardedResponseTimePercent() {
+        if(totalCompletedRequests > 0) return totalResponseTimeDiscarded/totalCompletedRequests * 100.0;
+        else return 0;
+    }
     protected PowerRatio clone() throws CloneNotSupportedException {
         return (PowerRatio)(super.clone());
     }

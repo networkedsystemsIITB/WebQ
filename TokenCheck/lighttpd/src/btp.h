@@ -15,6 +15,7 @@
 
 int sockfd;
 char buffr[256];
+char * url;
 
 int explode(char ***arr_ptr, char *str, char delimiter)
 { 
@@ -168,7 +169,7 @@ void connect_proxy1()
     struct sockaddr_in serv_addr;
     struct hostent *servr;
     int portno = 5006;
-    char* hostname = "10.129.28.160";
+    char* hostname = "10.129.41.17";
 
     /* Create a socket point */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -210,27 +211,48 @@ void disconnect_proxy1()
 }
 
 
-void inform_proxy1_arrival(){
+void inform_proxy1_arrival(char * query){
 //{{{
     bzero (buffr, 256);
-    strcpy(buffr, "A\n");//buffr[1]='\0';
+	if(strcmp(query,"req1.php")==0)
+		strcpy(url,"0");
+	else
+		strcpy(url,"1");
+
+    //strcpy(buffr, "A\n");//buffr[1]='\0'; 
+	
+	strcpy(buffr,"A_");
+	strcat(buffr,(const char*) url);
+	strcat(buffr,"\n");
+
     /* Send message to the server */
     write(sockfd,buffr,strlen(buffr));    
 //}}}
 }
 
-void inform_proxy1_departure(unsigned long service_time, int http_status){
+void inform_proxy1_departure(unsigned long service_time, int http_status, char* query){
 //{{{
     //char* c[50];
     //c = itoa(service_time);
     //strcpy(buffr, c);
     bzero (buffr, 256);
     strcpy(buffr, "" );
+	if(strcmp(query,"req1.php")==0)
+		strcpy(url,"0");
+	else
+		strcpy(url,"1");
     if ( http_status != 200 ){
-        strcpy(buffr, "F\n");
+        //strcpy(buffr, "F\n");
+		
+		strcpy(buffr,"F_");
+		strcat(buffr,(const char*) url);
+		strcat(buffr,"\n");
+
     }
     else {
         sprintf(buffr, "%ld\n", service_time);
+		strcat(buffr,"_");
+		strcat(buffr,(const char*) url);
     }
     //strcat( buffr, "," );
     /* Send message to the server */
