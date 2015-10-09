@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.FileOutputStream; 
 import java.util.Properties;
 
 import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
@@ -64,12 +65,16 @@ public class CapacityEstimator {
 
     PrintWriter pwGood = null;
     PrintWriter pwOverload = null;
+    public int id=1;
+    public int inSys0=0;
+    public int inSys1=0;
+    public static long epoch = getInt("webq.logic.epoch");
 
     public CapacityEstimator() {
-        this(getInt("webq.logic.initialcapacity"));
+       // this(getInt("webq.logic.initialcapacity"));
     }
 
-    public CapacityEstimator(int c0) {
+    /*public CapacityEstimator(int c0) {
         setCurrentCapacity(c0);
         initialCapacity = c0;
 
@@ -81,8 +86,8 @@ public class CapacityEstimator {
             System.exit(1);
         }
 
-        handleCapacityDiscoveryBegins();
-    }
+       // handleCapacityDiscoveryBegins();
+    }*/
 
     /**
      * Sets currentCapacity attibute of this class, and the WebQOriginal class.
@@ -97,13 +102,13 @@ public class CapacityEstimator {
      *
      * Called upon WEBQ_CAPACITY_DISCOVERY_BEGINS event.
      */
-    public void handleCapacityDiscoveryBegins() {
+    /*public void handleCapacityDiscoveryBegins() {
         setCurrentCapacity(initialCapacity);
     }
 
     private void scheduleCapacityDiscoveryEnds() {
         handleCapacityDiscoveryEnds();
-    }
+    }*/
 
     /**
      * Checks if the capacity is found, and updates the values as per Algorithm 1.
@@ -118,20 +123,29 @@ public class CapacityEstimator {
         //collect all the data - goodput, resp time and ip load
         PrintWriter currentPw = null;
         try {
-            currentPw = new PrintWriter(new File("capacityEstimator.inp"));
+            currentPw = new PrintWriter(new FileOutputStream(new File("capacityEstimator.inp"),true));
         }
         catch (FileNotFoundException e) {
             logger.error("cant create input file. exiting.");
             System.exit(1);
         }
-        PowerRatio currentPowerRatio = PowerRatioData.getCurrentPowerRatio();
-        currentPw.printf("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n",
-        currentPowerRatio.getArrivedRequestCount(0),
-        currentPowerRatio.getArrivedRequestCount(1),
-        currentPowerRatio.getThroughput(0),
-        currentPowerRatio.getThroughput(1),
-        currentPowerRatio.getAverageResponseTime());
-        currentPw.flush();
+        
+        	PowerRatio currentPowerRatio = PowerRatioData.getCurrentPowerRatio();
+        	if((currentPowerRatio.getSuccessfulRequestCount(0)+currentPowerRatio.getSuccessfulRequestCount(1))!=0)
+        	{
+			//currentPw.println("more text");
+        	currentPw.printf("%.2f\t%.2f\t%.2f\t%.2f\t%.4f\t%d\n",
+        	(currentPowerRatio.getArrivedRequestCount(0)+inSys0)/(float)epoch,
+        	(currentPowerRatio.getArrivedRequestCount(1)+inSys1)/(float)epoch,
+        	currentPowerRatio.getThroughput(0),
+        	currentPowerRatio.getThroughput(1),
+        	currentPowerRatio.getAverageResponseTime(),
+		id);
+        	currentPw.flush();
+		id++;
+		inSys0+=(currentPowerRatio.getArrivedRequestCount(0)-currentPowerRatio.getSuccessfulRequestCount(0)-currentPowerRatio.getFailedRequestCount(0));
+                inSys1+=(currentPowerRatio.getArrivedRequestCount(1)-currentPowerRatio.getSuccessfulRequestCount(1)-currentPowerRatio.getFailedRequestCount(1));
+        	}
        /* if (bypassDiscovery) {
             setCurrentCapacity(capacity);
             scheduleCapacityDiscoveryEnds();
@@ -336,20 +350,20 @@ public class CapacityEstimator {
      * @param tolerance percentage deviation tolerable from baseValue
      * @return true if newValue is near-enough to baseValue
      */
-    private boolean isNear(double newValue, double baseValue, double tolerance) {
+   /* private boolean isNear(double newValue, double baseValue, double tolerance) {
         boolean isNear = Math.abs((newValue - baseValue)/baseValue) <= tolerance;
         if(!isNear) {
             logger.debug("NewValue:" + newValue + " baseValue:" + baseValue + " tol:" + tolerance + " Ratio:" + Math.abs((newValue - baseValue)/baseValue));
         }
         return isNear;
-    }
+    }*/
 
-    private boolean isLower(double newValue, double baseValue, double tolerance) {
+   /* private boolean isLower(double newValue, double baseValue, double tolerance) {
         if(newValue > baseValue) {
             return false;
         }
         return !isNear(newValue, baseValue, tolerance);
-    }
+    }*/
 
     private void printDebug(PowerRatio currentPowerRatio) {
         PrintWriter currentPw = null;
@@ -409,10 +423,10 @@ public class CapacityEstimator {
      *
      * Called upon WEBQ_CAPACITY_DISCOVERY_ENDS event.
      */
-    public void handleCapacityDiscoveryEnds() {
+    /*public void handleCapacityDiscoveryEnds() {
         CapacityManager.scheduleCapacityChangeDetection();
         //TODO: give necessary information to capacity change detector
-    }
+    }*/
 
     public void handleEndofTrainingPeriod(){
         //Call findParams.java to estimate capacity and hardness

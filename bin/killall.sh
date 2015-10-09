@@ -22,6 +22,7 @@ for machine in $gens
 do
     # redirect stderr to stdout so that we can log it 
     ssh root@$machine "killall java" 2>&1 | tee -a $log_file > /dev/null
+    ssh root@$machine "killall MATLAB" 2>&1 | tee -a $log_file > /dev/null
     ssh root@$machine "killall apache2" 2>&1 | tee -a $log_file > /dev/null
 done
 ssh root@${tokencheck[$1]} "killall lighttpd" 2>&1  | tee -a $log_file > /dev/null

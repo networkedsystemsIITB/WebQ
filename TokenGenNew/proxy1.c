@@ -44,8 +44,8 @@ int readFromClient( struct clientDetails * cd ) {
     int prev_bytesRead=0;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
-        /* debug_printf( "bytesRead %d \n", bytesRead ); */
-        if( bytesRead > 10 ) {
+        debug_printf( "bytesRead %d \n", bytesRead );
+        if( bytesRead > 20 ) {
             /* debug_printf( "read from %d.%d.%d.%d arrayIdx %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
             int j;
             memcpy( peer_v_count[ ipToid[cd] ]+(prev_bytesRead/4) , buffer , bytesRead );
@@ -62,8 +62,14 @@ int readFromClient( struct clientDetails * cd ) {
             //calculate peer_avg_waiting_time here with locks
         }
         else{
-            /* debug_printf( "data from capacity estimator %d \n", *buffer ); */
-            capacity = stoi((char*)buffer );
+            debug_printf( "data from capacity estimator %s", (char*)buffer );
+            if( bytesRead <= 15 )
+                capacity = stoi((char*)buffer );
+            else if( bytesRead >= 15 ){
+                hardness[0] = stod((char*)buffer );
+                hardness[1] = stod(  strchr( (char*)buffer, ' ')  );
+                debug_printf( "hardness %f %f\n", hardness[0], hardness[1] );
+            }
             // get hardness from CapacityEstimator
             // Add Code
         }
@@ -256,7 +262,7 @@ int main(void) {/*{{{*/
     total_in = 0;
     total_out = 0;
 //  proxy2_in = 0;
-    capacity = 15;
+    capacity = 100000;
     connectedClients = 0;
 //  initial_alpha = (float) 1 / 15.0; //  Initial factor by which we multiply the number of pending requests to get waiting
 //  alpha = (float) 1 / 15.0; //  Factor by which we multiply the number of pending requests to get waiting time time

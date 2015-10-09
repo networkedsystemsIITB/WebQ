@@ -54,19 +54,20 @@ public class TokenCheckCommunicator {
 //              if(count > 0) {
                 if(line != null) {
                     // TODO: listen to socket and compute the two variables above
+			logger.debug("Received: " + line);
                     if(line.charAt(0) == 'A') {
-                        url=Integer.parseInt(line.substring(line.indexOf('_')));
+                        url=Integer.parseInt(line.substring(line.indexOf('_')+1));
                         PowerRatioData.handleArrival(url);
                     } else if(line.charAt(0) == 'F') {
-                        url=Integer.parseInt(line.substring(line.indexOf('_')));
+                        url=Integer.parseInt(line.substring(line.indexOf('_')+1));
                         PowerRatioData.handleFailure(url);
                     } else {
                         //String line = String.valueOf(charbuf);
-//                      logger.debug("Received: " + line);
+                      logger.debug("Received: " + line);
 //                      logger.debug(line.charAt(0));
 //                      logger.debug(line.charAt(line.length()-1));
-                        responseTimes = Integer.parseInt(line);
-                        url=Integer.parseInt(line.substring(line.indexOf('_')));
+                        responseTimes = Double.parseDouble(line.substring(0,line.indexOf('_')));
+                        url=Integer.parseInt(line.substring(line.indexOf('_')+1));
                         requestCount = 1;
                         PowerRatioData.handleCompletion(responseTimes/1000000, requestCount,url);
                     }

@@ -12,3 +12,5 @@ TokenGenNew/apache.pid
 TokenGenNew/proxy1_withMoodle
 .gdb_history
 *.class
+*.swp
+*.txt

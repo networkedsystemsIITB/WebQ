@@ -3,19 +3,22 @@ function cost=computeCost(theta)
 	%n=0.1;
     theta
     %X=load('consolidated_inp.txt','txt');
-    X=load('nip50.txt','txt');
-	wt=X(:,7)*theta(1)+X(:,8)*theta(2);
-	X(:,1)=X(:,1).*X(:,7)*theta(1)+X(:,1).*X(:,8)*theta(2);
+    X=load('capacityEstimator.inp','txt');
+	%wt=X(:,7)*theta(1)+X(:,8)*theta(2);
+	wt=(X(:,1)./(X(:,1)+X(:,2)))*theta(1)+(X(:,2)./(X(:,1)+X(:,2)))*theta(2);
+	%X(:,1)=X(:,1).*X(:,7)*theta(1)+X(:,1).*X(:,8)*theta(2);
+	X(:,1)=X(:,1)*theta(1)+X(:,2)*theta(2);
 	X(:,3)=X(:,3)*theta(1);
 	X(:,4)=X(:,4)*theta(2);
-	X(:,2)=X(:,2)./wt;
-	t1=(X(:,3)+X(:,4))./X(:,2);
-	t2=t1(t1>10);
+	X(:,5)=X(:,5)./wt;
+	t1=(X(:,3)+X(:,4))./X(:,5);
+	t2=t1(t1>2000);
 	
-	X1=X((t1>10),1);
-	X2=X((t1>10),[1 9]);
-	X3=X(:,[1 9]);
-	t3=[X1.^2 X1 ones(size(t2,1),1)];
+	X1=X((t1>2000),1);
+	X2=X((t1>2000),[1 6]);
+	X3=X(:,[1 6]);
+	%t3=[X1.^2 X1 ones(size(t2,1),1)];
+    t3=[X1.^3 X1.^2 X1 ones(size(t2,1),1)];
 	a=pinv(t3)*t2;
 	e=norm(t2-t3*a);
     if(a(1)==0 && a(2)==0 && a(3)==0)
@@ -29,9 +32,9 @@ function cost=computeCost(theta)
 	cellA=mat2cell(sortedX2,accumarray(uniqueIndex(:),1),2);
 	
 	xmax=max(X3(:,1));
-	x=0:1:50;
-	y2=a(1)*x.^2+a(2)*x+a(3);
-	
+	x=0:1:150;
+	%y2=a(1)*x.^2+a(2)*x+a(3);
+	y2=a(1)*x.^3+a(2)*x.^2+a(3)*x+a(4);
 	hold off;	
 	
 	start=1;
@@ -60,5 +63,8 @@ function cost=computeCost(theta)
 	ylabel('scaled power ratio');
 	
 	plot(x,y2,'k--');
-	
+
+	capacity=-a(2)/(2*a(1));
+	fileID=fopen('capacity.txt','w');
+	fprintf(fileID,'%f',capacity);
 end

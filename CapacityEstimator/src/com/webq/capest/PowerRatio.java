@@ -38,6 +38,10 @@ class PowerRatio implements Cloneable {
         return totalSuccessfulRequests[url];
     }
 
+    public int getArrivedRequestCount() {
+        return totalArrivedRequests[0]+totalArrivedRequests[1];
+    }
+
     public int getArrivedRequestCount(int url) {
         return totalArrivedRequests[url];
     }

@@ -1,6 +1,6 @@
 clear;
 initial_theta = [1,1];
-lb=[1 1];
+lb=[1 4];
 ub=[100 100];
 %options = optimset('GradObj', 'on', 'MaxIter', 400);
 %X=load('file1.txt','txt');
@@ -15,4 +15,7 @@ options = saoptimset('TolFun',1e-5);
 %fprintf('Cost at theta found by fminunc: %f\n', cost);
 %fprintf('theta: \n');
 %fprintf(' %f \n', initial_theta);
+
+fileID = fopen('hardness.txt','w');
+fprintf(fileID,'%f ',x); 
 

@@ -26,6 +26,7 @@ public class CapacityManager {
         TokenGenCommunicator.init();
 
         schedulePerSecondLogging();
+        gencapestinp();
         scheduleCapacityEstimation();
         startTokenCheckListener();
     }
@@ -42,8 +43,8 @@ public class CapacityManager {
         logger.debug("Exit startTokenCheckListener");
     }
 
-    /* public static void scheduleCapacityEstimation() {
-        logger.debug("enter scheduleCapacityEstimation");
+     public static void gencapestinp() {
+        logger.debug("enter genipfile");
         capacityEstimator = new CapacityEstimator();
         TimerTask estimationTask = new TimerTask() {
             public void run() {
@@ -52,8 +53,8 @@ public class CapacityManager {
         };
 
         capacityEstimationTimer.schedule(estimationTask, 0, (long) epoch*1000);
-        logger.debug("exit scheduleCapacityEstimation");
-    } */
+        logger.debug("exit genipfile");
+    } 
 
     public static void scheduleCapacityEstimation() {
         logger.debug("enter scheduleCapacityEstimation");
@@ -64,11 +65,11 @@ public class CapacityManager {
            }
        };
 
-       capacityEstimationTimer.schedule(estimationTask, 0, (long) trainingperiod*1000);
+       capacityEstimationTimer.schedule(estimationTask, (long) trainingperiod*1000);
        logger.debug("exit scheduleCapacityEstimation");
    }
 
-    public static void scheduleCapacityChangeDetection() {
+   /* public static void scheduleCapacityChangeDetection() {
         capacityEstimationTimer.cancel();
         capacityEstimationTimer.purge();
         capacityEstimator = null;
@@ -81,7 +82,7 @@ public class CapacityManager {
         };
 
         capacityChangeDetectionTimer.schedule(capacityChangeDetectionTask, 0, epoch * 1000);
-    }
+    }*/
 
     public static void schedulePerSecondLogging() {
         TimerTask perSecondLoggingTask = new TimerTask() {
