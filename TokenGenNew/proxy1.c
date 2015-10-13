@@ -389,10 +389,12 @@ int main(void) {/*{{{*/
             }
             char* req_url = getenv("QUERY_STRING");
             int url;
-            if(strcmp(req_url,"req1.php")==0)
-                url=0;
-            else
-                url=1;
+            if(strchr(req_url,'1') != NULL ){
+                url=0;  // this means this is req1.php?a=b
+            }
+            else {
+                url=1;  // this means this is req2.php?a=b
+            }
             if ( total_usable_capacity - hardness[url]> 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;

@@ -3,7 +3,7 @@ function cost=computeCost(theta)
 	%n=0.1;
     theta
     %X=load('consolidated_inp.txt','txt');
-    X=load('capacityEstimator.inp','txt');
+    X=load('capacityEstimator.inp1','txt');
 	%wt=X(:,7)*theta(1)+X(:,8)*theta(2);
 	wt=(X(:,1)./(X(:,1)+X(:,2)))*theta(1)+(X(:,2)./(X(:,1)+X(:,2)))*theta(2);
 	%X(:,1)=X(:,1).*X(:,7)*theta(1)+X(:,1).*X(:,8)*theta(2);
