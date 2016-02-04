@@ -44,7 +44,7 @@ int readFromClient( struct clientDetails * cd ) {
     int prev_bytesRead=0;
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
-        debug_printf( "bytesRead %d \n", bytesRead );
+        /* debug_printf( "bytesRead %d \n", bytesRead ); */
         if( bytesRead > 20 ) {
             /* debug_printf( "read from %d.%d.%d.%d arrayIdx %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
             int j;
@@ -398,6 +398,7 @@ int main(void) {/*{{{*/
             if ( total_usable_capacity - hardness[url]> 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;
+                debug_printf( "time %d %d \n" , current_time , iter) ;
                 update_array(&visitor_count[(current_time + iter) % LIMIT], hardness[url]); // increment by hardness
                 break;
             }
