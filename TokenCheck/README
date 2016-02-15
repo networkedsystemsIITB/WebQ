@@ -12,5 +12,6 @@ The configuration options are in the file lighttpd.conf
 
 
 changes are in TokenCheck/lighttpd/src/btp.h
-server ip and port is HARD CODED in btp.h !!!!
-The server is configured in TokenCheck/lighttpd/lighttpd.conf  -> 10.129.49.76
+CapacityEstimator ip and port at which it listens
+( this is listed as webq.tokencheck.port ) is HARD CODED in btp.h !!!!
+The apache server is configured in TokenCheck/lighttpd/lighttpd.conf  -> 10.129.49.76
