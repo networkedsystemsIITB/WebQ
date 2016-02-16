@@ -66,8 +66,8 @@ int readFromClient( struct clientDetails * cd ) {
             if( bytesRead <= 15 )
                 capacity = stoi((char*)buffer );
             else if( bytesRead >= 15 ){
-                hardness[0] = stod((char*)buffer );
-                hardness[1] = stod(  strchr( (char*)buffer, ' ')  );
+                hardness[0] = 1; //stod((char*)buffer );
+                hardness[1] = 1; //stod(  strchr( (char*)buffer, ' ')  );
                 debug_printf( "hardness %f %f\n", hardness[0], hardness[1] );
             }
             // get hardness from CapacityEstimator
@@ -192,6 +192,9 @@ void* create_server_socket(void*) {
 }
 
 void writeToServer(char *ip_array_n){
+    // FUNCTION DESC:
+    // write visitor array to peer proxy 
+    // ( which is a server as far as 'this' proxy is concerned )
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     // sending_port is already filled by the parser
@@ -200,7 +203,7 @@ void writeToServer(char *ip_array_n){
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
     {
-        debug_printf( "ERROR opening socket\n");
+        debug_printf( "ERROR opening socket while writing to server\n");
         exit(1);
     }
     bzero((char *) &server_addr, sizeof(server_addr));
@@ -214,8 +217,8 @@ void writeToServer(char *ip_array_n){
     server_addr.sin_port = htons(portnum);
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
-        float sec= 2;
-        float sec_frac = 0.0;
+        float sec= 0;       // time frequency in which to communicate
+        float sec_frac = 0.5;
         debug_printf( "connected %s \n" , ip_array_n);
         struct timespec tim, rem;
         tim.tv_sec = sec;
@@ -231,7 +234,7 @@ void writeToServer(char *ip_array_n){
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
             if (n < 0)
             {
-                debug_printf("ERROR writing to socket\n");
+                debug_printf("ERROR writing to peer socket\n");
                 /* exit(1); */
                 /* break; */
             }
@@ -381,7 +384,7 @@ int main(void) {/*{{{*/
             {
                 peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
             }
-
+            debug_printf( "uc-%d puc-%d share-%d iter-%d \n", usedCapacity, peerUsedCapacity, share , iter);
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( peerUsedCapacity > 0 ){
                 excess_used = (capacity - share)-peerUsedCapacity;
@@ -389,13 +392,11 @@ int main(void) {/*{{{*/
             }
             char* req_url = getenv("QUERY_STRING");
             int url;
-            if(strchr(req_url,'1') != NULL ){
-                url=0;  // this means this is req1.php?a=b
-            }
-            else {
-                url=1;  // this means this is req2.php?a=b
-            }
-            if ( total_usable_capacity - hardness[url]> 0 )
+            if(strcmp(req_url,"req1.php")==0)
+                url=0;
+            else
+                url=1;
+            if ( total_usable_capacity > 0 )
             {
                 //visitor_count[(current_time+iter)%LIMIT]++;
                 debug_printf( "time %d %d \n" , current_time , iter) ;
