@@ -33,10 +33,10 @@ public class TokenGenCommunicator {
     }
 
     public static void conveyNewCapacity(String value) {
-        logger.debug("To TokenGen: >" + value + "<");
+        logger.debug("Capacity To TokenGen: >" + value + "<");
         try{
             for( int i = 0; i < noOfProxy; i++ ){
-                toProxy1[i].println(value);
+                toProxy1[i].println("c" + value);
                 toProxy1[i].flush();
             }
         } catch (Exception e) {
@@ -44,7 +44,15 @@ public class TokenGenCommunicator {
         }
     }
     public static void conveyHardness(String value) {
-        conveyNewCapacity(value);
+        logger.debug("Hardness To TokenGen: >" + value + "<");
+        try{
+            for( int i = 0; i < noOfProxy; i++ ){
+                toProxy1[i].println("h" + value);
+                toProxy1[i].flush();
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+        }
     }
 
     public static void conveyNewCapacity(double value) {

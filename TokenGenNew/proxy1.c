@@ -45,7 +45,18 @@ int readFromClient( struct clientDetails * cd ) {
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
         /* debug_printf( "bytesRead %d \n", bytesRead ); */
-        if( bytesRead > 20 ) {
+        if( *(char*)buffer == 'c' ){ // if content of buffer == c
+            debug_printf( "data from capacity estimator in c %s", ((char*)buffer)+1 );
+            capacity = stoi((char*)buffer+1 );
+        }
+        else if( *(char*)buffer == 'h' ){
+            debug_printf( "data from capacity estimator in h %s", ((char*)buffer)+1 );
+            // error here due to not handling buffer which is not decimal
+            hardness[0] = stod( ((char*)buffer)+1 );
+            hardness[1] = stod( strchr( ((char*)buffer)+2 , ' ')  );
+            debug_printf( "hardness %f %f n", hardness[0], hardness[1] );
+        }
+        else if( bytesRead > 20 ) {
             /* debug_printf( "read from %d.%d.%d.%d arrayIdx %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
             int j;
             memcpy( peer_v_count[ ipToid[cd] ]+(prev_bytesRead/4) , buffer , bytesRead );
@@ -60,18 +71,6 @@ int readFromClient( struct clientDetails * cd ) {
                 /* } */
             }
             //calculate peer_avg_waiting_time here with locks
-        }
-        else{
-            debug_printf( "data from capacity estimator %s", (char*)buffer );
-            if( bytesRead <= 15 )
-                capacity = stoi((char*)buffer );
-            else if( bytesRead >= 15 ){
-                hardness[0] = 1; //stod((char*)buffer );
-                hardness[1] = 1; //stod(  strchr( (char*)buffer, ' ')  );
-                debug_printf( "hardness %f %f\n", hardness[0], hardness[1] );
-            }
-            // get hardness from CapacityEstimator
-            // Add Code
         }
     }
     debug_printf( "gonna shutdown read thread \n");
