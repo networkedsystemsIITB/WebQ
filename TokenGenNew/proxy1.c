@@ -11,6 +11,7 @@ int listening_portno;
 char ** ip_array ;
 char * sending_port;
 int no_of_proxy;
+char delimChar='i';
 char * tokenCheckIp;
 float peer_avg_waiting_time[PEERS];
 float sum_peer_avg_waiting_time;
@@ -56,6 +57,12 @@ int readFromClient( struct clientDetails * cd ) {
             hardness[1] = stod( strchr( ((char*)buffer)+2 , ' ')  );
             debug_printf( "hardness %f %f n", hardness[0], hardness[1] );
         }
+        else if( *(char*)buffer == 'i' ){
+            // if i is sent incoming will be sent behind ; get that
+            if( ( bytesRead = read( clientSocketFD, buffer, sizeof(int)) ) > 0){
+                debug_printf( "populate incoming and use %d \n", *buffer );
+            }
+        }
         else if( bytesRead > 20 ) {
             /* debug_printf( "read from %d.%d.%d.%d arrayIdx %d\n", cd->ip1, cd->ip2, cd->ip3, cd->ip4 , ipToid[cd] ); */
             int j;
@@ -71,6 +78,9 @@ int readFromClient( struct clientDetails * cd ) {
                 /* } */
             }
             //calculate peer_avg_waiting_time here with locks
+        }
+        else{
+            debug_printf( "bytesRead in else %d \n", bytesRead );
         }
     }
     debug_printf( "gonna shutdown read thread \n");
@@ -230,13 +240,14 @@ void writeToServer(char *ip_array_n){
             /*     if ( visitor_count[j]!= 0 ) */
             /*         debug_printf( "(%d) vc %d\n", j, visitor_count[j] ); */
             /* } */
+            // sent incoming with 'i' indicator
+            n = write(sockfd, &delimChar, sizeof(char));
+            if (n < 0) { debug_printf("ERROR writing to peer socket\n"); }
+            n = write(sockfd, &incoming , sizeof(int) );
+            if (n < 0) { debug_printf("ERROR writing to peer socket\n"); }
+            // sent visitor queue
             n = write(sockfd, visitor_count , 1000 * sizeof(int) );
-            if (n < 0)
-            {
-                debug_printf("ERROR writing to peer socket\n");
-                /* exit(1); */
-                /* break; */
-            }
+            if (n < 0) { debug_printf("ERROR writing to peer socket\n"); }
             // connect as a client;
             nanosleep( &tim, &rem );
         }
