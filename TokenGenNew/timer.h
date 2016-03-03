@@ -41,7 +41,8 @@ extern int total_in = 0;
 extern int total_out = 0;
 extern int current_time = 0;
 int visitor_count[LIMIT];
-int peer_v_count[PEERS][LIMIT];
+int peer_v_count[PEERS][LIMIT];         //peer visitor count : list of arrays storing wait time arrays of peers
+int incoming_peers[PEERS];
 extern char log_format_string[256];
 FILE* log_ptr;
 struct queue q = { NULL, NULL, 0, 100, 0, 0, 0 };

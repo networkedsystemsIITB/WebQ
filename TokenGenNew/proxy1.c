@@ -60,7 +60,7 @@ int readFromClient( struct clientDetails * cd ) {
         else if( *(char*)buffer == 'i' ){
             // if i is sent incoming will be sent behind ; get that
             if( ( bytesRead = read( clientSocketFD, buffer, sizeof(int)) ) > 0){
-                debug_printf( "populate incoming and use %d \n", *buffer );
+                memcpy( incoming_peers+ ipToid[cd] , buffer , bytesRead );
             }
         }
         else if( bytesRead > 20 ) {
@@ -77,7 +77,6 @@ int readFromClient( struct clientDetails * cd ) {
                 /*         debug_printf( "(%d)%d,%d\n", j, peer_v_count[ ipToid[cd] ][j], visitor_count[j] ); */
                 /* } */
             }
-            //calculate peer_avg_waiting_time here with locks
         }
         else{
             debug_printf( "bytesRead in else %d \n", bytesRead );
@@ -317,48 +316,23 @@ int main(void) {/*{{{*/
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
         int j;
-        /* peer_avg_waiting_time = 0; */
         avg_waiting_time = 0;
-        int reqInHost =0;
-        int reqInPeers[PEERS];
         for( j=0; j<PEERS; j++)
         {
             peer_avg_waiting_time[j] = 0; // TODO use memset
-            reqInPeers[j] = 0;
         }
-        for (iter = 0; iter < LIMIT; iter++) {
-            reqInHost += visitor_count[iter];
-            if( iter - current_time > 0 )
-            {
-                // sum the times .. actual avg found later outside the loop
-                avg_waiting_time += ( iter - current_time ) * visitor_count[ iter ];
-                for( j=0; j<PEERS; j++)
-                {
-                    peer_avg_waiting_time[j] += (iter-current_time) * peer_v_count[j][iter];
-                    reqInPeers[j] += peer_v_count[j][iter];
-                    /* if( visitor_count[iter] != 0 && peer_v_count[j][iter] != 0) */
-                    /* { */
-                    /*     debug_printf( "%d|%d||%d|%d \n", */
-                    /*             (iter -current_time), visitor_count[ iter ], */
-                    /*             (iter -current_time), peer_v_count[j][iter] ); */
-                    /* } */
-                }
-            }
+        // sum the times .. actual avg found later outside the loop
+        avg_waiting_time = incoming;
+        for( j=0; j<PEERS; j++)
+        {
+            peer_avg_waiting_time[j] = incoming_peers[j];
         }
-        if( reqInHost != 0 )
-            avg_waiting_time /= reqInHost;
         sum_peer_avg_waiting_time = 0;
         for( j=0; j<PEERS; j++)
         {
-            if( reqInPeers[j] != 0 )
-                peer_avg_waiting_time[j] /= reqInPeers[j];
             sum_peer_avg_waiting_time += peer_avg_waiting_time[j];
         }
-        /* debug_printf( "%.2f %d, %.2f %d \n" , */
-        /*         avg_waiting_time , */
-        /*         reqInHost, */
-        /*         peer_avg_waiting_time , */
-        /*         reqInPeers ); */
+        /* debug_printf( "befor av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_avg_waiting_time); */
         int usedCapacity = 0;
         int peerUsedCapacity = 0;
         // calculate the share :
@@ -377,6 +351,7 @@ int main(void) {/*{{{*/
             sum_peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
         }
         // we need to multiply by no_of_proxy so as to normalize .
+        /* debug_printf( "after av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_avg_waiting_time); */
         share = capacity * avg_waiting_time/(avg_waiting_time + sum_peer_avg_waiting_time);
         // share found
         if ( share == 0 ) {
@@ -394,7 +369,7 @@ int main(void) {/*{{{*/
             {
                 peerUsedCapacity += get_array( &peer_v_count[j][(current_time + iter) % LIMIT] );
             }
-            debug_printf( "uc-%d puc-%d share-%d iter-%d \n", usedCapacity, peerUsedCapacity, share , iter);
+            /* debug_printf( "uc-%d puc-%d share-%d iter-%d \n", usedCapacity, peerUsedCapacity, share , iter); */
             int total_usable_capacity = (share  - usedCapacity) ; // use a buffer here to compensate n/w delay!!!
             if( peerUsedCapacity > 0 ){
                 excess_used = (capacity - share)-peerUsedCapacity;
