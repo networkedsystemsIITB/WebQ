@@ -60,7 +60,9 @@ int readFromClient( struct clientDetails * cd ) {
         else if( *(char*)buffer == 'i' ){
             // if i is sent incoming will be sent behind ; get that
             if( ( bytesRead = read( clientSocketFD, buffer, sizeof(int)) ) > 0){
-                memcpy( incoming_peers+ ipToid[cd] , buffer , bytesRead );
+                // copy content of buffer to incoming_peers
+                incoming_peers[ipToid[cd]] = *buffer;
+                debug_printf( "buf %d %d\n" , ipToid[cd] , incoming_peers[ ipToid[cd] ] );
             }
         }
         else if( bytesRead > 20 ) {
@@ -225,8 +227,11 @@ void writeToServer(char *ip_array_n){
     server_addr.sin_port = htons(portnum);
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
-        float sec= 0;       // time frequency in which to communicate
-        float sec_frac = 0.5;
+        // the time frequnecy value is important 
+        // 0,5 seconds does not work where as 1s works 
+        // should be same as frequency of clearing incoming
+        float sec= 1;       // time frequency in which to communicate
+        float sec_frac = 0.0;
         debug_printf( "connected %s \n" , ip_array_n);
         struct timespec tim, rem;
         tim.tv_sec = sec;
@@ -326,6 +331,7 @@ int main(void) {/*{{{*/
         for( j=0; j<PEERS; j++)
         {
             peer_avg_waiting_time[j] = incoming_peers[j];
+            debug_printf( "%d %d %f\n", j, incoming_peers[j] , peer_avg_waiting_time[j]);
         }
         sum_peer_avg_waiting_time = 0;
         for( j=0; j<PEERS; j++)
