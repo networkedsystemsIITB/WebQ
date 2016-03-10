@@ -53,8 +53,8 @@ int readFromClient( struct clientDetails * cd ) {
         else if( *(char*)buffer == 'h' ){
             debug_printf( "data from capacity estimator in h %s", ((char*)buffer)+1 );
             // error here due to not handling buffer which is not decimal
-            hardness[0] = stod( ((char*)buffer)+1 );
-            hardness[1] = stod( strchr( ((char*)buffer)+2 , ' ')  );
+            hardness[0] = 1; //stod( ((char*)buffer)+1 );
+            hardness[1] = 1; //stod( strchr( ((char*)buffer)+2 , ' ')  );
             debug_printf( "hardness %f %f n", hardness[0], hardness[1] );
         }
         else if( *(char*)buffer == 'i' ){
@@ -62,7 +62,7 @@ int readFromClient( struct clientDetails * cd ) {
             if( ( bytesRead = read( clientSocketFD, buffer, sizeof(int)) ) > 0){
                 // copy content of buffer to incoming_peers
                 incoming_peers[ipToid[cd]] = *buffer;
-                debug_printf( "buf %d %d\n" , ipToid[cd] , incoming_peers[ ipToid[cd] ] );
+                /* debug_printf( "buf %d %d\n" , ipToid[cd] , incoming_peers[ ipToid[cd] ] ); */
             }
         }
         else if( bytesRead > 20 ) {
@@ -331,7 +331,7 @@ int main(void) {/*{{{*/
         for( j=0; j<PEERS; j++)
         {
             peer_avg_waiting_time[j] = incoming_peers[j];
-            debug_printf( "%d %d %f\n", j, incoming_peers[j] , peer_avg_waiting_time[j]);
+            /* debug_printf( "%d %d %f\n", j, incoming_peers[j] , peer_avg_waiting_time[j]); */
         }
         sum_peer_avg_waiting_time = 0;
         for( j=0; j<PEERS; j++)
