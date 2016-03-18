@@ -29,7 +29,7 @@ extern int failing = 0;
 extern int share = 0;
 extern float total_waiting_time = 0;
 extern float hostIncomingRate = 0;
-extern float peer_avg_waiting_time[];
+extern float peer_incomingRate[];
 extern float sum_peer_incoming_rate;
 extern float old_waiting_time = 0;
 //extern float old_service_time = 0;

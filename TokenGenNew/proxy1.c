@@ -13,7 +13,7 @@ char * sending_port;
 int no_of_proxy;
 char delimChar='i';
 char * tokenCheckIp;
-float peer_avg_waiting_time[PEERS];
+float peer_incomingRate[PEERS];
 float sum_peer_incoming_rate;
 double hardness[2];
 struct clientDetails{
@@ -324,19 +324,19 @@ int main(void) {/*{{{*/
         hostIncomingRate = 0;
         for( j=0; j<PEERS; j++)
         {
-            peer_avg_waiting_time[j] = 0; // TODO use memset
+            peer_incomingRate[j] = 0; // TODO use memset
         }
         // sum the times .. actual avg found later outside the loop
         hostIncomingRate = incoming;
         for( j=0; j<PEERS; j++)
         {
-            peer_avg_waiting_time[j] = incoming_peers[j];
-            /* debug_printf( "%d %d %f\n", j, incoming_peers[j] , peer_avg_waiting_time[j]); */
+            peer_incomingRate[j] = incoming_peers[j];
+            /* debug_printf( "%d %d %f\n", j, incoming_peers[j] , peer_incomingRate[j]); */
         }
         sum_peer_incoming_rate = 0;
         for( j=0; j<PEERS; j++)
         {
-            sum_peer_incoming_rate += peer_avg_waiting_time[j];
+            sum_peer_incoming_rate += peer_incomingRate[j];
         }
         /* debug_printf( "befor av-%.2f, sum-%.2f \n", hostIncomingRate, sum_peer_incoming_rate); */
         int usedCapacity = 0;
