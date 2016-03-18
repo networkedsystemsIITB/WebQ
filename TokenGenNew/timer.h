@@ -28,7 +28,7 @@ extern int failing = 0;
 //changes made to enable logging of avg wait time (following two lines are uncommented)
 extern int share = 0;
 extern float total_waiting_time = 0;
-extern float avg_waiting_time = 0;
+extern float hostIncomingRate = 0;
 extern float peer_avg_waiting_time[];
 extern float sum_peer_incoming_rate;
 extern float old_waiting_time = 0;
@@ -140,7 +140,7 @@ void log_data() {
 //   current_ratio=prev_ratio;*/
 //
 //  /*fprintf(log_ptr, "%lld %d %d %d %0.5f %ld %d %d %0.2f %d %d %d \n", (long long int) time(NULL),
-//   incoming, outgoing, failing, avg_waiting_time, avg_service_time, proxy2_in, capacity, current_ratio, ctr, flag);*/
+//   incoming, outgoing, failing, hostIncomingRate, avg_service_time, proxy2_in, capacity, current_ratio, ctr, flag);*/
     time_t rawtime;
     char time_buf[256];
     time(&rawtime);
@@ -152,8 +152,8 @@ void log_data() {
         fprintf(log_ptr,
                 "%s "
                 "inc %d "
-                "hostWt %0.2f "    //logging the avg_waiting_time parameter
-                "peerWt %0.2f "    //logging the avg_waiting_time parameter
+                "hostWt %0.2f "    //logging the hostIncomingRate parameter
+                "peerWt %0.2f "    //logging the hostIncomingRate parameter
                 "Cap %d "
                 "expVisitors %d "
                 "share %d "
@@ -161,8 +161,8 @@ void log_data() {
                 "\n",
                 time_buf,
                 incoming,
-                avg_waiting_time,  //logging the avg_waiting_time parameter
-                sum_peer_incoming_rate,  //logging the avg_waiting_time parameter
+                hostIncomingRate,  //logging the hostIncomingRate parameter
+                sum_peer_incoming_rate,  //logging the hostIncomingRate parameter
                 capacity,
                 get_array(&visitor_count[current_time]),
                 share,
@@ -296,7 +296,7 @@ void log_data() {
     change_values(&outgoing, 0);
 
     //changes made to enable logging of avg wait time (following line is uncommented)
-    old_waiting_time = avg_waiting_time;
+    old_waiting_time = hostIncomingRate;
 //  old_service_time = avg_service_time;
 
     //changes made to enable logging of avg wait time (following line is uncommented)

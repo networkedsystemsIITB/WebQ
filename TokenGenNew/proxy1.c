@@ -321,13 +321,13 @@ int main(void) {/*{{{*/
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
         int j;
-        avg_waiting_time = 0;
+        hostIncomingRate = 0;
         for( j=0; j<PEERS; j++)
         {
             peer_avg_waiting_time[j] = 0; // TODO use memset
         }
         // sum the times .. actual avg found later outside the loop
-        avg_waiting_time = incoming;
+        hostIncomingRate = incoming;
         for( j=0; j<PEERS; j++)
         {
             peer_avg_waiting_time[j] = incoming_peers[j];
@@ -338,27 +338,27 @@ int main(void) {/*{{{*/
         {
             sum_peer_incoming_rate += peer_avg_waiting_time[j];
         }
-        /* debug_printf( "befor av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_incoming_rate); */
+        /* debug_printf( "befor av-%.2f, sum-%.2f \n", hostIncomingRate, sum_peer_incoming_rate); */
         int usedCapacity = 0;
         int peerUsedCapacity = 0;
         // calculate the share :
         // reserve a min value of capacity (0.1) for each servers
         int percent = 10;
-        if( avg_waiting_time == 0 && sum_peer_incoming_rate == 0 )
+        if( hostIncomingRate == 0 && sum_peer_incoming_rate == 0 )
         {
-            avg_waiting_time = 1;
+            hostIncomingRate = 1;
             sum_peer_incoming_rate = 1;
         }
-        else if ( avg_waiting_time == 0 ){
+        else if ( hostIncomingRate == 0 ){
             //      awt/( awt + p_awt ) * 100 = percent;
-            avg_waiting_time = percent * sum_peer_incoming_rate / ( 100 - percent );
+            hostIncomingRate = percent * sum_peer_incoming_rate / ( 100 - percent );
         }
         else if ( sum_peer_incoming_rate == 0 ){
-            sum_peer_incoming_rate = percent * avg_waiting_time / ( 100 - percent );
+            sum_peer_incoming_rate = percent * hostIncomingRate / ( 100 - percent );
         }
         // we need to multiply by no_of_proxy so as to normalize .
-        /* debug_printf( "after av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_incoming_rate); */
-        share = capacity * avg_waiting_time/(avg_waiting_time + sum_peer_incoming_rate);
+        /* debug_printf( "after av-%.2f, sum-%.2f \n", hostIncomingRate, sum_peer_incoming_rate); */
+        share = capacity * hostIncomingRate/(hostIncomingRate + sum_peer_incoming_rate);
         // share found
         if ( share == 0 ) {
             // share can never be 0
