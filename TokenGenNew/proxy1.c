@@ -14,7 +14,7 @@ int no_of_proxy;
 char delimChar='i';
 char * tokenCheckIp;
 float peer_avg_waiting_time[PEERS];
-float sum_peer_avg_waiting_time;
+float sum_peer_incoming_rate;
 double hardness[2];
 struct clientDetails{
     int sockfd;
@@ -333,32 +333,32 @@ int main(void) {/*{{{*/
             peer_avg_waiting_time[j] = incoming_peers[j];
             /* debug_printf( "%d %d %f\n", j, incoming_peers[j] , peer_avg_waiting_time[j]); */
         }
-        sum_peer_avg_waiting_time = 0;
+        sum_peer_incoming_rate = 0;
         for( j=0; j<PEERS; j++)
         {
-            sum_peer_avg_waiting_time += peer_avg_waiting_time[j];
+            sum_peer_incoming_rate += peer_avg_waiting_time[j];
         }
-        /* debug_printf( "befor av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_avg_waiting_time); */
+        /* debug_printf( "befor av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_incoming_rate); */
         int usedCapacity = 0;
         int peerUsedCapacity = 0;
         // calculate the share :
         // reserve a min value of capacity (0.1) for each servers
         int percent = 10;
-        if( avg_waiting_time == 0 && sum_peer_avg_waiting_time == 0 )
+        if( avg_waiting_time == 0 && sum_peer_incoming_rate == 0 )
         {
             avg_waiting_time = 1;
-            sum_peer_avg_waiting_time = 1;
+            sum_peer_incoming_rate = 1;
         }
         else if ( avg_waiting_time == 0 ){
             //      awt/( awt + p_awt ) * 100 = percent;
-            avg_waiting_time = percent * sum_peer_avg_waiting_time / ( 100 - percent );
+            avg_waiting_time = percent * sum_peer_incoming_rate / ( 100 - percent );
         }
-        else if ( sum_peer_avg_waiting_time == 0 ){
-            sum_peer_avg_waiting_time = percent * avg_waiting_time / ( 100 - percent );
+        else if ( sum_peer_incoming_rate == 0 ){
+            sum_peer_incoming_rate = percent * avg_waiting_time / ( 100 - percent );
         }
         // we need to multiply by no_of_proxy so as to normalize .
-        /* debug_printf( "after av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_avg_waiting_time); */
-        share = capacity * avg_waiting_time/(avg_waiting_time + sum_peer_avg_waiting_time);
+        /* debug_printf( "after av-%.2f, sum-%.2f \n", avg_waiting_time, sum_peer_incoming_rate); */
+        share = capacity * avg_waiting_time/(avg_waiting_time + sum_peer_incoming_rate);
         // share found
         if ( share == 0 ) {
             // share can never be 0

@@ -30,7 +30,7 @@ extern int share = 0;
 extern float total_waiting_time = 0;
 extern float avg_waiting_time = 0;
 extern float peer_avg_waiting_time[];
-extern float sum_peer_avg_waiting_time;
+extern float sum_peer_incoming_rate;
 extern float old_waiting_time = 0;
 //extern float old_service_time = 0;
 //extern unsigned long total_service_time = 0;
@@ -162,7 +162,7 @@ void log_data() {
                 time_buf,
                 incoming,
                 avg_waiting_time,  //logging the avg_waiting_time parameter
-                sum_peer_avg_waiting_time,  //logging the avg_waiting_time parameter
+                sum_peer_incoming_rate,  //logging the avg_waiting_time parameter
                 capacity,
                 get_array(&visitor_count[current_time]),
                 share,
