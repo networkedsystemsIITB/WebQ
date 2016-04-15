@@ -15,7 +15,7 @@
 
 int sockfd;
 char buffr[256];
-char * url;
+char url[333];
 
 int explode(char ***arr_ptr, char *str, char delimiter)
 { 
@@ -169,7 +169,7 @@ void connect_proxy1()
     struct sockaddr_in serv_addr;
     struct hostent *servr;
     int portno = 5006;
-    char* hostname = "10.129.41.17";
+    char* hostname = "10.129.28.160";
 
     /* Create a socket point */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -211,10 +211,21 @@ void disconnect_proxy1()
 }
 
 
-void inform_proxy1_arrival(char * query){
+void inform_proxy1_arrival( char* query ){
 //{{{
+    //log_error__write(srv,__FILE__,__LINE__,"sb", "query   : ", query)
     bzero (buffr, 256);
-	if(strcmp(query,"req1.php")==0)
+    //strcpy(buffr, "A\n");//buffr[1]='\0';
+	char temp_query[300];
+	char query2[300];
+	strcpy(temp_query,query);
+    char* query1;
+    query1=strtok(temp_query,"/");
+    query1=strtok(NULL,"/");
+    query1=strtok(NULL,"/");
+    query1=strtok(NULL,"/");
+	strcpy(query2,query1);
+	if(strcmp(query2,"req1.php")==0)
 		strcpy(url,"0");
 	else
 		strcpy(url,"1");
@@ -227,33 +238,43 @@ void inform_proxy1_arrival(char * query){
 
     /* Send message to the server */
     write(sockfd,buffr,strlen(buffr));    
+
+	
 //}}}
 }
 
-void inform_proxy1_departure(unsigned long service_time, int http_status, char* query){
+void inform_proxy1_departure(unsigned long service_time, int http_status,char* query){
 //{{{
     //char* c[50];
     //c = itoa(service_time);
     //strcpy(buffr, c);
     bzero (buffr, 256);
     strcpy(buffr, "" );
-	if(strcmp(query,"req1.php")==0)
+    char* query1;
+	char temp_query[300];
+	char query2[300];
+	strcpy(temp_query,query);
+    query1=strtok(temp_query,"/");
+    query1=strtok(NULL,"/");
+    query1=strtok(NULL,"/");
+    query1=strtok(NULL,"/");
+	strcpy(query2,query1);
+	if(strcmp(query2,"req1.php")==0)
 		strcpy(url,"0");
 	else
 		strcpy(url,"1");
-    if ( http_status != 200 ){
-        //strcpy(buffr, "F\n");
-		
-		strcpy(buffr,"F_");
-		strcat(buffr,(const char*) url);
-		strcat(buffr,"\n");
 
+
+    if ( http_status != 200 ){
+       strcpy(buffr, "F");
     }
     else {
-        sprintf(buffr, "%ld\n", service_time);
-		strcat(buffr,"_");
-		strcat(buffr,(const char*) url);
-    }
+        sprintf(buffr, "%ld", service_time);
+	}
+	strcat(buffr,"_");
+	strcat(buffr,(const char*) url);
+	strcat(buffr,"\n");
+    
     //strcat( buffr, "," );
     /* Send message to the server */
     write(sockfd,buffr,strlen(buffr));

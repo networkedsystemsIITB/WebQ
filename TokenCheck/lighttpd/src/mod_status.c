@@ -778,7 +778,20 @@ static int mod_status_patch_connection(server *srv, connection *con, plugin_data
 }
 
 static handler_t mod_status_handler(server *srv, connection *con, void *p_d) {
-    inform_proxy1_arrival(con->uri.query);   // Communicating arrival of a request to Proxy1 (BTP)
+    log_error_write(srv, __FILE__, __LINE__,  "ss", "Query         :", (con->uri.path_raw)->ptr);
+	/*char* query1;
+	 char query[300];
+	char a[300];
+	strcpy(query,(con->uri.path_raw)->ptr);
+    query1=strtok(query,"/");
+    query1=strtok(NULL,"/");
+    query1=strtok(NULL,"/");
+    query1=strtok(NULL,"/");
+	strcpy(a,query1);
+	if(strcmp(a,"req2.php")==0)
+	log_error_write(srv, __FILE__, __LINE__,  "ss", "Query         :",a);*/
+	if(strstr((con->uri.path)->ptr, "favicon") == NULL) 
+    inform_proxy1_arrival((con->uri.path_raw)->ptr);   // Communicating arrival of a request to Proxy1 (BTP)
     
     //For verifying if token is authentic
     //if(verify_token((con->uri.query)->ptr) == 0) 
@@ -844,7 +857,7 @@ REQUESTDONE_FUNC(mod_status_account) {
 	if(strstr((con->uri.path)->ptr, "favicon") == NULL) {
 		gettimeofday(&(con->tv_temp),NULL);
         unsigned long temp = ((con->tv_temp).tv_sec)*1000000 + ((con->tv_temp).tv_usec);
-		inform_proxy1_departure((temp - con->start_time), con->http_status,con->uri.query);    
+		inform_proxy1_departure((temp - con->start_time), con->http_status,(con->uri.path_raw)->ptr);    
     }
 	plugin_data *p = p_d;
 
