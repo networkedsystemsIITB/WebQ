@@ -31,7 +31,6 @@ extern float total_waiting_time = 0;
 extern float hostIncomingRate = 0;
 extern float peer_incomingRate[];
 extern float sum_peer_incoming_rate;
-extern float old_waiting_time = 0;
 //extern float old_service_time = 0;
 //extern unsigned long total_service_time = 0;
 //extern int proxy2_in = 0;
@@ -292,11 +291,11 @@ void log_data() {
     current_time = (current_time + 1) % LIMIT;
 
     //if (get_total_failing(&q) == 0) change_float_values(&alpha, -1*penalty, initial_alpha);
+    hostIncomingRate = incoming;
     change_values(&incoming, 0);
     change_values(&outgoing, 0);
 
     //changes made to enable logging of avg wait time (following line is uncommented)
-    old_waiting_time = hostIncomingRate;
 //  old_service_time = avg_service_time;
 
     //changes made to enable logging of avg wait time (following line is uncommented)
