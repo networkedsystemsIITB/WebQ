@@ -53,8 +53,8 @@ int readFromClient( struct clientDetails * cd ) {
         else if( *(char*)buffer == 'h' ){
             debug_printf( "data from capacity estimator in h %s", ((char*)buffer)+1 );
             // error here due to not handling buffer which is not decimal
-            hardness[0] = 1; //stod( ((char*)buffer)+1 );
-            hardness[1] = 1; //stod( strchr( ((char*)buffer)+2 , ' ')  );
+            hardness[0] = stod( ((char*)buffer)+1 );
+            hardness[1] = stod( strchr( ((char*)buffer)+2 , ' ')  );
             debug_printf( "hardness %f %f n", hardness[0], hardness[1] );
         }
         else if( *(char*)buffer == 'i' ){
@@ -321,13 +321,11 @@ int main(void) {/*{{{*/
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
         int j;
-        hostIncomingRate = 0;
         for( j=0; j<PEERS; j++)
         {
             peer_incomingRate[j] = 0; // TODO use memset
         }
         // sum the times .. actual avg found later outside the loop
-        hostIncomingRate = incoming;
         for( j=0; j<PEERS; j++)
         {
             peer_incomingRate[j] = incoming_peers[j];
