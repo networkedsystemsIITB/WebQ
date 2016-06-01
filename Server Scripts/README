@@ -7,3 +7,8 @@ httperf commands
     make a file named "httperf_content" with contents
     /test.php?limit=100 method=GET
 
+
+to make moodle instantces
+use
+https://github.com/moodlehq/moodle-performance-comparison
+
