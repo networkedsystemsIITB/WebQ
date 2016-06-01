@@ -1,20 +1,21 @@
 #!/bin/bash
 
+#run this script to fix some repetitve tasks when first setting up 
+# the development machine
+
 if [ -z "$1" ];
 then
     echo "pass user account. eg ~/dev_setup <username>"
     exit
 fi
 
-echo 'alias jl="vim ~/webq/journal/`date --iso`"' >> ~/.localaliases.sh
-
 source ~/webq/bin/ips.sh
 
-echo "$server           server" | sudo tee -a /etc/hosts
-echo "${tokencheck[$1]} check" | sudo tee -a /etc/hosts
-echo "${tokengen1[$1]}  gen1" | sudo tee -a /etc/hosts
-echo "${tokengen2[$1]}  gen2" | sudo tee -a /etc/hosts
-echo "$vachaspati       vacha" | sudo tee -a /etc/hosts
+echo " $server       server " | sudo tee -a /etc/hosts
+echo " ${tokencheck} check  " | sudo tee -a /etc/hosts
+echo " ${tokengen1}  gen1   " | sudo tee -a /etc/hosts
+echo " ${tokengen2}  gen2   " | sudo tee -a /etc/hosts
+echo " $vachaspati   vacha  " | sudo tee -a /etc/hosts
 
 cd ~/webq
 git update-index --assume-unchanged TokenCheck/lighttpd/src/*.o
