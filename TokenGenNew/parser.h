@@ -16,7 +16,7 @@ void parse_config_file(){
     sending_port = (char *) malloc( 8 * sizeof( char) );
     tokenCheckIp = (char *) malloc( 8 * sizeof( char) );
 
-    FILE *f = fopen("/home/murali/webq/TokenGenNew/proxy.conf", "r");
+    FILE *f = fopen("proxy.conf", "r");
     if(f) {
         do { // read all lines in file
             pos = 0;
