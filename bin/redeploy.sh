@@ -18,23 +18,23 @@ fi
 # {{{ put the number of tokengens
 if [ -z "$2" ];
 then
-    gens="${tokengen1[$username]}"
+    gens="${tokengen1}"
 else
     case $2 in
         1)
-            gens="${tokengen2[$username]}"
+            gens="${tokengen2}"
             ;;
         2)
-            gens="${tokengen2[$username]} ${tokengen1[$username]} "
+            gens="${tokengen2} ${tokengen1} "
             ;;
         3)
-            gens="${tokengen2[$username]} ${tokengen1[$username]} 10.129.26.133"
+            gens="${tokengen2} ${tokengen1} 10.129.26.133"
             ;;
         4)
-            gens="${tokengen2[$username]} ${tokengen1[$username]} 10.129.26.133 10.129.49.76"
+            gens="${tokengen2} ${tokengen1} 10.129.26.133 10.129.49.76"
             ;;
         *)
-            gens="${tokengen2[$username]}"
+            gens="${tokengen2}"
             ;;
     esac
 fi
@@ -114,19 +114,19 @@ done
 
 #start java code {{{
 printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
-ssh root@${capacityEstimator[$username]} "cd /home/${username}/webq/CapacityEstimator;bash Makefile"
-ssh root@${capacityEstimator[$username]} "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
+ssh root@${capacityEstimator} "cd /home/${username}/webq/CapacityEstimator;bash Makefile"
+ssh root@${capacityEstimator} "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
 printf " %d\n%s%43s" $? $marker "foo.out" | tee -a $log_file
-ssh root@${capacityEstimator[$username]} "cat /home/${username}/webq/CapacityEstimator/foo.out;"| tee -a $log_file
+ssh root@${capacityEstimator} "cat /home/${username}/webq/CapacityEstimator/foo.out;"| tee -a $log_file
 printf " %d\n%s%43s" $? $marker "foo.err" | tee -a $log_file
-ssh root@${capacityEstimator[$username]} "cat /home/${username}/webq/CapacityEstimator/foo.err;"| tee -a $log_file
+ssh root@${capacityEstimator} "cat /home/${username}/webq/CapacityEstimator/foo.err;"| tee -a $log_file
 
 #}}}
 
 # {{{ start lighttpd
 sleep 4
 printf " %d\n%s%46s\n" $? $marker "Starting the lighttpd server" | tee -a $log_file
-ssh root@${tokencheck[$username]} "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
+ssh root@${tokencheck} "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 
