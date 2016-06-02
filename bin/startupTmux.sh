@@ -1,4 +1,9 @@
 #!/bin/sh
+# this script starts tmux with all relevant log files 'tailed' in respective windows.
+# window 1 have all machines 
+# window 2 have all TokenGen logs
+# window 3 have all CapacityEstimator logs
+# window 4 is the workwindow
 tmux start-server
 tmux new-session -d -s Haystack -n git
 tmux new-window -tHaystack:1 -n all
