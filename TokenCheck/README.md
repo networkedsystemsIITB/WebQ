@@ -1,4 +1,4 @@
-# TokenCheck install steps
+### TokenCheck install steps
 
 install openssl-dev package (libssl-dev in ubuntu)
 
@@ -8,7 +8,7 @@ install openssl-dev package (libssl-dev in ubuntu)
 
 For starting the server, run "lighttpd -f lighttpd.conf"
 
-# TokenCheck configuration steps
+### TokenCheck configuration steps
 
 The configuration options are in the file lighttpd.conf. CapacityEstimator ip and port at which it
 listens ( this is listed as webq.tokencheck.port in `CapacityEstimator/webq.properties` ) is HARD
