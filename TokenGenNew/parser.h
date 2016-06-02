@@ -22,7 +22,7 @@ void parse_config_file(){
             pos = 0;
             do{ // read till the first space in each line
                 c = fgetc(f);
-                if(c != EOF) buffer[pos++] = (char)c;
+                if(c != EOF && c!= ' ') buffer[pos++] = (char)c;
                 if(pos >= size - 1) {
                     // increase buffer length - leave room for 0
                     size *=2;
