@@ -1,9 +1,0 @@
-
-todo:
-Move ip seeings to a configuration file. done
-Calculate average wait time from peer_waiting_time[]
-decide capacity based on average wait times.
-
-test throughput /response time at both servers
-1) when the rate is well withing the capacity
-2) when the rate is near the max capacity

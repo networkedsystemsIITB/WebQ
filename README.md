@@ -6,11 +6,11 @@ to match server capacity.
 
 # Installation
 
-read README of TokenGen 
+To get WebQ up and running , TokenGen , TokenCheck and CapacityEstimator
+have to be successfull installed and configured. Ideally TokenGen and CapacityEstimator
+are run on one machine( or VM ) and TokenCheck on another. The instllation instructions
+for each of the components are found in respective `doc/` folders
 
-read README of TokenCheck 
-
-read README ofCapacityEstimator
 
 To start components, just run redeploy.sh in "Experiments
 Scripts" folder. Do not deploy each component by hand, as there

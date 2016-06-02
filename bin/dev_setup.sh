@@ -17,6 +17,8 @@ echo " ${tokengen1}  gen1   " | sudo tee -a /etc/hosts
 echo " ${tokengen2}  gen2   " | sudo tee -a /etc/hosts
 echo " $vachaspati   vacha  " | sudo tee -a /etc/hosts
 
+# some binary files have been inadventantly commited into git tree previously.
+# use this script to prevent them from bothering you
 cd ~/webq
 git update-index --assume-unchanged TokenCheck/lighttpd/src/*.o
 git update-index --assume-unchanged TokenCheck/lighttpd/src/.libs/**
@@ -33,6 +35,7 @@ git update-index --assume-unchanged TokenCheck/lighttpd/src/spawn-fcgi
 git update-index --assume-unchanged TokenGenNew/waittimedebug.log
 git update-index --assume-unchanged TokenGenNew/proxy1
 git update-index --assume-unchanged TokenGenNew/proxy1.log
+git update-index --assume-unchanged CapacityEstimator/bin/com/webq/capest/*.class
 git update-index --assume-unchanged CapacityEstimator/bin/**/*.class
 
 sudo apt-get install sshpass lynx
