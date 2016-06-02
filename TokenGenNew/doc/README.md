@@ -3,9 +3,9 @@
 The configuration setting for each TokenGen is stored in proxy.conf
 each of the lines store a respective setting:
 
-1.port at where proxy 1 should listen
-2.token check ip
-3.number of peer proxies
+1. port at where proxy 1 should listen
+2. token check ip
+3. number of peer proxies
 
 subsequent lines have the ips of the peers ( there shoudld be as many lines
 below as the number of peers mentioned above
