@@ -15,3 +15,6 @@ changes are in TokenCheck/lighttpd/src/btp.h
 CapacityEstimator ip and port at which it listens
 ( this is listed as webq.tokencheck.port ) is HARD CODED in btp.h !!!!
 The apache server is configured in TokenCheck/lighttpd/lighttpd.conf  -> 10.129.49.76
+
+the lighttpd error log can be found at 
+/var/log/lighttpd/error.log
