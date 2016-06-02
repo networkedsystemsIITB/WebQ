@@ -12,3 +12,7 @@ to make moodle instantces
 use
 https://github.com/moodlehq/moodle-performance-comparison
 
+
+For moodle :
+put req1 req2 scripts in
+ /var/www/html/moodleM/moodle/webq/
