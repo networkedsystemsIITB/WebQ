@@ -410,12 +410,16 @@ int main(void) {/*{{{*/
             char* request_limit = strchr(env_var, '=') + 1;
             char url_to_visit[100];
             if( strchr(env_var, 'M') > 0 || strchr(env_var, 'S') > 0 ){
-                strcpy(url_to_visit, "http://10.129.41.67:9000/");
+                strcpy(url_to_visit, "http://");
+                strcat( url_to_visit,  tokenCheckIp);
+                strcat( url_to_visit, "/");
             }
             else{
-                /* fired url http://10.129.28.32:8000/proxy1?limit=moodleS/moodle/ */
-                /* http://10.129.49.76/moodleS/moodle/ */
-                strcpy(url_to_visit, "http://10.129.41.67:9000/test.php?limit=");
+                /* fired url http://<ip>/proxy1?limit=moodleS/moodle/ */
+                /* http://<ip>/moodleS/moodle/ */
+                strcpy(url_to_visit, "http://");
+                strcat( url_to_visit,  tokenCheckIp);
+                strcat( url_to_visit, "/test.php?limit=");
             }
             strcat(url_to_visit, (const char*) request_limit);
             /* debug_printf("%d %d\n", time_to_wait, (currtime+iter)%LIMIT ) ; */
