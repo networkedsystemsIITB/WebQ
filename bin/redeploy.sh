@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #run from proxy1 server(same as capacity estimator)
-cd ~/webq/bin
-source ~/webq/bin/ips.sh
+cd ~/WebQ/bin
+source ~/WebQ/bin/ips.sh
 
 # get command line arguments {{{
 if [ -z "$1" ];
@@ -48,19 +48,17 @@ export gens
 # then start the server
 
 # killall.sh will stop all tokenGens and TokenChecks
-bash ~/webq/bin/killall.sh $username                  #kill all components
+bash ~/WebQ/bin/killall.sh $username                  #kill all components
 
 # cleaning up all the log files#{{{
 for machine in $gens
 do
     printf " %d\n%s%43s" $? $marker "Cleaning up the log files at $machine" | tee -a $log_file
-    ssh root@$machine "cat /dev/null > /home/${username}/webq/TokenGenNew/proxy1.log"
+    ssh root@$machine "cat /dev/null > /home/${username}/WebQ/TokenGenNew/proxy1.log"
     ssh root@$machine "cat /dev/null > /usr/lib/cgi-bin/proxy1.log"
-#     ssh root@$machine "cat /dev/null > /home/${uesrname}/webq/CapacityEstimator/javapersecond.log"
-#     ssh root@$machine "cat /dev/null > /home/${username}/webq/CapacityEstimator/javadebug.log"
+#     ssh root@$machine "cat /dev/null > /home/${uesrname}/WebQ/CapacityEstimator/javapersecond.log"
+#     ssh root@$machine "cat /dev/null > /home/${username}/WebQ/CapacityEstimator/javadebug.log"
 done
-# ssh webq@$vachaspati rm /home/webq/summary60.csv &> $log_file
-# ssh webq@$vachaspati rm /home/webq/summary110.csv &> $log_file
 #}}}
 
 # rebuild and copy tokengen(proxy1) to cgi-bin folder#{{{
@@ -68,7 +66,7 @@ for machine in $gens
 do
     printf " %d\n%s%43s" $? $marker "remade proxy1 -> php @ $machine" | tee -a $log_file
     sshpass -p "webq" ssh root@$machine \
-        "cd /home/${username}/webq/TokenGenNew; ./make_script.sh" >> $log_file
+        "cd /home/${username}/WebQ/TokenGenNew; ./make_script.sh" >> $log_file
 done
 #}}}
 
@@ -114,19 +112,19 @@ done
 
 #start java code {{{
 printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
-ssh root@${capacityEstimator} "cd /home/${username}/webq/CapacityEstimator;bash Makefile"
-ssh root@${capacityEstimator} "cd /home/${username}/webq/CapacityEstimator;bash run.sh;"
+ssh root@${capacityEstimator} "cd /home/${username}/WebQ/CapacityEstimator;bash Makefile"
+ssh root@${capacityEstimator} "cd /home/${username}/WebQ/CapacityEstimator;bash run.sh;"
 printf " %d\n%s%43s" $? $marker "foo.out" | tee -a $log_file
-ssh root@${capacityEstimator} "cat /home/${username}/webq/CapacityEstimator/foo.out;"| tee -a $log_file
+ssh root@${capacityEstimator} "cat /home/${username}/WebQ/CapacityEstimator/foo.out;"| tee -a $log_file
 printf " %d\n%s%43s" $? $marker "foo.err" | tee -a $log_file
-ssh root@${capacityEstimator} "cat /home/${username}/webq/CapacityEstimator/foo.err;"| tee -a $log_file
+ssh root@${capacityEstimator} "cat /home/${username}/WebQ/CapacityEstimator/foo.err;"| tee -a $log_file
 
 #}}}
 
 # {{{ start lighttpd
 sleep 4
 printf " %d\n%s%46s\n" $? $marker "Starting the lighttpd server" | tee -a $log_file
-ssh root@${tokencheck} "bash /home/${username}/webq/TokenCheck/run.sh ${username}"
+ssh root@${tokencheck} "bash /home/${username}/WebQ/TokenCheck/run.sh ${username}"
 
 echo "################# REDEPLOYMENT ATTEMPT FINISHED ##################";
 

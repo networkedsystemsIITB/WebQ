@@ -43,8 +43,8 @@ tmux send-keys -tHaystack:2.2 "watch -n1 -t 'echo spare1 & tail /usr/lib/cgi-bin
 tmux new-window -tHaystack:3 -n caplogs
 tmux select-window -tHaystack:3
 tmux split-window
-tmux send-keys -tHaystack:3.0 "tail -f ~/webq/CapacityEstimator/javadebug.log" C-m
-tmux send-keys -tHaystack:3.1 "tail -f ~/webq/CapacityEstimator/javapersecond.log" C-m
+tmux send-keys -tHaystack:3.0 "tail -f ~/WebQ/CapacityEstimator/javadebug.log" C-m
+tmux send-keys -tHaystack:3.1 "tail -f ~/WebQ/CapacityEstimator/javapersecond.log" C-m
 
 tmux new-window -tHaystack:4 -n workarea
 tmux attach-session -d -tHaystack

@@ -7,7 +7,7 @@ then
     exit
 fi
 
-cd ~/webq/bin
+cd ~/WebQ/bin
 source ips.sh
 printf "`date`" | tee -a $log_file
 

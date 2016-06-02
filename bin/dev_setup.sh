@@ -9,7 +9,7 @@ then
     exit
 fi
 
-source ~/webq/bin/ips.sh
+source ~/WebQ/bin/ips.sh
 
 echo " $server       server " | sudo tee -a /etc/hosts
 echo " ${tokencheck} check  " | sudo tee -a /etc/hosts
@@ -19,7 +19,7 @@ echo " $vachaspati   vacha  " | sudo tee -a /etc/hosts
 
 # some binary files have been inadventantly commited into git tree previously.
 # use this script to prevent them from bothering you
-cd ~/webq
+cd ~/WebQ
 git update-index --assume-unchanged TokenCheck/lighttpd/src/*.o
 git update-index --assume-unchanged TokenCheck/lighttpd/src/.libs/**
 git update-index --assume-unchanged TokenCheck/lighttpd/**/Makefile
