@@ -85,8 +85,8 @@ mod_compress.lo: mod_compress.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/netdb.h splaytree.h etag.h log.h \
  server.h response.h stat_cache.h plugin.h crc32.h /usr/include/zlib.h \
  /usr/include/x86_64-linux-gnu/zconf.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h /usr/include/bzlib.h \
- sys-mmap.h /usr/include/x86_64-linux-gnu/sys/mman.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h sys-mmap.h \
+ /usr/include/x86_64-linux-gnu/sys/mman.h \
  /usr/include/x86_64-linux-gnu/bits/mman.h \
  /usr/include/x86_64-linux-gnu/bits/mman-linux.h
 
@@ -347,8 +347,6 @@ crc32.h:
 /usr/include/x86_64-linux-gnu/zconf.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h:
-
-/usr/include/bzlib.h:
 
 sys-mmap.h:
 

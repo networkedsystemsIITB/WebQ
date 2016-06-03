@@ -14,7 +14,7 @@ library_names='mod_compress.so mod_compress.so mod_compress.so'
 old_library=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -lz -lbz2'
+dependency_libs=' -lz'
 
 # Version information for mod_compress.
 current=0
