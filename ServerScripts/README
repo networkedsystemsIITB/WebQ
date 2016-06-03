@@ -8,7 +8,7 @@ httperf commands
     /test.php?limit=100 method=GET
 
 
-to make moodle instantces
+to make moodle instances
 use
 https://github.com/moodlehq/moodle-performance-comparison
 

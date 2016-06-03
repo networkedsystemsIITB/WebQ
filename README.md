@@ -22,7 +22,7 @@ TestServer         | MTS
 1. clone this repo in each of the machines. One machine may run multiple components 
 and can also double up as a PRIMARY machine as well.
 
-		for eg:
+		for e.g:
         TokenGen and CapacityEstimator and run at one machine and that machine can 
         double up as PRIMARY machine
 

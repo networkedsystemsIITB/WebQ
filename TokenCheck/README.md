@@ -13,7 +13,7 @@ For starting the server, run `lighttpd -f lighttpd.conf`
 The configuration options are in the file lighttpd.conf. CapacityEstimator ip and port at which it
 listens ( this is listed as webq.tokencheck.port in `CapacityEstimator/webq.properties` ) is HARD
 CODED in btp.h !!!!
-The apache server ip is configured in TokenCheck/lighttpd/lighttpd.conf  
+The Apache server ip is configured in TokenCheck/lighttpd/lighttpd.conf  
 
 ###  Code changes to lighttpd
 Code changes for this project to lighttpd are in TokenCheck/lighttpd/src/btp.h
