@@ -1,3 +1,4 @@
-install java. Thats it!!
+install java. 
+install Matlab ( tested with R2014B-Linux )
 sudo apt-get install default-jre
 sudo apt-get install default-jdk
