@@ -1,12 +1,12 @@
 ### TokenCheck install steps
 
-install openssl-dev package (libssl-dev in ubuntu)
+install `libssl-dev` and `libbz2-dev` package 
 
 1. Go inside "lighttpd" directory.
-2. Run "sudo make", and then "sudo make install"
+2. Run `sudo make`, and then `sudo make install`
 
 
-For starting the server, run "lighttpd -f lighttpd.conf"
+For starting the server, run `lighttpd -f lighttpd.conf`
 
 ### TokenCheck configuration steps
 
