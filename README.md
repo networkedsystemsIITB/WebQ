@@ -29,5 +29,6 @@ and can also double up as a PRIMARY machine as well.
 2. At PRIMARY machine grant password-less root access to all other machines
 3. At MTG update proxy.conf with correct TokenCheck ip
 4. At MTC update lighttpd.conf with correct server ip. follow instruction in doc/README and make lighttpd
-5. At MTS install test scripts available at `ServerScripts` which will be access by user.
-6. run `redeploy.sh` from PRIMARY machine
+5. At MCE install Matlab and java
+6. At MTS install test scripts available at `ServerScripts` which will be access by user.
+7. run `redeploy.sh` from PRIMARY machine
