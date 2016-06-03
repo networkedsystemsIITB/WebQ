@@ -112,7 +112,7 @@ done
 
 #start java code {{{
 printf " %d\n%s%43s" $? $marker "Starting the java code" | tee -a $log_file
-ssh root@${capacityEstimator} "cd /home/${username}/WebQ/CapacityEstimator;bash Makefile"
+ssh root@${capacityEstimator} "cd /home/${username}/WebQ/CapacityEstimator;bash makefile.sh"
 ssh root@${capacityEstimator} "cd /home/${username}/WebQ/CapacityEstimator;bash run.sh;"
 printf " %d\n%s%43s" $? $marker "foo.out" | tee -a $log_file
 ssh root@${capacityEstimator} "cat /home/${username}/WebQ/CapacityEstimator/foo.out;"| tee -a $log_file
