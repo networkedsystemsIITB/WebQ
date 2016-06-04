@@ -1,5 +1,8 @@
 # Documentation for TokenGen
 
+Configure FastCGI for apache. Sample `apache2_etc.conf` file is provided in
+the repo for reference.
+
 The configuration setting for each TokenGen is stored in proxy.conf
 each of the lines store a respective setting:
 

@@ -26,6 +26,6 @@ git update-index --assume-unchanged TokenCheck/lighttpd/tests/docroot/www/expire
 git update-index --assume-unchanged TokenCheck/lighttpd/tests/docroot/www/go/Makefile
 git update-index --assume-unchanged TokenCheck/lighttpd/tests/docroot/www/indexfile/Makefile
 git update-index --assume-unchanged TokenCheck/lighttpd/tests/docroot/www/Makefile
-git update-index --assume-unchanged TokenGenNew/proxy1
-git update-index --assume-unchanged TokenGenNew/proxy1.log
-git update-index --assume-unchanged TokenGenNew/waittimedebug.log
+git update-index --assume-unchanged TokenGenNew/src/proxy1
+git update-index --assume-unchanged TokenGenNew/src/proxy1.log
+git update-index --assume-unchanged TokenGenNew/src/waittimedebug.log

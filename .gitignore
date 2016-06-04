@@ -8,8 +8,8 @@ nohup.out
 *.png
 TokenCheck/lighttpd/confdfr0je/
 foo*
-TokenGenNew/apache.pid
-TokenGenNew/proxy1_withMoodle
+TokenGenNew/src/apache.pid
 .gdb_history
 *.class
 *.swp
+cscopeFiles
