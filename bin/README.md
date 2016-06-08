@@ -9,6 +9,11 @@ The scripts are listed in the order of importance
    successfully.  The script requires ssh access to all the component machines.
    Use `makeKnownHost.sh` to configure passwordless ssh access to machines.
 
+        Redeploy.sh requires access to root account of the
+        participating machines. This has to be setup.
+        In Ubuntu you have to explicitly enable the root login.
+        [http://askubuntu.com/questions/44418/how-to-enable-root-login]
+
 2. `ips.sh` - This file serves as as a single point for modifying ips of the
    current deployment. The variables in this script must be updated to correct
    values for `redeploy.sh` to function.
@@ -18,5 +23,5 @@ The scripts are listed in the order of importance
    development ease and is not necessary for running WebQ.
 
 4. `dev_setup.sh` - execute this file after the first time you clone the repo!
-5. `cscope.sh`
+5. `cscope.sh` - a simple script to generate the file list needed for cscope
 6. `makeKnownHost.sh` - a script that does the same job as `ssh-copy-id`
