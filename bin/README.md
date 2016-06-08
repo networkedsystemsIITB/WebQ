@@ -9,10 +9,10 @@ The scripts are listed in the order of importance
    successfully.  The script requires ssh access to all the component machines.
    Use `makeKnownHost.sh` to configure passwordless ssh access to machines.
 
-        Redeploy.sh requires access to root account of the
-        participating machines. This has to be setup.
-        In Ubuntu you have to explicitly enable the root login.
-        [http://askubuntu.com/questions/44418/how-to-enable-root-login]
+   Redeploy.sh requires access to root account of the
+   participating machines. This has to be setup.
+   In Ubuntu you have to explicitly enable the root login.
+   [Enable root login in Ubuntu](http://askubuntu.com/questions/44418/how-to-enable-root-login)
 
 2. `ips.sh` - This file serves as as a single point for modifying ips of the
    current deployment. The variables in this script must be updated to correct
