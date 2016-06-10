@@ -1,6 +1,6 @@
 ## WebQ
 
-often crash when faced with transient overload, causing user
+Servers often crash when faced with transient overload, causing user
 experience to degrade sharply when incoming load exceeds capacity.
 Existing overload control mechanisms focus on some form of admission
 control to protect the web server from overload. Importantly, there is

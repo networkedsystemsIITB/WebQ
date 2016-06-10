@@ -1,22 +1,24 @@
-### TokenCheck install steps
+### Required Packages
 
-install `libssl-dev` and `libbz2-dev` package 
+- libssl-dev 
+- libbz2-dev
+
+### Configuration steps
+The configuration options are in the file lighttpd.conf. 
+- Configure CapacityEstimator ip and post at btp.h in lighttpd/src folder.
+( this should be same as `webq.tokencheck.port` in
+`CapacityEstimator/webq.properties` ). Do the install steps if the
+CapacityEstimator ip is changed.
+- The IP of test moodle server ip is configured in TokenCheck/lighttpd/lighttpd.conf.
+
+### Install steps
 
 1. Go inside "lighttpd" directory.
-2. Run `sudo make`, and then `sudo make install`
-
-
-For starting the server, run `lighttpd -f lighttpd.conf`
-
-### TokenCheck configuration steps
-
-The configuration options are in the file lighttpd.conf. CapacityEstimator ip and port at which it
-listens ( this is listed as webq.tokencheck.port in `CapacityEstimator/webq.properties` ) is HARD
-CODED in btp.h !!!!
-The Apache server ip is configured in TokenCheck/lighttpd/lighttpd.conf  
+2. Run `sudo make`, and then `sudo make install`.
+3. For starting the server, run `lighttpd -f lighttpd.conf`.This is
+   done as a part of `redeploy.sh` and is not expected to run
+   manually.
 
 ###  Code changes to lighttpd
-Code changes for this project to lighttpd are in TokenCheck/lighttpd/src/btp.h
-
-### Other files
-the lighttpd error log can be found at /var/log/lighttpd/error.log
+Code changes on lighttpd for this project are in TokenCheck/lighttpd/src/btp.h.
+The lighttpd error log can be found at /var/log/lighttpd/error.log.
