@@ -169,6 +169,7 @@ void connect_proxy1()
     struct sockaddr_in serv_addr;
     struct hostent *servr;
     int portno = 5006;
+    // This is the ip of machine running Capacity Estimator
     char* hostname = "10.129.28.160";
 
     /* Create a socket point */
