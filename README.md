@@ -1,8 +1,21 @@
 ## WebQ
 
-WebQ is a system consisting of two web proxies, that together simulate
-a virtual queue of web requests, and shape incoming load to match
-server capacity.
+often crash when faced with transient overload, causing user
+experience to degrade sharply when incoming load exceeds capacity.
+Existing overload control mechanisms focus on some form of admission
+control to protect the web server from overload. Importantly, there is
+no feedback to the frustrated user about when to retry again, leading
+to adhoc retries.
+
+WebQ consist of two web proxies, that together simulate a virtual
+queue of web requests, and shape incoming load to match server
+capacity. Users accessing a server protected by WebQ receive a HTTP
+redirect response specifying a wait time in the virtual queue, and are
+automatically redirected to the web server upon expiration of the wait
+time. The wait times are calculated using an estimate of the server’s
+capacity that is computed by WebQ.  Users in the virtual queue are
+provided with a secure cryptographic token, which is checked to
+guarantee that the user has waited his prescribed time in the queue.
 
 ### Directory Structure
 
@@ -47,3 +60,6 @@ components.
 * WebQ: A Virtual Queue To Improve User Experience During Web Server Overload [pdf](https://www.cse.iitb.ac.in/~mythili/research/webq-iwqos.pdf)</br>
 Bhavin Doshi, Chandan Kumar, Pulkit Piyush, Mythili Vutukuru</br>
 IEEE/ACM International Symposium on Quality of Service (IWQoS), Portland, OR, June 2015.
+
+
+
