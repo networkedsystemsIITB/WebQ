@@ -6,11 +6,11 @@ server capacity.
 
 ### Directory Structure
 
-- **TokenGenNew** - Source code and documentation of Token Gen.
-- **TokenCheck** - Source code and documentation of Token Check.
-- **CapacityEstimator** - Source code and documentation of Capacity Estimator.
 - **bin** - Scripts to deploy all the components.
+- **TokenCheck** - Source code and documentation of Token Check.
+- **TokenGenNew** - Source code and documentation of Token Gen.
 - **ServerScripts** - Scripts and details on how to setup a test Moodle server.
+- **CapacityEstimator** - Source code and documentation of Capacity Estimator.
 - **JMeter_test_configurations** - Test configuration used when testing with jmeter[deprecated]. Use [LoadGenerator](https://github.com/networkedsystemsIITB/LoadGenerator) instead.
 
 #### Developer Manual
@@ -44,6 +44,6 @@ components.
 
 ### Publications
 
-WebQ: A Virtual Queue To Improve User Experience During Web Server Overload [pdf](https://www.cse.iitb.ac.in/~mythili/research/webq-iwqos.pdf)</br>
+* WebQ: A Virtual Queue To Improve User Experience During Web Server Overload [pdf](https://www.cse.iitb.ac.in/~mythili/research/webq-iwqos.pdf)</br>
 Bhavin Doshi, Chandan Kumar, Pulkit Piyush, Mythili Vutukuru</br>
 IEEE/ACM International Symposium on Quality of Service (IWQoS), Portland, OR, June 2015.
