@@ -33,7 +33,8 @@ of respective folders. It contains detailed instructions for
 understanding the codebase. It will be helpful while modifying/adding
 code functionalities to WebQ.
 
-### Installation
+
+### Configureation and Machine Setup
 
 `redeploy.sh` script at `bin/` is used to bring up all the components
 in different machines.  Before `redeploy.sh` can be successfully run
@@ -47,13 +48,16 @@ components.
    access to all other machines. This machine is will run
    `redeploy.sh`.
 3. At TokenGen machines update `proxy.conf` with correct TokenCheck ip.
-4. At TokenCheck update `lighttpd.conf` with correct server ip. follow
-   instruction in doc/README and make lighttpd.
-5. At CapacityEstimator install Matlab and java.
+4. At TokenCheck configure `lighttpd.conf` with correct proxy server ip.
+    Configure CapacityEstimator ip in `btp.h`.
+    Make and build TokenCheck.(Detailed configuration and build instructions available in TokenCheck/README.md).
+5. At CapacityEstimator install Matlab and java. Configure `webq.properties` file with correct TokenGen ip and port.
 6. At TestServer setup [Test Moodle](https://github.com/moodlehq/moodle-performance-comparison).
    Install test scripts available at `ServerScripts` (See
    ServerScripts readme).
-7. Run `redeploy.sh` from PRIMARY machine.
+7. Run `redeploy.sh` from PRIMARY machine to start using WebQ for
+   TestServer.
+
 
 ### Publications
 
