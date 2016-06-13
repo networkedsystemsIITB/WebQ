@@ -21,7 +21,7 @@ guarantee that the user has waited his prescribed time in the queue.
 
 - **bin** - Scripts to deploy all the components.
 - **TokenCheck** - Source code and documentation of Token Check.
-- **TokenGenNew** - Source code and documentation of Token Gen.
+- **TokenGen** - Source code and documentation of Token Gen.
 - **ServerScripts** - Scripts and details on how to setup a test Moodle server.
 - **CapacityEstimator** - Source code and documentation of Capacity Estimator.
 - **JMeter_test_configurations** - Test configuration used when testing with jmeter [deprecated]. Use [LoadGenerator](https://github.com/networkedsystemsIITB/LoadGenerator) instead.

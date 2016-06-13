@@ -8,7 +8,7 @@ nohup.out
 *.png
 TokenCheck/lighttpd/confdfr0je/
 foo*
-TokenGenNew/src/apache.pid
+TokenGen/src/apache.pid
 .gdb_history
 *.class
 *.swp
