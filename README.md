@@ -61,7 +61,7 @@ components.
 
 ### Publications
 
-* WebQ: A Virtual Queue To Improve User Experience During Web Server Overload [pdf](https://www.cse.iitb.ac.in/~mythili/research/webq-iwqos.pdf)</br>
+* [WebQ: A Virtual Queue To Improve User Experience During Web Server Overload](https://www.cse.iitb.ac.in/~mythili/research/webq-iwqos.pdf)</br>
 Bhavin Doshi, Chandan Kumar, Pulkit Piyush, Mythili Vutukuru</br>
 IEEE/ACM International Symposium on Quality of Service (IWQoS), Portland, OR, June 2015.
 
