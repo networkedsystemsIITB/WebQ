@@ -24,7 +24,7 @@ guarantee that the user has waited his prescribed time in the queue.
 - **TokenGenNew** - Source code and documentation of Token Gen.
 - **ServerScripts** - Scripts and details on how to setup a test Moodle server.
 - **CapacityEstimator** - Source code and documentation of Capacity Estimator.
-- **JMeter_test_configurations** - Test configuration used when testing with jmeter[deprecated]. Use [LoadGenerator](https://github.com/networkedsystemsIITB/LoadGenerator) instead.
+- **JMeter_test_configurations** - Test configuration used when testing with jmeter [deprecated]. Use [LoadGenerator](https://github.com/networkedsystemsIITB/LoadGenerator) instead.
 
 #### Developer Manual
 
@@ -34,7 +34,7 @@ understanding the codebase. It will be helpful while modifying/adding
 code functionalities to WebQ.
 
 
-### Configureation and Machine Setup
+### Configuration and Machine Setup
 
 `redeploy.sh` script at `bin/` is used to bring up all the components
 in different machines.  Before `redeploy.sh` can be successfully run
