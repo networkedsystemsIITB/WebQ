@@ -8,7 +8,8 @@ At /var/www/html clone moodle-performance-analysis as moodleM, moodleXS, moodleS
 **moodle-performance-analysis configuration:** the following fields of
 `webserver_config.properties` at
 `moodle(XS|S|M)/webserver_config.properties`  were altered to meet the
-local machine requirements
+local machine requirements (these are sample values, use the
+dbpassword of your machine the below fields)
 
 ```
 dbtype="mysqli"
