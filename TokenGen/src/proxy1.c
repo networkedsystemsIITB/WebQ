@@ -96,7 +96,7 @@ void * ThreadWorker( void * threadArgs) {
 
 void* create_server_socket(void*) {
     //
-    // Creates server socket for communication between Proxy1 and Proxy2
+    // Creates server socket for communication between Proxy1 and Proxy2, and CapacityEstimator
     //
     int sockfd, newsockfd;
     socklen_t clilen;
@@ -165,38 +165,6 @@ void* create_server_socket(void*) {
             debug_printf("Thread creation failed");
             exit(1);
         }
-
-        /* If connection is established then start communicating */
-
-        /* bzero(buffer, 256); */
-        /* bytes_read_count = read(newsockfd, buffer, 255); */
-        /* if (bytes_read_count <= 0) { */
-        /*     perror("ERROR reading from socket. Waiting for TokenCheck to reconnect"); */
-        /*     debug_log( "bytes_read_count < 0 " ); */
-        /*     /1* Accept actual connection from the client *1/ */
-        /*     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen); */
-        /*     continue; */
-        /* } */
-//      fprintf(log_ptr, "New capacity received from java: %s", buffer);
-//      char* pch = strtok(buffer, " ,.-");
-//      while (pch != NULL) {
-            //printf ("%s\n",pch);
-            //fprintf(log_ptr, "%s\n", pch);
-            //fflush(log_ptr);
-//          if (strcmp(pch, "A") == 0) {
-//              proxy2_in++;
-//          } else if (strcmp(pch, "F") == 0) {
-//              change_values(&failing, 1);
-//              change_values(&outgoing, 1);
-//              //change_float_values(&alpha, penalty, initial_alpha);
-//          } else {
-                /* capacity = atol(buffer); */
-//              change_values(&outgoing, 1);
-                //change_long_values(&total_service_time, wait_time);
-//              total_out++;
-//          }
-//          pch = strtok(NULL, " ,.-");
-//      }
 
     }
 }
@@ -270,7 +238,6 @@ void* queue_sender( void * args) {/*{{{*/
 }/*}}}*/
 
 int main(void) {/*{{{*/
-//  prev_ratio = 0;
     incoming = 0;
 //  outgoing = 0;
     failing = 0;
@@ -281,10 +248,12 @@ int main(void) {/*{{{*/
 //  proxy2_in = 0;
     capacity = 100000;
     connectedClients = 0;
-//  initial_alpha = (float) 1 / 15.0; //  Initial factor by which we multiply the number of pending requests to get waiting
-//  alpha = (float) 1 / 15.0; //  Factor by which we multiply the number of pending requests to get waiting time time
     current_time = 0;
     int counter;
+
+    // Initialize
+    // visitor_count - number of incoming at current TokenGen
+    // peer_v_count - number of incoming at peers
     for (counter = 0; counter < LIMIT; counter++)
     {
         visitor_count[counter] = 0;  // Initialize visitor_count
@@ -293,7 +262,7 @@ int main(void) {/*{{{*/
         peer_v_count[i][counter] = 0; // replace with memset
     }
 
-
+    // parse the proxy.conf file to get the values 
     parse_config_file();
 
 
@@ -313,10 +282,6 @@ int main(void) {/*{{{*/
 
         // Updated on 17.04
         time_t currtime = time(NULL);
-
-        //int curr_backlog = get_values(&incoming) - get_values(&outgoing);
-        //curr_backlog = curr_backlog > 0 ? curr_backlog : 0;
-        //float float_wait_time =  ((float) (curr_backlog + get_pending())/capacity);
 
         // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
         int iter = 0;
