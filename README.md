@@ -54,7 +54,7 @@ components.
 5. At CapacityEstimator install Matlab and java. Configure `webq.properties` file with correct TokenGen ip and port.
 6. At TestServer setup [Test Moodle](https://github.com/moodlehq/moodle-performance-comparison).
    Install test scripts available at `ServerScripts` (See
-   ServerScripts readme).
+   ServerScripts README).
 7. Run `redeploy.sh` from PRIMARY machine to start using WebQ for
    TestServer.
 
