@@ -22,7 +22,14 @@ beforebranchrepository="https://github.com/moodle/moodle.git"
 afterbranchrepository="https://github.com/moodle/moodle.git"
 backupsdir="/tmp"
 ```
-
+moodle-performance-comparison provide various options to generate the dummy
+data of students and courses (XS -Extra Small , S- Small etc )
+```
+cd /path/to/moodle-performance-comparison (in this case /path/to/moodleM) 
+./before_run_setup.sh {XS|S|M|L|XL|XXL} 
+```
+A moodle populated with various number of courses can be created based on the 
+argument passed ( XS , S etc )
 
 When server is accessed from TokenCheck (through lighttpd proxy) the ip
 used will be different and hence will trigger is redirect. Use the following 
@@ -33,14 +40,6 @@ In each of `moodle(XS|S|M)/moodle/config.php:19`
 $CFG->wwwroot   = 'http://'.$_SERVER["HTTP_HOST"].'/moodleXS/moodle'; 
 ```
 
-moodle-performance-comparison provide various options to generate the dummy
-data of students and courses (XS -Extra Small , S- Small etc )
-```
-cd /path/to/moodle-performance-comparison (in this case /path/to/moodleM) 
-./before_run_setup.sh {XS|S|M|L|XL|XXL} 
-```
-A moodle populated with various number of courses can be created based on the 
-argument passed ( XS , S etc )
 
 
 for e.g: if `moodleM` is medium-Moodle installation setup at `/var/www/html/`,<br/>
