@@ -27,7 +27,7 @@ When server is accessed from TokenCheck (through lighttpd proxy) the ip
 used will be different and hence will trigger is redirect. Use the following 
 setting to prevent such redirects:
 
-In each of moodle(XS|S|M)/moodle/config.php:19
+In each of `moodle(XS|S|M)/moodle/config.php:19`
 ```
 $CFG->wwwroot   = 'http://'.$_SERVER["HTTP_HOST"].'/moodleXS/moodle'; 
 ```
