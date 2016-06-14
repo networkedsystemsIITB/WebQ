@@ -6,6 +6,7 @@ nohup.out
 *.log
 *.dat
 *.png
+*.aux
 TokenCheck/lighttpd/confdfr0je/
 foo*
 TokenGen/src/apache.pid

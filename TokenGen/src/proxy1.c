@@ -33,10 +33,12 @@ void* start_logging( void* ) {
 }
 
 int readFromClient( struct clientDetails * cd ) {
+    /* This functions reads data from two types of clients 
+     * that connect to TokenGen
+     * Two types of clients are:
+     *  1 Capacity Estimator
+     *  2 other peer proxy */
     // make buffer to store the data from client
-    // Two types of clients
-    //  1 Capacity Estimator
-    //  2 other peer proxy
     int clientSocketFD = cd->sockfd;
     /* debug_printf( "yo yo thread id %d\n", clientSocketFD ); */
     int bytes = LIMIT * sizeof(int);
@@ -46,6 +48,13 @@ int readFromClient( struct clientDetails * cd ) {
     while( ( bytesRead = read( clientSocketFD, buffer, bytes ) ) > 0)
     {
         /* debug_printf( "bytesRead %d \n", bytesRead ); */
+        //the fist character indicates if the data is from
+        //a CapacityEstimator for TokenGen
+        //c - capacity data from CapacityEstimator
+        //h - hardness data form CapacityEstimator
+        //i - incoming rate data from peer TokenGen
+        //in all above communicatin the data count will be less than 20
+        //if >20  - its peer_v_count from TokenGen
         if( *(char*)buffer == 'c' ){ // if content of buffer == c
             debug_printf( "data from capacity estimator in c %s", ((char*)buffer)+1 );
             capacity = stoi((char*)buffer+1 );
@@ -83,6 +92,7 @@ int readFromClient( struct clientDetails * cd ) {
         else{
             debug_printf( "bytesRead in else %d \n", bytesRead );
         }
+        // Exit once the communication is over.
     }
     debug_printf( "gonna shutdown read thread \n");
     // 2- shutdown both send and recieve functions
