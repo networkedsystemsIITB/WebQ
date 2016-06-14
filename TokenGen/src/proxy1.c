@@ -172,7 +172,11 @@ void* create_server_socket(void*) {
 void writeToServer(char *ip_array_n){
     // FUNCTION DESC:
     // write visitor array to peer proxy 
-    // ( which is a server as far as 'this' proxy is concerned )
+    // ( which is a server as far as 'this' proxy is concerned, therefore the 
+    // function name )
+    // This function runs as a separate thread.for each peer
+    // i.e.: There will be as many instance of this function as the
+    // number of peer TokenGen
     int sockfd, portnum, n;
     struct sockaddr_in server_addr;
     // sending_port is already filled by the parser
@@ -193,6 +197,8 @@ void writeToServer(char *ip_array_n){
         exit(1);
     }
     server_addr.sin_port = htons(portnum);
+    // Connect once to the current ip_array_n and keep on sending
+    // visitor_count array at the below infinite while loop
     if(connect(sockfd,(struct sockaddr *)&server_addr,sizeof(server_addr)) >= 0)
     {
         // the time frequnecy value is important 
@@ -239,13 +245,9 @@ void* queue_sender( void * args) {/*{{{*/
 
 int main(void) {/*{{{*/
     incoming = 0;
-//  outgoing = 0;
     failing = 0;
-//  total_waiting_time = 0;
-//  total_service_time = 0;
     total_in = 0;
     total_out = 0;
-//  proxy2_in = 0;
     capacity = 100000;
     connectedClients = 0;
     current_time = 0;
@@ -283,7 +285,9 @@ int main(void) {/*{{{*/
         // Updated on 17.04
         time_t currtime = time(NULL);
 
-        // Calculate waiting time and increment corresponding count in queue (Make this more efficient if needed)
+        // we need to find share of capacity (share)
+        // hostIncomingRate is updated in timer.h
+        // sum_peer_incoming_rate - is updated below
         int iter = 0;
         int j;
         for( j=0; j<PEERS; j++)
@@ -304,7 +308,6 @@ int main(void) {/*{{{*/
         /* debug_printf( "befor av-%.2f, sum-%.2f \n", hostIncomingRate, sum_peer_incoming_rate); */
         int usedCapacity = 0;
         int peerUsedCapacity = 0;
-        // calculate the share :
         // reserve a min value of capacity (0.1) for each servers
         int percent = 10;
         if( hostIncomingRate == 0 && sum_peer_incoming_rate == 0 )
@@ -313,13 +316,11 @@ int main(void) {/*{{{*/
             sum_peer_incoming_rate = 1;
         }
         else if ( hostIncomingRate == 0 ){
-            //      awt/( awt + p_awt ) * 100 = percent;
             hostIncomingRate = percent * sum_peer_incoming_rate / ( 100 - percent );
         }
         else if ( sum_peer_incoming_rate == 0 ){
             sum_peer_incoming_rate = percent * hostIncomingRate / ( 100 - percent );
         }
-        // we need to multiply by no_of_proxy so as to normalize .
         /* debug_printf( "after av-%.2f, sum-%.2f \n", hostIncomingRate, sum_peer_incoming_rate); */
         share = capacity * hostIncomingRate/(hostIncomingRate + sum_peer_incoming_rate);
         // share found
@@ -330,8 +331,7 @@ int main(void) {/*{{{*/
 
         int excess_used;
         for (iter = 0; iter < LIMIT; iter++) {
-            // find the current used capacity for THIS "iter"
-            // for subsequent reqests at same time
+            // find the current used capacity for THIS "iter" time instant 
             peerUsedCapacity = 0;
             usedCapacity = get_array(&visitor_count[(current_time + iter) % LIMIT]);
             for( j=0; j<PEERS; j++)
@@ -352,8 +352,9 @@ int main(void) {/*{{{*/
                 url=1;
             if ( total_usable_capacity > 0 )
             {
-                //visitor_count[(current_time+iter)%LIMIT]++;
                 debug_printf( "time %d %d \n" , current_time , iter) ;
+                // found the time at which the request is to be
+                // sheduled , now update the visitor_count array
                 update_array(&visitor_count[(current_time + iter) % LIMIT], hardness[url]); // increment by hardness
                 break;
             }
