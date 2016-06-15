@@ -1,5 +1,12 @@
 ### Seting Up Moodle server
 
+#### Required Packages
+
+- php5-curl
+- php5-gd
+
+#### Installation Instructions
+
 Use [Moodle Performance Comparison](https://github.com/moodlehq/moodle-performance-comparison).
 to setup test moodle installations.
 
